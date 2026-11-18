@@ -1,371 +1,178 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commander - Restaurant By Mali</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif
-        }
-
-        body {
-            background: #FFF8EE;
-            color: #1A1512
-        }
-
-        .header {
-            background: #1A1512;
-            color: #fff;
-            padding: 22px 20px;
-            text-align: center
-        }
-
-        .header h1 {
-            font-family: Georgia, serif;
-            font-size: 22px;
-            font-weight: 400
-        }
-
-        .header p {
-            font-size: 13px;
-            opacity: .85;
-            margin-top: 4px
-        }
-
-        .nav {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            padding: 14px 20px;
-            justify-content: center
-        }
-
-        .nav a {
-            background: #fff;
-            border: 1px solid #F1E3C8;
-            padding: 9px 14px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: #1A1512;
-            font-size: 13px;
-            font-weight: 700
-        }
-
-        .main {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 0 16px 30px
-        }
-
-        .card {
-            background: #fff;
-            border: 1px solid #F1E3C8;
-            border-radius: 16px;
-            padding: 18px;
-            margin-top: 14px
-        }
-
-        .plat {
-            display: flex;
-            gap: 12px;
-            align-items: center
-        }
-
-        .plat img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 12px
-        }
-
-        .btn {
-            width: 100%;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px
-        }
-
-        .btn-or {
-            background: #C9A227;
-            color: #1A1512
-        }
-
-        .btn-noir {
-            background: #1A1512;
-            color: #fff
-        }
-
-        .btn-blanc {
-            background: #fff;
-            border: 2px solid #F1E3C8
-        }
-
-        input,
-        select {
-            width: 100%;
-            border: 1.5px solid #F1E3C8;
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 14px;
-            outline: none;
-            margin-top: 8px
-        }
-
-        label {
-            font-size: 11px;
-            font-weight: 800;
-            color: #7A7268;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-            display: block;
-            margin-top: 12px
-        }
-
-        .qte {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-top: 10px
-        }
-
-        .qte button {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 2px solid #C9A227;
-            background: #fff;
-            font-size: 20px;
-            font-weight: 800;
-            cursor: pointer
-        }
-
-        .qte span {
-            font-size: 20px;
-            font-weight: 800
-        }
-
-        .total {
-            font-size: 18px;
-            font-weight: 800;
-            text-align: center;
-            margin-top: 12px
-        }
-
-        .msg-ok {
-            font-size: 14px;
-            text-align: center;
-            margin-top: 12px;
-            color: #1B6B2E;
-            font-weight: 700
-        }
-
-        .msg-err {
-            font-size: 14px;
-            text-align: center;
-            margin-top: 12px;
-            color: #A83200;
-            font-weight: 700
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passer commande - Restaurant By Mali</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#FFF8EE;color:#1A1512;overflow-x:hidden}
+.header{background:#1A1512;color:#fff;padding:22px 20px;text-align:center}
+.header h1{font-family:Georgia,serif;font-size:22px;font-weight:400}
+.header p{font-size:13px;opacity:.85;margin-top:6px}
+.nav{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;justify-content:center}
+.nav a{background:#fff;border:1px solid #F1E3C8;padding:9px 14px;border-radius:20px;text-decoration:none;color:#1A1512;font-size:13px;font-weight:700;white-space:nowrap}
+.main{max-width:600px;margin:0 auto;padding:0 16px 30px}
+.card{background:#fff;border:1px solid #F1E3C8;border-radius:16px;padding:20px;margin-top:16px}
+.card h2{font-family:Georgia,serif;font-weight:400;font-size:22px}
+.card p{font-size:14px;color:#555;line-height:1.6;margin-top:8px}
+label{font-size:11px;font-weight:800;color:#7A7268;text-transform:uppercase;letter-spacing:.6px;display:block;margin-top:16px}
+input,select{width:100%;border:1.5px solid #F1E3C8;border-radius:10px;padding:13px;font-size:14px;outline:none;margin-top:8px}
+.qte{display:flex;align-items:center;gap:12px;margin-top:8px}
+.qte button{width:44px;height:44px;border-radius:50%;border:1.5px solid #1A1512;background:#fff;font-size:20px;font-weight:800;cursor:pointer}
+.qte b{font-size:20px;min-width:20px;text-align:center}
+.plat-box{display:flex;gap:12px;align-items:center;border:1px solid #F1E3C8;border-radius:12px;padding:12px;margin-top:10px}
+.plat-box img{width:70px;height:70px;object-fit:cover;border-radius:10px;background:#eee}
+.plat-box b{font-size:15px}
+.plat-box small{color:#888}
+.btn{border:none;padding:14px;border-radius:12px;font-weight:800;cursor:pointer;font-size:15px;width:100%;margin-top:16px}
+.btn-noir{background:#1A1512;color:#fff}
+.btn-or{background:#C9A227;color:#1A1512}
+.btn-blanc{background:#fff;color:#7A0C1A;border:1.5px solid #7A0C1A}
+.total{font-size:16px;line-height:2;margin-top:12px}
+.total b{color:#1A1512}
+.alerte{background:#FFF3CD;border:1px solid #F1E3C8;border-radius:12px;padding:14px;font-size:14px;line-height:1.6;margin-top:12px}
+</style>
 </head>
-
 <body>
-    <div class="header">
-        <h1>Passer commande</h1>
-        <p id="sousTitre">Restaurant By Mali</p>
-    </div>
-    <div class="nav">
-        <a href="accueil.html">Accueil</a>
-        <a href="commandes.html">Mes Commandes</a>
-        <a href="profil.html">Profil</a>
-        <a href="message.html">Message des Commandes</a>
-        <a href="login.html" onclick="localStorage.removeItem('rbm_client_connecte')">Se déconnecter</a>
-    </div>
-    <div class="main">
+<div class="header">
+<h1>Passer commande</h1>
+<p id="bonjour">Bonjour</p>
+</div>
+<div class="nav">
+<a href="accueil.html">Accueil</a>
+<a href="commandes.html">Mes Commandes</a>
+<a href="profil.html">Profil</a>
+<a href="message.html">Message des Commandes</a>
+<a href="#" onclick="deconnecter()">Se déconnecter</a>
+</div>
+<div class="main">
+<div class="card">
+<h2>Ta commande</h2>
+<div id="platChoisi"></div>
+<div id="messageVide" class="alerte" style="display:none">Tu n'as pas encore choisi de plat.<br>Va sur <b>Accueil</b> → clique un restaurant → clique sur un plat → puis reviens ici pour commander.</div>
+<label>Restaurant</label>
+<input type="text" id="resto" readonly placeholder="Choisi sur Accueil">
+<label>Quantité</label>
+<div class="qte">
+<button onclick="changerQte(-1)">−</button>
+<b id="qteTxt">1</b>
+<button onclick="changerQte(1)">+</button>
+</div>
+<label>Mon quartier de livraison *</label>
+<input type="text" id="quartier" placeholder="Ex : ACI 2000 - Bamako">
+<label>Mon téléphone *</label>
+<input type="text" id="telephone" placeholder="Ex : +223 70 11 22 33">
+<div class="total" id="totalBox"></div>
+<button class="btn btn-noir" onclick="commander()">✅ Commander</button>
+<button class="btn btn-or" onclick="location.href='accueil.html'">🍽 Voir le menu</button>
+<p id="msg" style="font-size:13px;text-align:center;margin-top:10px;font-weight:700;color:#1B6B2E"></p>
+</div>
+</div>
+<script>
 
-        <!-- ===== 1. CE QUE TU AS CHOISI ===== -->
-        <div class="card">
-            <h3 style="font-family:Georgia,serif;font-weight:400">Ta commande</h3>
-            <div id="blocPlat" style="margin-top:12px"></div>
-            <p id="msgPasDePlat" style="font-size:13px;color:#888;margin-top:10px;display:none">Tu n'as pas encore
-                choisi de plat.<br>Va sur <b>Accueil → clique un restaurant → VOIR MENU → Commander</b> sur un plat,
-                puis reviens ici.</p>
+function getClient(){
+  var cles = ["rbm_client_connecte","rbm_client","client_connecte","rbm_user"];
+  for(var i=0;i<cles.length;i++){
+    try{
+      var v = localStorage.getItem(cles[i]);
+      if(!v) continue;
+      if(v.charAt(0) === "{") return JSON.parse(v);
+      if(v) return {nom:v};
+    }catch(e){}
+  }
+  return null;
+}
+function getPlatChoisi(){
+  try{
+    var v = localStorage.getItem("rbm_plat_choisi");
+    if(!v) return null;
+    if(v.charAt(0) === "{") return JSON.parse(v);
+    return {nom:v};
+  }catch(e){ return null; }
+}
+var client = getClient();
+var plat = getPlatChoisi();
+var qte = 1;
+var bonjourEl = document.getElementById("bonjour");
+if(client && client.nom){
+  bonjourEl.textContent = "Bonjour " + client.nom + (client.quartier ? " • " + client.quartier : "");
+  if(client.quartier) document.getElementById("quartier").value = client.quartier;
+  if(client.telephone) document.getElementById("telephone").value = client.telephone;
+} else {
+  bonjourEl.textContent = "Bonjour, connecte-toi pour commander";
+}
 
-            <label>Restaurant</label>
-            <input type="text" id="inpResto" readonly>
-
-            <label>Quantité</label>
-            <div class="qte">
-                <button type="button" onclick="changerQte(-1)">−</button>
-                <span id="txtQte">1</span>
-                <button type="button" onclick="changerQte(1)">+</button>
-            </div>
-
-            <label>Mon quartier de livraison *</label>
-            <input type="text" id="inpQuartier" placeholder="Ex : ACI 2000 - Bamako">
-            <label>Mon téléphone *</label>
-            <input type="text" id="inpTel" placeholder="Ex : +223 70 11 22 33">
-
-            <label>Moyen de paiement *</label>
-            <select id="moyen">
-                <option value="Wave">Wave</option>
-                <option value="Sama">Sama</option>
-                <option value="Espèces à la livraison">Espèces à la livraison</option>
-            </select>
-
-            <div class="total" id="txtTotal">Total : 0 F</div>
-            <p style="font-size:12px;color:#888;text-align:center;margin-top:6px">Prix du plat x quantité + livraison
-                500 F = Total. Tu ne tapes pas le prix, il se calcule tout seul.</p>
-
-            <button class="btn btn-or" onclick="passerCommande()">✅ CONFIRMER ET PAYER</button>
-            <p id="msg" class=""></p>
-        </div>
-
-        <!-- ===== 2. MES ANCIENNES COMMANDES ===== -->
-        <div class="card">
-            <h3 style="font-family:Georgia,serif;font-weight:400">Mes commandes</h3>
-            <div id="mesCommandes" style="margin-top:10px"></div>
-        </div>
-
-    </div>
-    <script>
-        // ===== QUI EST CONNECTÉ ? =====
-        let nomClient = localStorage.getItem("rbm_client_connecte") || localStorage.getItem("rbm_client_nom") || "";
-        let telSauv = localStorage.getItem("rbm_client_tel") || "";
-        let quartierSauv = localStorage.getItem("rbm_client_quartier") || "";
-        if (nomClient) document.getElementById("sousTitre").textContent = "Connecté : " + nomClient;
-
-        // ===== PLAT CHOISI DEPUIS LA PAGE RESTAURANT =====
-        let nomResto = localStorage.getItem("rbm_client_choix_resto") || "";
-        let plat = null;
-        try { plat = JSON.parse(localStorage.getItem("rbm_client_choix_plat") || "null"); } catch (e) { plat = null; }
-        let quantite = 1;
-        let livraison = 500;
-        let prixPlat = plat ? parseInt(plat.prix || 0) : 0;
-
-        function afficherPlat() {
-            let zone = document.getElementById("blocPlat");
-            if (!plat) {
-                zone.innerHTML = "";
-                document.getElementById("msgPasDePlat").style.display = "block";
-                document.getElementById("inpResto").value = "";
-                document.getElementById("txtTotal").textContent = "Total : 0 F";
-                return;
-            }
-            document.getElementById("msgPasDePlat").style.display = "none";
-            let img = plat.img || "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop";
-            zone.innerHTML = "<div class='plat'><img src='" + img + "'><div><b>" + plat.nom + "</b><br><small>" + prixPlat + " F — " + (nomResto || "") + "</small><br><small style='color:#888'>Clique − / + pour changer la quantité</small></div></div>";
-            document.getElementById("inpResto").value = nomResto || "";
-            document.getElementById("inpTel").value = telSauv || "";
-            document.getElementById("inpQuartier").value = quartierSauv || "";
-            majTotal();
-        }
-        function majTotal() {
-            if (!plat) { document.getElementById("txtTotal").textContent = "Total : 0 F"; return; }
-            let total = (prixPlat * quantite) + livraison;
-            document.getElementById("txtQte").textContent = quantite;
-            document.getElementById("txtTotal").textContent = "Total : " + total.toLocaleString("fr-FR") + " F  (" + prixPlat + " F x " + quantite + " + livraison " + livraison + " F)";
-            return total;
-        }
-        function changerQte(d) {
-            quantite = quantite + d;
-            if (quantite < 1) quantite = 1;
-            if (quantite > 20) quantite = 20;
-            majTotal();
-        }
-        afficherPlat();
-
-        // ===== MES ANCIENNES COMMANDES =====
-        function afficherMesCommandes() {
-            let toutes = [];
-            try { toutes = JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); } catch (e) { toutes = []; }
-            let miennes = toutes.filter(function (c) { return (c.client || "") === nomClient; });
-            miennes.sort(function (a, b) { return new Date(b.date || 0) - new Date(a.date || 0); });
-            let zone = document.getElementById("mesCommandes");
-            if (miennes.length === 0) { zone.innerHTML = "<p style='font-size:13px;color:#888'>Aucune commande pour le moment.</p>"; return; }
-            zone.innerHTML = miennes.map(function (c) {
-                return "<div style='border-bottom:1px solid #F1E3C8;padding:10px 0;font-size:13px;line-height:1.7'><b>" + (c.plat || c.commande) + " x " + (c.quantite || c.qty || 1) + "</b> — " + (c.restaurant || c.resto) + "<br>Total : <b>" + (c.total || c.prix) + " F</b> — " + (c.paiement || "") + " — " + (c.statut || "") + "<br><small>" + (c.date || "") + "</small></div>";
-            }).join("");
-        }
-        afficherMesCommandes();
-
-        // ===== PASSER COMMANDE — C'EST ICI QUE ÇA BLOQUAIT =====
-        function passerCommande() {
-            let msg = document.getElementById("msg");
-            msg.className = "";
-            if (!plat) {
-                msg.className = "msg-err";
-                msg.textContent = "Choisis d'abord un plat. Va sur Accueil → clique un restaurant → VOIR MENU → Commander.";
-                return;
-            }
-            if (!nomResto) {
-                msg.className = "msg-err";
-                msg.textContent = "Choisis d'abord un restaurant.";
-                return;
-            }
-            let quartier = document.getElementById("inpQuartier").value.trim();
-            let tel = document.getElementById("inpTel").value.trim();
-            let moyen = document.getElementById("moyen").value;
-            if (!quartier) {
-                msg.className = "msg-err";
-                msg.textContent = "Ecris ton quartier de livraison.";
-                return;
-            }
-            if (!tel) {
-                msg.className = "msg-err";
-                msg.textContent = "Ecris ton téléphone.";
-                return;
-            }
-            if (!nomClient) {
-                msg.className = "msg-err";
-                msg.textContent = "Connecte-toi d'abord comme client.";
-                return;
-            }
-            let total = majTotal();
-            // On enregistre la commande — le Restaurant la verra dans notification-commande + paiement
-            let commandes = [];
-            try { commandes = JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); } catch (e) { commandes = []; }
-            commandes.push({
-                restaurant: nomResto,
-                resto: nomResto,
-                client: nomClient,
-                telephone: tel,
-                tel: tel,
-                quartier: quartier,
-                plat: plat.nom,
-                commande: plat.nom,
-                quantite: quantite,
-                qty: quantite,
-                total: total,
-                prix: total,
-                paiement: moyen === "Espèces à la livraison" ? "En attente" : "Payé",
-                moyenPaiement: moyen,
-                moyen: moyen,
-                statut: "En attente",
-                date: new Date().toLocaleString("fr-FR")
-            });
-            localStorage.setItem("rbm_commandes", JSON.stringify(commandes));
-            // On sauvegarde ton quartier / tel pour la prochaine fois
-            localStorage.setItem("rbm_client_tel", tel);
-            localStorage.setItem("rbm_client_quartier", quartier);
-            // On vide le choix pour ne pas re-commander 2 fois le même
-            localStorage.removeItem("rbm_client_choix_plat");
-            msg.className = "msg-ok";
-            msg.textContent = "Commande envoyée ! " + plat.nom + " x " + quantite + " — Total " + total + " F — " + nomResto + ". Le restaurant va la voir.";
-            afficherMesCommandes();
-            // On reste sur la page pour que tu voies ta commande dans la liste ci-dessous
-            setTimeout(function () { afficherPlat(); }, 500);
-        }
-    </script>
+function afficherPlat(){
+  var box = document.getElementById("platChoisi");
+  var vide = document.getElementById("messageVide");
+  if(!plat){
+    box.innerHTML = "";
+    vide.style.display = "block";
+    document.getElementById("resto").value = "";
+    document.getElementById("totalBox").innerHTML = "";
+    return;
+  }
+  vide.style.display = "none";
+  var prix = parseInt(plat.prix || plat.total || 0) || 0;
+  var photo = plat.photo || plat.image || plat.img || "";
+  var imgHtml = photo ? '<img src="'+photo+'">' : '<div style="width:70px;height:70px;background:#F1E3C8;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888">Plat</div>';
+  box.innerHTML = '<div class="plat-box">'+imgHtml+'<div><b>'+(plat.nom || plat.plat || "Plat")+'</b><br><small>'+(plat.restaurant || plat.resto || "")+' — '+prix.toLocaleString("fr-FR")+' F</small></div></div>';
+  if(plat.restaurant || plat.resto) document.getElementById("resto").value = plat.restaurant || plat.resto;
+  mettreTotal();
+}
+function mettreTotal(){
+  if(!plat) return;
+  var prix = parseInt(plat.prix || plat.total || 0) || 0;
+  var sousTotal = prix * qte;
+  var livraison = 500;
+  var total = sousTotal + livraison;
+  document.getElementById("totalBox").innerHTML =
+    "Prix du plat : <b>" + prix.toLocaleString("fr-FR") + " F</b><br>" +
+    "Quantité : <b>" + qte + "</b><br>" +
+    "Sous-total : <b>" + sousTotal.toLocaleString("fr-FR") + " F</b><br>" +
+    "Livraison : <b>" + livraison.toLocaleString("fr-FR") + " F</b><br>" +
+    "Total à payer : <b>" + total.toLocaleString("fr-FR") + " F</b>";
+}
+function changerQte(d){
+  qte = Math.max(1, qte + d);
+  document.getElementById("qteTxt").textContent = qte;
+  mettreTotal();
+}
+function commander(){
+  if(!plat){ alert("Choisis d'abord un plat sur Accueil."); return; }
+  var quartier = document.getElementById("quartier").value.trim();
+  var tel = document.getElementById("telephone").value.trim();
+  if(!quartier){ alert("Mets ton quartier de livraison."); return; }
+  if(!tel){ alert("Mets ton téléphone."); return; }
+  var prix = parseInt(plat.prix || plat.total || 0) || 0;
+  var total = prix * qte + 500;
+  var commandes = [];
+  try{ commandes = JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); }catch(e){ commandes = []; }
+  commandes.push({
+    client: client ? client.nom : "Client",
+    telephone: tel,
+    quartier: quartier,
+    restaurant: plat.restaurant || plat.resto || document.getElementById("resto").value,
+    plat: plat.nom || plat.plat,
+    photo: plat.photo || plat.image || plat.img || "",
+    quantite: qte,
+    total: total,
+    paiement: "En attente",
+    livree: false,
+    statut: "En attente",
+    date: new Date().toLocaleString("fr-FR")
+  });
+  localStorage.setItem("rbm_commandes", JSON.stringify(commandes));
+  document.getElementById("msg").textContent = "Commande envoyée ! Le restaurant va te confirmer.";
+  setTimeout(function(){ location.href = "message.html"; }, 1500);
+}
+function deconnecter(){
+  if(!confirm("Te déconnecter ?")) return;
+  localStorage.removeItem("rbm_client_connecte");
+  location.href = "login.html";
+}
+afficherPlat();
+</script>
 </body>
-
 </html>
