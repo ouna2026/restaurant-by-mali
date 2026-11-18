@@ -1,17 +1,24 @@
 {
-    "name": "Restaurant By Mali",
-    "short_name": "Restaurant By Mali",
-    "description": "Commande dans les meilleurs restaurants de Bamako",
-    "start_url": "./index.html",
-    "display": "standalone",
-    "background_color": "#1A1512",
-    "theme_color": "#1A1512",
-    "icons": [
-        {
-            "src": "https://cdn-icons-png.flaticon.com/512/3075/3075977.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any"
-        }
-    ]
+  "name": "Restaurant By Mali",
+  "short_name": "Restaurant By Mali",
+  "description": "Commande dans les meilleurs restaurants de Bamako",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1A1512",
+  "theme_color": "#1A1512",
+  "icons": [
+    {
+      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f37d.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f37d.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
