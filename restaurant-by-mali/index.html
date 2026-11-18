@@ -1,83 +1,65 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant By Mali</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif
-        }
-
-        body {
-            background: #1A1512;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px
-        }
-
-        .box {
-            max-width: 480px;
-            width: 100%;
-            text-align: center
-        }
-
-        h1 {
-            font-family: Georgia, serif;
-            font-size: 34px;
-            font-weight: 400
-        }
-
-        h1 span {
-            color: #C9A227
-        }
-
-        p {
-            opacity: .7;
-            font-size: 14px;
-            margin: 10px 0 24px
-        }
-
-        a {
-            display: block;
-            background: #C9A227;
-            color: #1A1512;
-            text-decoration: none;
-            padding: 16px;
-            border-radius: 14px;
-            font-weight: 800;
-            margin-top: 12px;
-            font-size: 16px
-        }
-
-        a.blanc {
-            background: #fff;
-            color: #1A1512
-        }
-
-        a.noir {
-            background: #000;
-            color: #fff;
-            border: 1px solid #333
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurant By Mali</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1A1512">
+<meta name="description" content="Commande dans les meilleurs restaurants de Bamako">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#1A1512;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{max-width:480px;width:100%;text-align:center}
+.logo{font-size:55px;margin-bottom:10px}
+h1{font-family:Georgia,serif;font-size:34px;font-weight:400;line-height:1.2}
+h1 span{color:#C9A227}
+p{opacity:.75;font-size:14px;margin:12px 0 26px;line-height:1.6}
+a{display:block;text-decoration:none;padding:16px;border-radius:14px;font-weight:800;margin-top:12px;font-size:16px}
+a.client{background:#C9A227;color:#1A1512}
+a.resto{background:#fff;color:#1A1512}
+a.admin{background:#000;color:#fff;border:1px solid #333}
+small{display:block;margin-top:22px;opacity:.5;font-size:12px}
+.install{background:#1E3A1E;border:1px solid #2E7D32;color:#fff;padding:12px;border-radius:12px;font-size:14px;font-weight:700;margin-top:16px;display:none;cursor:pointer;width:100%}
+</style>
 </head>
-
 <body>
-    <div class="box">
-        <h1>Restaurant <span>By Mali</span></h1>
-        <p>Choisis ton espace</p>
-        <a href="Client/login.html">👤 Je suis Client</a>
-        <a href="Restaurant/login.html" class="blanc">🍽 Je suis Restaurant</a>
-        <a href="Admin/dashboard.html" class="noir">🔒 Je suis Admin</a>
-    </div>
-</body>
+<div class="box">
+<div class="logo">🍽️</div>
+<h1>Restaurant <span>By Mali</span></h1>
+<p>Commande dans les meilleurs restaurants de Bamako.<br>Choisis ton espace.</p>
 
+<a href="Client/login.html" class="client">👤 Je suis Client</a>
+<a href="Restaurant/login.html" class="resto">🍽 Je suis Restaurant</a>
+<a href="Admin/dashboard.html" class="admin">🔒 Je suis Admin</a>
+
+<button id="btnInstall" class="install">📲 Télécharger l'application</button>
+
+<small>Restaurant By Mali — Bamako, Mali</small>
+</div>
+
+<script>
+// Pour rendre l'application téléchargeable
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js");
+}
+
+let promptInstall = null;
+window.addEventListener("beforeinstallprompt", function(e){
+  e.preventDefault();
+  promptInstall = e;
+  document.getElementById("btnInstall").style.display = "block";
+});
+document.getElementById("btnInstall").addEventListener("click", async function(){
+  if(promptInstall){
+    promptInstall.prompt();
+    await promptInstall.userChoice;
+    promptInstall = null;
+    this.style.display = "none";
+  } else {
+    alert("Sur ton téléphone : clique sur les 3 points ⋮ en haut → Installer l'application ou Ajouter à l'écran d'accueil.");
+  }
+});
+</script>
+</body>
 </html>
