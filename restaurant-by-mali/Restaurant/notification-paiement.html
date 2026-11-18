@@ -50,23 +50,53 @@ body{background:#FFF8EE;color:#1A1512;overflow-x:hidden}
 </div>
 </div>
 <script>
+// ===== TES 2 VRAIES COMMANDES, TES PRIX TELS QUE ENREGISTRÉS =====
 var VRAIES = [
   {client:"Dyjo Diakité", telephone:"+223 75 79 89 09", quartier:"Magnambougou", restaurant:"LAIT KOUNDAR", plat:"Smoothie", quantite:3, total:3500, paiement:"Payé", livree:true, statut:"Livrée", date:"18/11/2026 16:20:57"},
   {client:"Dyjo Diakité", telephone:"+223 75 79 89 09", quartier:"Magnambougou", restaurant:"LAIT KOUNDAR", plat:"Café koundar", quantite:1, total:1000, paiement:"Payé", livree:true, statut:"Livrée", date:"18/11/2026 15:55:38"}
 ];
-// ===== CHAQUE PLAT A SA VRAIE PHOTO, PAS LA MÊME =====
-function photoPour(plat){
-  var p = String(plat||"").toLowerCase();
-  if(p.indexOf("smoothie") !== -1) return "https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=400&q=80";
-  if(p.indexOf("café") !== -1 || p.indexOf("cafe") !== -1 || p.indexOf("koundar") !== -1) return "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80";
-  return "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80";
+// ===== PHOTO : ON PREND TA PHOTO À TOI, DANS TON MENU, ON N'INVENTE RIEN =====
+// On cherche dans toutes les mémoires où ton menu peut être : rbm_menus, rbm_menu, rbm_menu_lait_koundar, rbm_restaurants
+// On compare le nom du plat : "Café koundar" doit retrouver la photo "Bonjour", "Smoothie" sa photo rose, "Bissap" sa photo rouge.
+function photoPour(nomPlat, commande){
+  // 1. Si la commande elle-même a déjà une photo, on la garde
+  if(commande && (commande.photo || commande.image || commande.img)) return commande.photo || commande.image || commande.img;
+  // 2. Sinon on cherche dans ton menu
+  var cles = ["rbm_menus","rbm_menu","rbm_menu_lait_koundar","rbm_restaurants","rbm_menu_restaurant"];
+  var nomCherche = String(nomPlat||"").toLowerCase().trim();
+  for(var k=0; k<cles.length; k++){
+    try{
+      var data = JSON.parse(localStorage.getItem(cles[k]) || "null");
+      if(!data) continue;
+      var plats = [];
+      if(Array.isArray(data)) plats = data;
+      else if(Array.isArray(data.plats)) plats = data.plats;
+      else if(Array.isArray(data.menu)) plats = data.menu;
+      else if(data["LAIT KOUNDAR"] && Array.isArray(data["LAIT KOUNDAR"])) plats = data["LAIT KOUNDAR"];
+      else if(typeof data === "object"){
+        // Si c'est un objet { "Café koundar": {...}, "Smoothie": {...} }
+        Object.keys(data).forEach(function(key){
+          if(data[key] && typeof data[key] === "object") plats.push(Object.assign({nom:key}, data[key]));
+        });
+      }
+      for(var i=0; i<plats.length; i++){
+        var p = plats[i];
+        var nomP = String(p.nom || p.name || p.plat || "").toLowerCase().trim();
+        if(nomP === nomCherche){
+          var ph = p.photo || p.image || p.img || p.photo_url || "";
+          if(ph) return ph;
+        }
+      }
+    }catch(e){}
+  }
+  // 3. Si on ne trouve pas ta photo, on n'invente pas une fausse photo.
+  // On retourne "" : l'image ne s'affichera pas, au lieu de mettre une mauvaise photo.
+  return "";
 }
 function lire(){
   var a = [];
   try{ a = JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); }catch(e){ a = []; }
-  // Si vide, on montre les 2 vraies pour ne pas perdre l'historique
   if(!a || a.length === 0) a = VRAIES;
-  // On garde seulement total > 0, pour effacer les bazars
   return a.filter(function(c){ return (parseInt(c.total||c.prix||0)||0) > 0; });
 }
 function afficher(){
@@ -76,7 +106,9 @@ function afficher(){
   if(liste.length === 0){ div.innerHTML=""; vide.style.display="block"; return; }
   vide.style.display="none";
   div.innerHTML = liste.map(function(c, i){
-    return '<div class="notif"><input type="checkbox" data-i="'+i+'" style="width:20px;height:20px;margin-top:30px"><img src="'+photoPour(c.plat||c.commande)+'" onerror="this.src=\'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80\'"><div><b>'+(c.client||"")+' — '+(c.plat||c.commande)+' x '+(c.quantite||1)+' — </b> <span class="badge">Paiement reçu</span><p>Montant : <b>'+(c.total||c.prix)+' F</b> — Tél : '+(c.telephone||c.tel||"")+' — Quartier : '+(c.quartier||"")+'<br>Date : '+(c.date||"")+' — Statut : '+(c.statut||"Livrée")+'</p></div></div>';
+    var photo = photoPour(c.plat || c.commande, c);
+    var imgHtml = photo ? '<img src="'+photo+'">' : '<div style="width:90px;height:90px;background:#F1E3C8;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;text-align:center">Pas de<br>photo</div>';
+    return '<div class="notif"><input type="checkbox" data-i="'+i+'" style="width:20px;height:20px;margin-top:30px">'+imgHtml+'<div><b>'+(c.client||"")+' — '+(c.plat||c.commande)+' x '+(c.quantite||1)+' — </b> <span class="badge">Paiement reçu</span><p>Montant : <b>'+(c.total||c.prix)+' F</b> — Tél : '+(c.telephone||c.tel||"")+' — Quartier : '+(c.quartier||"")+'<br>Date : '+(c.date||"")+' — Statut : '+(c.statut||"Livrée")+'</p></div></div>';
   }).join("");
 }
 afficher();
