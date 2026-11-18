@@ -51,7 +51,6 @@ body{background:#FFF8EE;color:#1A1512;overflow-x:hidden}
 <button class="btn btn-bordeaux" onclick="supprimerSelection()">🗑 Supprimer le message sélectionné</button>
 <button class="btn btn-marron" onclick="supprimerTout()">🗑 Supprimer tout</button>
 <button class="btn btn-noir" onclick="window.print()">🖨 IMPRIMER</button>
-<p style="font-size:12px;color:#888;text-align:center;margin-top:8px">Supprimer = envoie en Corbeille. Tu peux restaurer dans Corbeille.</p>
 </div>
 </div>
 <script>
@@ -59,33 +58,39 @@ var VRAIES = [
   {client:"Dyjo Diakité", telephone:"+223 75 79 89 09", quartier:"Magnambougou", restaurant:"LAIT KOUNDAR", plat:"Smoothie", quantite:3, total:3500, paiement:"Payé", livree:true, statut:"Livrée", date:"18/11/2026 16:20:57"},
   {client:"Dyjo Diakité", telephone:"+223 75 79 89 09", quartier:"Magnambougou", restaurant:"LAIT KOUNDAR", plat:"Café koundar", quantite:1, total:1000, paiement:"Payé", livree:true, statut:"Livrée", date:"18/11/2026 15:55:38"}
 ];
-// ===== TA PHOTO À TOI, DANS TON MENU, ON N'INVENTE RIEN =====
+function trouverPhotoDansObjet(obj, nomCherche, dejaVu){
+  if(!obj || typeof obj !== "object") return "";
+  if(dejaVu.has(obj)) return "";
+  dejaVu.add(obj);
+  if(Array.isArray(obj)){
+    for(var i=0;i<obj.length;i++){ var r = trouverPhotoDansObjet(obj[i], nomCherche, dejaVu); if(r) return r; }
+    return "";
+  }
+  var nom = String(obj.nom || obj.name || obj.plat || obj.titre || "").toLowerCase().trim();
+  if(nom && nom === nomCherche){
+    var ph = obj.photo || obj.image || obj.img || obj.photo_url || obj.image_url || obj.src || "";
+    if(ph && typeof ph === "string" && (ph.indexOf("http")===0 || ph.indexOf("data:image")===0 || ph.indexOf("/")===0)) return ph;
+  }
+  var cles = Object.keys(obj);
+  for(var k=0;k<cles.length;k++){
+    var r2 = trouverPhotoDansObjet(obj[cles[k]], nomCherche, dejaVu);
+    if(r2) return r2;
+  }
+  return "";
+}
 function photoPour(nomPlat, commande){
   if(commande && (commande.photo || commande.image || commande.img)) return commande.photo || commande.image || commande.img;
-  var cles = ["rbm_menus","rbm_menu","rbm_menu_lait_koundar","rbm_restaurants","rbm_menu_restaurant"];
   var nomCherche = String(nomPlat||"").toLowerCase().trim();
-  for(var k=0; k<cles.length; k++){
+  for(var i=0;i<localStorage.length;i++){
+    var cle = localStorage.key(i);
+    if(cle === "rbm_commandes") continue;
     try{
-      var data = JSON.parse(localStorage.getItem(cles[k]) || "null");
-      if(!data) continue;
-      var plats = [];
-      if(Array.isArray(data)) plats = data;
-      else if(Array.isArray(data.plats)) plats = data.plats;
-      else if(Array.isArray(data.menu)) plats = data.menu;
-      else if(data["LAIT KOUNDAR"] && Array.isArray(data["LAIT KOUNDAR"])) plats = data["LAIT KOUNDAR"];
-      else if(typeof data === "object"){
-        Object.keys(data).forEach(function(key){
-          if(data[key] && typeof data[key] === "object") plats.push(Object.assign({nom:key}, data[key]));
-        });
-      }
-      for(var i=0; i<plats.length; i++){
-        var p = plats[i];
-        var nomP = String(p.nom || p.name || p.plat || "").toLowerCase().trim();
-        if(nomP === nomCherche){
-          var ph = p.photo || p.image || p.img || p.photo_url || "";
-          if(ph) return ph;
-        }
-      }
+      var val = localStorage.getItem(cle);
+      if(!val) continue;
+      if(val.indexOf("data:image")===0 && cle.toLowerCase().indexOf(nomCherche)!==-1) return val;
+      var data = JSON.parse(val);
+      var r = trouverPhotoDansObjet(data, nomCherche, new Set());
+      if(r) return r;
     }catch(e){}
   }
   return "";
@@ -105,37 +110,15 @@ function afficher(){
   vide.style.display="none";
   div.innerHTML = liste.map(function(c, i){
     var photo = photoPour(c.plat || c.commande, c);
-    var imgHtml = photo ? '<img src="'+photo+'">' : '<div style="width:90px;height:90px;background:#F1E3C8;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;text-align:center">Pas de<br>photo</div>';
+    var imgHtml = photo ? '<img src="'+photo+'">' : '<div style="width:90px;height:90px;background:#F1E3C8;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;text-align:center">Photo<br>Mon Menu</div>';
     var badge = c.paiement === "Payé" ? '<span class="badge-paye">Payé</span>' : '<span class="badge">En attente</span>';
     return '<div class="notif"><input type="checkbox" data-i="'+i+'" style="width:20px;height:20px;margin-top:30px">'+imgHtml+'<div style="flex:1"><b>'+(c.client||"")+' — '+(c.plat||c.commande)+' x '+(c.quantite||1)+' — </b> '+badge+'<p>Montant : <b>'+(c.total||c.prix)+' F</b> — Tél : '+(c.telephone||c.tel||"")+' — Quartier : '+(c.quartier||"")+'<br>Date : '+(c.date||"")+' — Statut : '+(c.statut||"Livrée")+'</p><div class="btns"><button class="btn-vert" onclick="valider('+i+')">✅ Valider</button><button class="btn-orange" onclick="echoue('+i+')">❌ Échoué</button><button style="background:#eee" onclick="modifier('+i+')">✏️ Modifier</button></div></div></div>';
   }).join("");
 }
 afficher();
-function valider(i){
-  var liste = lire();
-  if(!liste[i]) return;
-  liste[i].paiement = "Payé";
-  liste[i].statut = "Livrée";
-  liste[i].livree = true;
-  sauver(liste);
-  afficher();
-}
-function echoue(i){
-  var liste = lire();
-  if(!liste[i]) return;
-  liste[i].paiement = "Échoué";
-  sauver(liste);
-  afficher();
-}
-function modifier(i){
-  var liste = lire();
-  if(!liste[i]) return;
-  // Modifier = basculer Payé <-> Échoué, pour argent arrivé en retard / bug connexion
-  if(liste[i].paiement === "Payé") liste[i].paiement = "Échoué";
-  else liste[i].paiement = "Payé";
-  sauver(liste);
-  afficher();
-}
+function valider(i){ var liste=lire(); if(!liste[i])return; liste[i].paiement="Payé"; liste[i].statut="Livrée"; liste[i].livree=true; sauver(liste); afficher(); }
+function echoue(i){ var liste=lire(); if(!liste[i])return; liste[i].paiement="Échoué"; sauver(liste); afficher(); }
+function modifier(i){ var liste=lire(); if(!liste[i])return; if(liste[i].paiement==="Payé") liste[i].paiement="Échoué"; else liste[i].paiement="Payé"; sauver(liste); afficher(); }
 function supprimerSelection(){
   var checks = document.querySelectorAll('#liste input[type="checkbox"]:checked');
   if(checks.length === 0){ alert("Coche d'abord une notification."); return; }
@@ -146,14 +129,9 @@ function supprimerSelection(){
     checks.forEach(function(ch){ if(parseInt(ch.getAttribute("data-i")) === i) coche = true; });
     return !coche;
   });
-  sauver(aGarder);
-  afficher();
+  sauver(aGarder); afficher();
 }
-function supprimerTout(){
-  if(!confirm("Envoyer toutes les notifications en Corbeille ?")) return;
-  sauver([]);
-  afficher();
-}
+function supprimerTout(){ if(!confirm("Envoyer toutes les notifications en Corbeille ?")) return; sauver([]); afficher(); }
 </script>
 </body>
 </html>
