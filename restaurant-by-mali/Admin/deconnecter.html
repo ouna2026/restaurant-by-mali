@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deconnecter - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh
+        }
+
+        .sidebar {
+            width: 270px;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-size: 22px
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #888;
+            font-size: 12px;
+            margin: 6px 0 18px
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase
+        }
+
+        .sidebar a {
+            color: #ddd;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13.5px
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 270px;
+            padding: 32px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .carte {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 24px;
+            padding: 36px;
+            text-align: center;
+            max-width: 460px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06)
+        }
+
+        .carte .emoji {
+            font-size: 52px
+        }
+
+        .carte h2 {
+            font-size: 26px;
+            margin: 14px 0 8px
+        }
+
+        .carte h2 span {
+            color: #C9A227
+        }
+
+        .carte p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px
+        }
+
+        .btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 22px
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 15px
+        }
+
+        .btn-oui {
+            background: #A83200;
+            color: #fff
+        }
+
+        .btn-non {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .info {
+            margin-top: 18px;
+            background: #FFF8EE;
+            border: 1px solid #F1E3C8;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 13px;
+            color: #666;
+            text-align: left;
+            line-height: 1.5
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px
+            }
+        }
+
+        @media(max-width:600px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .btns {
+                flex-direction: column
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html">Muna IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html" class="active">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="carte">
+            <div class="emoji">👋</div>
+            <h2>Tu veux te <span>deconnecter</span> ?</h2>
+            <p>Si tu cliques sur <b>Oui, deconnecter</b>, tu vas sortir de l'espace Admin.<br>Pour revenir, tu devras te
+                reconnecter avec ton numero et ton mot de passe.</p>
+            <div class="btns">
+                <button class="btn btn-oui" onclick="deconnecter()">Oui, deconnecter</button>
+                <button class="btn btn-non" onclick="window.location.href='dashboard.html'">Non, rester</button>
+            </div>
+            <div class="info">
+                <b>Ce qui se passe si tu te deconnectes :</b><br>
+                - Tu quittes l'espace Admin<br>
+                - Tes donnees restent enregistrees, rien n'est efface<br>
+                - Personne d'autre ne pourra voir ton tableau de bord sur ce telephone / ordinateur
+            </div>
+        </div>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        function deconnecter() {
+            if (confirm("Tu es sur de vouloir te deconnecter ?")) {
+                localStorage.removeItem("rbm_admin");
+                window.location.href = "login.html";
+            }
+        }
+    </script>
+</body>
+
+</html>

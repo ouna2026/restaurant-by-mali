@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications Paiements - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .header {
+            background: #1A1512;
+            color: #fff;
+            padding: 22px 20px;
+            text-align: center
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: 400
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 4px
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 14px 20px;
+            justify-content: center
+        }
+
+        .nav a {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            padding: 9px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #1A1512;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap
+        }
+
+        .nav a.corbeille {
+            background: #7A0C1A;
+            color: #fff;
+            border-color: #7A0C1A
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px 30px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 14px;
+            overflow: hidden
+        }
+
+        .msg {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            border-bottom: 1px solid #F1E3C8;
+            padding: 14px 0
+        }
+
+        .msg:last-child {
+            border-bottom: none
+        }
+
+        .msg img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0
+        }
+
+        .msg .texte {
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
+            font-size: 13px;
+            line-height: 1.7
+        }
+
+        .check {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            margin-top: 4px;
+            accent-color: #7A0C1A;
+            cursor: pointer
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .badge-rouge {
+            background: #A83200;
+            color: #fff
+        }
+
+        .badge-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-bordeaux {
+            background: #7A0C1A;
+            color: #fff;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .btn-bordeaux-clair {
+            background: #fff;
+            color: #7A0C1A;
+            border: 2px solid #7A0C1A;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .vide {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            padding: 20px
+        }
+
+        .bar-suppr {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .bar-suppr .btn-bordeaux,
+        .bar-suppr .btn-bordeaux-clair {
+            flex: 1;
+            min-width: 160px
+        }
+
+        @media print {
+
+            .nav,
+            .btn-bordeaux,
+            .btn-bordeaux-clair,
+            .btn-noir,
+            .check {
+                display: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 id="titreNom">Notifications Paiements</h1>
+        <p>Paiements de tes clients. Coche pour supprimer.</p>
+    </div>
+    <div class="nav">
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="notification-commande.html">Commandes</a>
+        <a href="notification-paiement.html">Notifications Paiements</a>
+        <a href="paiement.html">Mes Paiements</a>
+        <a href="historique.html">Historique</a>
+        <a href="corbeille.html" class="corbeille">🗑 Corbeille</a>
+    </div>
+    <div class="main">
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+                <h3 style="font-family:Georgia,serif;font-weight:400">Notifications</h3>
+                <label style="font-size:13px;font-weight:700;cursor:pointer"><input type="checkbox" id="toutCocher"
+                        onchange="toutCocher()"
+                        style="accent-color:#7A0C1A;width:18px;height:18px;vertical-align:middle"> Tout cocher</label>
+            </div>
+            <div id="liste"></div>
+            <div class="bar-suppr">
+                <button class="btn-bordeaux-clair" onclick="supprimerSelection()">🗑 Supprimer le message
+                    sélectionné</button>
+                <button class="btn-bordeaux" onclick="supprimerTout()">🗑 Supprimer tous les messages</button>
+            </div>
+            <button class="btn-noir" onclick="window.print()">🖨 IMPRIMER</button>
+            <p id="msgInfo" style="font-size:13px;text-align:center;margin-top:10px;color:#7A0C1A;font-weight:700"></p>
+            <p style="font-size:12px;text-align:center;color:#888;margin-top:6px">Supprimer = envoie en Corbeille. Tu
+                peux restaurer dans Corbeille.</p>
+        </div>
+    </div>
+    <script>
+        let nom = localStorage.getItem("rbm_resto_connecte") || "";
+        if (!nom) location.href = "login.html";
+        document.getElementById("titreNom").textContent = "Notifications Paiements — " + nom;
+        function propre(v) {
+            if (!v) return "—";
+            v = String(v).trim();
+            if (v.charAt(0) === "{") {
+                try { let o = JSON.parse(v); if (o.nom) return o.nom; } catch (e) { }
+                let m = v.match(/"nom"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "—";
+            }
+            return v;
+        }
+        function getCommandes() { try { return JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); } catch (e) { return []; } }
+        function afficher() {
+            let commandes = getCommandes().filter(function (c) { return (c.restaurant || c.resto) === nom; });
+            commandes.sort(function (a, b) { return new Date(b.date || 0) - new Date(a.date || 0); });
+            let zone = document.getElementById("liste");
+            if (commandes.length === 0) {
+                zone.innerHTML = "<div class='vide'>Aucune notification de paiement pour le moment.</div>";
+                return;
+            }
+            zone.innerHTML = commandes.map(function (c) {
+                let toutes = getCommandes();
+                let idx = toutes.indexOf(c);
+                if (idx === -1) { idx = toutes.findIndex(function (x) { return (x.restaurant || x.resto) === nom && String(x.client) === String(c.client) && String(x.date) === String(c.date); }); }
+                let badge = c.paiement === "Payé" ? "badge-vert" : (c.paiement === "Échoué" ? "badge-rouge" : "badge-or");
+                let texteBadge = c.paiement === "Payé" ? "Paiement reçu" : (c.paiement || "En attente");
+                let img = (c.img && c.img.length > 10) ? c.img : "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop";
+                return "<div class='msg'><input type='checkbox' class='check' data-idx='" + idx + "'><img src='" + img + "' onerror=\"this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop'\"><div class='texte'><b>" + propre(c.client) + " — " + propre(c.plat || c.commande) + " x " + (c.quantite || c.qty || 1) + "</b> — <span class='badge " + badge + "'>" + texteBadge + "</span><br>Montant : <b>" + (c.total || c.prix || "—") + " F</b> — Tél : " + propre(c.telephone || c.tel) + " — Quartier : " + (c.quartier || "—") + "<br>Date : " + (c.date || "—") + " — Statut : " + (c.statut || "En attente") + (c.modifiee ? "<br><small style='color:#888'>Modifié le : " + c.dateModification + "</small>" : "") + "</div></div>";
+            }).join("");
+        }
+        afficher();
+        function toutCocher() {
+            let coche = document.getElementById("toutCocher").checked;
+            document.querySelectorAll(".check").forEach(function (c) { c.checked = coche; });
+        }
+        // ===== ENVOIE EN CORBEILLE =====
+        function envoyerEnCorbeille(original) {
+            let corb = [];
+            try { corb = JSON.parse(localStorage.getItem("rbm_corbeille") || "[]"); } catch (e) { corb = []; }
+            corb.push({ dossier: "restaurant", restaurant: nom, client: original.client, plat: original.plat || original.commande, commande: original.commande, quantite: original.quantite, qty: original.qty, total: original.total || original.prix, prix: original.prix, paiement: original.paiement, statut: original.statut, telephone: original.telephone || original.tel, tel: original.tel, quartier: original.quartier, moyen: original.moyen, moyenPaiement: original.moyenPaiement, img: original.img, photo: original.photo, date: original.date, dateSuppression: new Date().toLocaleString("fr-FR"), original: original });
+            localStorage.setItem("rbm_corbeille", JSON.stringify(corb));
+        }
+        function supprimerSelection() {
+            let coches = Array.from(document.querySelectorAll(".check:checked"));
+            if (coches.length === 0) { document.getElementById("msgInfo").textContent = "Coche d'abord le message à supprimer."; return; }
+            if (!confirm("Mettre " + coches.length + " notification(s) en Corbeille ?")) return;
+            let toutes = getCommandes();
+            let aSupprimer = coches.map(function (c) { return parseInt(c.getAttribute("data-idx")); }).sort(function (a, b) { return b - a; });
+            aSupprimer.forEach(function (i) { envoyerEnCorbeille(toutes[i]); toutes.splice(i, 1); });
+            localStorage.setItem("rbm_commandes", JSON.stringify(toutes));
+            document.getElementById("toutCocher").checked = false;
+            document.getElementById("msgInfo").textContent = "Envoyé en Corbeille. Va dans Corbeille pour restaurer.";
+            afficher();
+        }
+        function supprimerTout() {
+            let toutes = getCommandes();
+            let miennes = toutes.filter(function (c) { return (c.restaurant || c.resto) === nom; });
+            if (miennes.length === 0) { document.getElementById("msgInfo").textContent = "Aucune notification à supprimer."; return; }
+            if (!confirm("Mettre TOUTES tes " + miennes.length + " notifications en Corbeille ?")) return;
+            miennes.forEach(function (c) { envoyerEnCorbeille(c); });
+            let restantes = toutes.filter(function (c) { return (c.restaurant || c.resto) !== nom; });
+            localStorage.setItem("rbm_commandes", JSON.stringify(restantes));
+            document.getElementById("toutCocher").checked = false;
+            document.getElementById("msgInfo").textContent = "Tout envoyé en Corbeille.";
+            afficher();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            color: #1A1512
+        }
+
+        .header {
+            background: #1A1512;
+            color: #fff;
+            padding: 24px 20px;
+            text-align: center
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-weight: 400;
+            font-size: 26px
+        }
+
+        .header h1 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 6px
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 14px
+        }
+
+        .nav a {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            padding: 9px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #1A1512;
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .nav a:hover {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px 30px
+        }
+
+        .barre {
+            display: flex;
+            gap: 10px;
+            margin: 14px 0
+        }
+
+        .barre input {
+            flex: 1;
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px
+        }
+
+        .barre button {
+            border: none;
+            background: #C9A227;
+            color: #1A1512;
+            padding: 13px 18px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer
+        }
+
+        .card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block
+        }
+
+        .card .txt {
+            padding: 14px
+        }
+
+        .card h3 {
+            font-family: Georgia, serif;
+            font-weight: 400;
+            font-size: 19px
+        }
+
+        .card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            margin-top: 4px
+        }
+
+        .badge {
+            display: inline-block;
+            background: #D8F3DC;
+            color: #1B6B2E;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-top: 8px
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            background: #1A1512;
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 10px
+        }
+
+        @media(max-width:600px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Choisis ton restaurant — Clique pour voir son menu, ses photos, ses coins</p>
+    </div>
+    <div class="nav">
+        <a href="accueil.html">Accueil</a>
+        <a href="commandes.html">Commandes</a>
+        <a href="profil.html">Profil</a>
+        <a href="ia.html">Muna IA</a>
+        <a href="jeux.html">Jeux</a>
+        <a href="login.html">Déconnexion</a>
+    </div>
+    <div class="main">
+        <div class="barre">
+            <input id="search" placeholder="Rechercher un restaurant : Le Grill, LAIT KOUNDAR..." oninput="afficher()">
+            <button onclick="afficher()">Rechercher</button>
+        </div>
+        <p id="nb" style="font-size:13px;color:#888;margin-bottom:12px"></p>
+        <div class="grid" id="grid"></div>
+    </div>
+    <script>
+        // ===== DONNÉES DE CHAQUE RESTAURANT : PHOTO + QUARTIER + PLAT PRINCIPAL =====
+        // Quand tu cliques, la page restaurant.html va reprendre CES photos-là, pas les mêmes pour tout le monde.
+        let RESTOS_BASE = [
+            { nom: "Le Grill - Bamako", quartier: "ACI 2000 - Bamako", tel: "+223 70 11 22 33", photo: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=500&fit=crop", desc: "Grillades, poulet braisé, brochettes" },
+            { nom: "Sandwich+", quartier: "Hippodrome - Bamako", tel: "+223 65 44 33 22", photo: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&h=500&fit=crop", desc: "Sandwichs, tacos, burgers" },
+            { nom: "Le Relax", quartier: "Badalabougou - Bamako", tel: "+223 76 12 34 56", photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop", desc: "Plats calmes, jus, grillades" },
+            { nom: "Maquis Le Savana", quartier: "Sotuba - Bamako", tel: "+223 78 90 12 34", photo: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&h=500&fit=crop", desc: "Maquis, capitaine braisé, attiéké" },
+            { nom: "Chez Fatoumata", quartier: "Bamako Coura - Bamako", tel: "+223 66 55 44 33", photo: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&h=500&fit=crop", desc: "Riz, sauce feuille, mafé" },
+            { nom: "Le Faso", quartier: "Kati - Bamako", tel: "+223 79 11 22 33", photo: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=500&fit=crop", desc: "Plats du Faso, tô, riz gras" },
+            { nom: "Maquis Kati", quartier: "Kati", tel: "+223 70 99 88 77", photo: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&h=500&fit=crop", desc: "Maquis, viande braisée" },
+            { nom: "Douceur Sucrée", quartier: "ACI 2000 - Bamako", tel: "+223 77 66 55 44", photo: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&h=500&fit=crop", desc: "Desserts, jus, gâteaux" },
+            { nom: "LAIT KOUNDAR", quartier: "Bamako", tel: "+223 70 00 00 00", photo: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=500&fit=crop", desc: "Lait, bouillie, plats locaux" }
+        ];
+
+        function getTousRestos() {
+            let liste = [...RESTOS_BASE];
+            try {
+                let extra = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]");
+                extra.forEach(function (r) {
+                    let nom = r.nom || r;
+                    if (nom && !liste.some(function (x) { return x.nom === nom; })) {
+                        liste.push({ nom: nom, quartier: r.quartier || "Bamako", tel: r.tel || "+223 70 00 00 00", photo: r.photo || localStorage.getItem("rbm_resto_photo_" + nom) || "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop", desc: "Restaurant By Mali" });
+                    }
+                });
+            } catch (e) { }
+            // Si le restaurant a changé sa photo dans son Profil, on prend sa vraie photo
+            liste.forEach(function (r) {
+                let p = localStorage.getItem("rbm_resto_photo_" + r.nom);
+                if (p) r.photo = p;
+            });
+            return liste;
+        }
+
+        function afficher() {
+            let v = document.getElementById("search").value.toLowerCase();
+            let liste = getTousRestos().filter(function (r) { return !v || r.nom.toLowerCase().includes(v) || r.quartier.toLowerCase().includes(v); });
+            document.getElementById("nb").textContent = liste.length + " restaurant(s) — Clique sur un restaurant pour voir sa photo, son menu, ses images, ses coins";
+            document.getElementById("grid").innerHTML = liste.map(function (r) {
+                return "<div class='card' onclick=\"ouvrirResto('" + r.nom.replace(/'/g, "\\'") + "')\">"
+                    + "<img src='" + r.photo + "' onerror=\"this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop'\">"
+                    + "<div class='txt'><h3>" + r.nom + "</h3><p>" + r.desc + "<br>Quartier : " + r.quartier + "<br>Tél : " + r.tel + "</p><span class='badge'>OUVERT — Clique pour voir</span><button class='btn' onclick=\"event.stopPropagation();ouvrirResto('" + r.nom.replace(/'/g, "\\'") + "')\">VOIR MENU + PHOTOS + COINS</button></div></div>";
+            }).join("");
+        }
+        function ouvrirResto(nom) {
+            localStorage.setItem("rbm_client_choix_resto", nom);
+            location.href = "restaurant.html?nom=" + encodeURIComponent(nom);
+        }
+        afficher();
+    </script>
+</body>
+
+</html>

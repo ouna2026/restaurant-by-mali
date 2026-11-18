@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            max-width: 100vw;
+            width: 100%
+        }
+
+        body {
+            background: #FFF8EE;
+            padding-bottom: 120px
+        }
+
+        .top {
+            width: 100%;
+            background: #1A1512;
+            color: #fff;
+            padding: 22px 18px 28px;
+            border-radius: 0 0 28px 28px;
+            text-align: center
+        }
+
+        .top-inner {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto
+        }
+
+        .top .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #C9A227;
+            color: #1A1512;
+            font-size: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 900
+        }
+
+        .top h1 {
+            font-size: 21px
+        }
+
+        .top h1 span {
+            color: #C9A227
+        }
+
+        .top p {
+            color: #D8CFC0;
+            font-size: 13px;
+            margin-top: 6px
+        }
+
+        .wrap {
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px
+        }
+
+        .card h3 {
+            font-size: 15px;
+            margin-bottom: 12px
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #F5EBD6;
+            font-size: 14px
+        }
+
+        .row:last-child {
+            border: none
+        }
+
+        .row span {
+            color: #888
+        }
+
+        .row b {
+            text-align: right
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800
+        }
+
+        .badge.connecte {
+            background: #D4EDDA;
+            color: #1A7A2E
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 10px
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-rouge {
+            background: #C0392B;
+            color: #fff
+        }
+
+        .btn-blanc {
+            background: #fff;
+            border: 2px solid #F1E3C8;
+            color: #1A1512
+        }
+
+        .confirm-box {
+            display: none;
+            background: #FFF3CD;
+            border: 2px solid #C0392B;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 12px
+        }
+
+        .confirm-box.show {
+            display: block
+        }
+
+        .confirm-box b {
+            font-size: 15px;
+            color: #C0392B;
+            display: block;
+            margin-bottom: 8px
+        }
+
+        .confirm-box p {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 12px
+        }
+
+        .confirm-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .confirm-btns button {
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px
+        }
+
+        .btn-oui {
+            background: #C0392B;
+            color: #fff
+        }
+
+        .btn-non {
+            background: #fff;
+            border: 2px solid #E5D5B8
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #F1E3C8;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 14px;
+            z-index: 10;
+            width: 100%
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #888;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700
+        }
+
+        .nav a.active {
+            color: #C9A227
+        }
+
+        .nav a div {
+            font-size: 22px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="top-inner">
+            <div class="avatar" id="avatarLettre">?</div>
+            <h1>Bonjour, <span id="nomProfil">Client</span></h1>
+            <p id="telProfil">—</p>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <div class="card">
+            <h3>👤 Mes informations</h3>
+            <div class="row"><span>Nom complet</span><b id="infoNom">—</b></div>
+            <div class="row"><span>Téléphone</span><b id="infoTel">—</b></div>
+            <div class="row"><span>Quartier</span><b id="infoQuartier">—</b></div>
+            <div class="row"><span>Statut</span><b><span class="badge connecte">CONNECTÉ</span></b></div>
+            <div class="row"><span>Mes points (Jeux)</span><b id="infoPoints">0 pts</b></div>
+        </div>
+
+        <div class="card">
+            <h3>⚙️ Mon compte</h3>
+            <button class="btn btn-or" onclick="window.location.href='commandes.html'">🧾 VOIR MES COMMANDES</button>
+            <button class="btn btn-noir" onclick="window.location.href='accueil.html'">🏠 RETOUR À L'ACCUEIL</button>
+        </div>
+
+        <!-- ═══ DÉCONNEXION CLIENT — C'EST ICI ═══ -->
+        <div class="card">
+            <h3>🚪 Déconnexion</h3>
+            <p style="font-size:13px;color:#666;line-height:1.5;margin-bottom:12px">Tu veux quitter ton compte ?<br>Tu
+                pourras te reconnecter après avec ton téléphone + ton mot de passe.</p>
+
+            <button class="btn btn-rouge" onclick="demanderDeconnexion()">⛔ SE DÉCONNECTER</button>
+
+            <!-- Confirmation — pas de déconnexion par accident -->
+            <div id="confirmBox" class="confirm-box">
+                <b>Tu veux vraiment te déconnecter ?</b>
+                <p>Tu vas retourner à la page de connexion.<br>Tes commandes et tes points restent enregistrés.</p>
+                <div class="confirm-btns">
+                    <button class="btn-oui" onclick="seDeconnecterMaintenant()">OUI, DÉCONNECTER</button>
+                    <button class="btn-non" onclick="annulerDeconnexion()">NON, RESTER</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="accueil.html">
+            <div>🏠</div>Accueil
+        </a>
+        <a href="profil.html" class="active">
+            <div>👤</div>Profil
+        </a>
+        <a href="ia.html">
+            <div>🤖</div>IA
+        </a>
+        <a href="jeux.html">
+            <div>🎮</div>Jeux
+        </a>
+        <a href="commandes.html">
+            <div>🧾</div>Commandes
+        </a>
+    </div>
+
+    <script>
+        // ─── Si pas connecté, on va au login ───
+        if (!localStorage.getItem("rbm_client_connecte")) {
+            window.location.href = "login.html";
+        }
+        let client = JSON.parse(localStorage.getItem("rbm_client_connecte") || "{}");
+
+        // ─── Si l'Admin a déconnecté ce client, on le renvoie au login ───
+        let tousClients = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+        let monCompte = tousClients.find(c => c.telephone === client.telephone);
+        if (client.telephone && monCompte && monCompte.connecte === false) {
+            localStorage.removeItem("rbm_client_connecte");
+            alert("Tu as été déconnecté par l'Admin.");
+            window.location.href = "login.html";
+        }
+
+        // ─── Affichage ───
+        let nom = client.nom || "Client";
+        document.getElementById("nomProfil").textContent = nom;
+        document.getElementById("telProfil").textContent = client.telephone || "";
+        document.getElementById("avatarLettre").textContent = nom.charAt(0).toUpperCase();
+        document.getElementById("infoNom").textContent = nom;
+        document.getElementById("infoTel").textContent = client.telephone || "—";
+        document.getElementById("infoQuartier").textContent = client.quartier || "Non renseigné";
+        let pts = localStorage.getItem("rbm_points_" + (client.telephone || client.nom || "invite")) || "0";
+        document.getElementById("infoPoints").textContent = pts + " pts";
+
+        // ─── DÉCONNEXION CLIENT — LUI SEUL, PAS LES AUTRES ───
+        function demanderDeconnexion() {
+            document.getElementById("confirmBox").classList.add("show");
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }
+        function annulerDeconnexion() {
+            document.getElementById("confirmBox").classList.remove("show");
+        }
+        function seDeconnecterMaintenant() {
+            // 1. On marque ce client comme déconnecté dans la liste (pour que l'Admin le voie)
+            let liste = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+            let idx = liste.findIndex(c => c.telephone === client.telephone);
+            if (idx >= 0) {
+                liste[idx].connecte = false;
+                localStorage.setItem("rbm_clients", JSON.stringify(liste));
+            }
+            // 2. On enlève SA session à lui seul — on ne touche PAS aux autres, ni à l'Admin
+            localStorage.removeItem("rbm_client_connecte");
+            // 3. On va au login
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+
+</html>

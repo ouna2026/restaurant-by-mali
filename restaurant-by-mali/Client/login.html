@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Client — Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #1A1512;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .boite {
+            width: 100%;
+            max-width: 460px;
+            background: #FFF8EE;
+            color: #1A1512;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .4)
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            text-align: center;
+            line-height: 1.2
+        }
+
+        .logo span {
+            color: #C9A227
+        }
+
+        .sous {
+            color: #7A7268;
+            text-align: center;
+            font-size: 13px;
+            margin: 8px 0 20px;
+            line-height: 1.6
+        }
+
+        .onglets {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px
+        }
+
+        .onglets button {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #1A1512;
+            background: #fff;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px
+        }
+
+        .onglets button.actif {
+            background: #1A1512;
+            color: #fff
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 14px 0 5px
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px;
+            background: #fff
+        }
+
+        input:focus {
+            border-color: #C9A227
+        }
+
+        .aide {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            line-height: 1.5
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 18px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-gris {
+            background: #eee;
+            color: #1A1512
+        }
+
+        .msg {
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 14px;
+            display: none;
+            word-break: break-word
+        }
+
+        .msg.erreur {
+            display: block;
+            background: #FCE4E4;
+            color: #8A1A1A;
+            border: 1px solid #E8A0A0
+        }
+
+        .msg.succes {
+            display: block;
+            background: #D8F3DC;
+            color: #1B6B2E;
+            border: 1px solid #8ACB9A
+        }
+
+        .msg.info {
+            display: block;
+            background: #FFF3CD;
+            color: #7A5A00;
+            border: 1px solid #E8D8A0
+        }
+
+        .ligne {
+            height: 1px;
+            background: #F1E3C8;
+            margin: 20px 0
+        }
+
+        .petit {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            line-height: 1.6
+        }
+
+        .petit a {
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none
+        }
+
+        .motdepasse-wrap {
+            position: relative
+        }
+
+        .motdepasse-wrap button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: #eee;
+            border-radius: 8px;
+            padding: 8px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700
+        }
+    </style>
+</head>
+
+<body>
+    <div class="boite">
+        <div class="logo">Restaurant <span>By Mali</span></div>
+        <p class="sous">Espace Client — Connectez-vous avec votre compte réel.<br>Aucun compte de démonstration
+            n'existe.</p>
+
+        <div class="onglets">
+            <button id="btnOngletConnexion" class="actif" onclick="afficherOnglet('connexion')">SE CONNECTER</button>
+            <button id="btnOngletInscription" onclick="afficherOnglet('inscription')">CRÉER UN COMPTE</button>
+        </div>
+
+        <!-- ─── CONNEXION ─── -->
+        <div id="blocConnexion">
+            <label>Téléphone</label>
+            <input id="login_tel" type="tel" placeholder="Ex : +223..." autocomplete="tel">
+            <p class="aide">Le numéro que vous avez utilisé lors de votre inscription.</p>
+
+            <label>Mot de passe</label>
+            <div class="motdepasse-wrap">
+                <input id="login_mdp" type="password" placeholder="Votre mot de passe" autocomplete="current-password">
+                <button type="button" onclick="basculerMdp('login_mdp', this)">VOIR</button>
+            </div>
+
+            <div class="msg" id="msgLogin"></div>
+            <button class="btn btn-noir" onclick="seConnecter()">SE CONNECTER</button>
+            <button class="btn btn-gris" onclick="effacerConnexion()">EFFACER</button>
+        </div>
+
+        <!-- ─── INSCRIPTION ─── -->
+        <div id="blocInscription" style="display:none">
+            <label>Nom complet *</label>
+            <input id="ins_nom" placeholder="Votre nom complet réel">
+
+            <label>Téléphone *</label>
+            <input id="ins_tel" type="tel" placeholder="Ex : +223...">
+            <p class="aide">Ce numéro servira à vous connecter et à vous joindre pour vos commandes.</p>
+
+            <label>Quartier *</label>
+            <input id="ins_quartier" placeholder="Votre quartier à Bamako">
+
+            <label>Mot de passe *</label>
+            <div class="motdepasse-wrap">
+                <input id="ins_mdp" type="password" placeholder="Choisissez un mot de passe">
+                <button type="button" onclick="basculerMdp('ins_mdp', this)">VOIR</button>
+            </div>
+
+            <label>Confirmer le mot de passe *</label>
+            <input id="ins_mdp2" type="password" placeholder="Retapez le mot de passe">
+
+            <div class="msg" id="msgInscription"></div>
+            <button class="btn btn-or" onclick="creerCompte()">CRÉER MON COMPTE</button>
+            <button class="btn btn-gris" onclick="effacerInscription()">EFFACER</button>
+        </div>
+
+        <div class="ligne"></div>
+        <p class="petit">Vos données restent sur votre appareil pour le moment.<br>Plus tard, elles seront enregistrées
+            dans la base de données du site.<br><a href="../Admin/login.html">Espace Administrateur</a> — <a
+                href="accueil.html">Retour à l'Accueil</a></p>
+    </div>
+
+    <script>
+        // ─── SOURCE UNIQUE : les vrais clients inscrits ───
+        // Clé : rbm_clients = liste des clients RÉELLEMENT créés via ce formulaire
+        // ou créés par l'Admin avec de vraies données.
+        // AUCUN client inventé ici. Si la liste est vide, aucun compte n'existe.
+
+        function getClients() {
+            try {
+                let d = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+                return Array.isArray(d) ? d : [];
+            } catch (e) { return []; }
+        }
+        function saveClients(liste) {
+            localStorage.setItem("rbm_clients", JSON.stringify(liste));
+        }
+        function normaliserTel(tel) {
+            return (tel || "").replace(/[\s\-\(\)]/g, "").trim();
+        }
+        function afficherMsg(id, texte, type) {
+            let el = document.getElementById(id);
+            el.className = "msg " + type;
+            el.textContent = texte;
+            el.style.display = "block";
+        }
+        function cacherMsg(id) {
+            let el = document.getElementById(id);
+            el.style.display = "none";
+            el.textContent = "";
+        }
+        function afficherOnglet(quel) {
+            document.getElementById("blocConnexion").style.display = quel === "connexion" ? "block" : "none";
+            document.getElementById("blocInscription").style.display = quel === "inscription" ? "block" : "none";
+            document.getElementById("btnOngletConnexion").className = quel === "connexion" ? "actif" : "";
+            document.getElementById("btnOngletInscription").className = quel === "inscription" ? "actif" : "";
+            cacherMsg("msgLogin");
+            cacherMsg("msgInscription");
+        }
+        function basculerMdp(id, btn) {
+            let input = document.getElementById(id);
+            if (input.type === "password") { input.type = "text"; btn.textContent = "CACHER"; }
+            else { input.type = "password"; btn.textContent = "VOIR"; }
+        }
+        function effacerConnexion() {
+            document.getElementById("login_tel").value = "";
+            document.getElementById("login_mdp").value = "";
+            cacherMsg("msgLogin");
+        }
+        function effacerInscription() {
+            ["ins_nom", "ins_tel", "ins_quartier", "ins_mdp", "ins_mdp2"].forEach(id => document.getElementById(id).value = "");
+            cacherMsg("msgInscription");
+        }
+
+        function seConnecter() {
+            let tel = normaliserTel(document.getElementById("login_tel").value);
+            let mdp = document.getElementById("login_mdp").value;
+
+            if (!tel || !mdp) {
+                afficherMsg("msgLogin", "Veuillez entrer votre téléphone et votre mot de passe.", "erreur");
+                return;
+            }
+
+            let clients = getClients();
+
+            if (clients.length === 0) {
+                afficherMsg("msgLogin", "Aucun compte client n'existe encore. Créez d'abord votre compte dans l'onglet CRÉER UN COMPTE.", "info");
+                return;
+            }
+
+            // Recherche par téléphone exact (c'est l'identifiant réel du client)
+            let trouve = clients.find(c => normaliserTel(c.telephone) === tel);
+
+            if (!trouve) {
+                afficherMsg("msgLogin", "Compte introuvable pour ce numéro : " + tel + ". Vérifiez votre numéro, ou créez un compte.", "erreur");
+                return;
+            }
+
+            if (trouve.mot_de_passe !== mdp) {
+                afficherMsg("msgLogin", "Mot de passe incorrect pour ce numéro. Vérifiez votre mot de passe.", "erreur");
+                return;
+            }
+
+            // SUCCÈS : on enregistre le VRAI client connecté — c'est lui qui sera utilisé dans Mes Commandes
+            localStorage.setItem("rbm_client_connecte", JSON.stringify({
+                id: trouve.id,
+                nom: trouve.nom,
+                telephone: trouve.telephone,
+                quartier: trouve.quartier,
+                points: trouve.points || 0,
+                date_inscription: trouve.date_inscription || ""
+            }));
+
+            afficherMsg("msgLogin", "Bienvenue " + trouve.nom + ". Connexion réussie. Redirection vers vos commandes...", "succes");
+            setTimeout(() => { window.location.href = "commandes.html"; }, 800);
+        }
+
+        function creerCompte() {
+            let nom = document.getElementById("ins_nom").value.trim();
+            let tel = normaliserTel(document.getElementById("ins_tel").value);
+            let quartier = document.getElementById("ins_quartier").value.trim();
+            let mdp = document.getElementById("ins_mdp").value;
+            let mdp2 = document.getElementById("ins_mdp2").value;
+
+            if (!nom || !tel || !quartier || !mdp || !mdp2) {
+                afficherMsg("msgInscription", "Veuillez remplir tous les champs marqués *.", "erreur");
+                return;
+            }
+            if (tel.length < 8) {
+                afficherMsg("msgInscription", "Veuillez entrer un numéro de téléphone valide.", "erreur");
+                return;
+            }
+            if (mdp.length < 4) {
+                afficherMsg("msgInscription", "Choisissez un mot de passe d'au moins 4 caractères.", "erreur");
+                return;
+            }
+            if (mdp !== mdp2) {
+                afficherMsg("msgInscription", "Les deux mots de passe ne sont pas identiques.", "erreur");
+                return;
+            }
+
+            let clients = getClients();
+
+            // Un téléphone = un seul compte. Pas de doublon.
+            if (clients.some(c => normaliserTel(c.telephone) === tel)) {
+                afficherMsg("msgInscription", "Un compte existe déjà avec ce numéro : " + tel + ". Connectez-vous dans l'onglet SE CONNECTER.", "erreur");
+                return;
+            }
+
+            let nouveau = {
+                id: Date.now(),
+                nom: nom,
+                telephone: tel,
+                quartier: quartier,
+                mot_de_passe: mdp,
+                points: 0,
+                date_inscription: new Date().toISOString().slice(0, 10)
+            };
+
+            clients.push(nouveau);
+            saveClients(clients);
+
+            // On connecte directement ce vrai nouveau client
+            localStorage.setItem("rbm_client_connecte", JSON.stringify({
+                id: nouveau.id,
+                nom: nouveau.nom,
+                telephone: nouveau.telephone,
+                quartier: nouveau.quartier,
+                points: 0,
+                date_inscription: nouveau.date_inscription
+            }));
+
+            afficherMsg("msgInscription", "Compte créé avec succès pour " + nom + ". Redirection vers vos commandes...", "succes");
+            setTimeout(() => { window.location.href = "commandes.html"; }, 800);
+        }
+
+        // Si déjà connecté, on propose de continuer
+        window.addEventListener("DOMContentLoaded", () => {
+            try {
+                let c = JSON.parse(localStorage.getItem("rbm_client_connecte") || "null");
+                if (c && c.nom) {
+                    afficherMsg("msgLogin", "Vous êtes déjà connecté(e) en tant que " + c.nom + ".", "info");
+                }
+            } catch (e) { }
+        });
+    </script>
+</body>
+
+</html>

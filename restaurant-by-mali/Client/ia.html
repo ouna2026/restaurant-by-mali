@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müna IA - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            max-width: 100vw;
+            width: 100%
+        }
+
+        body {
+            background: #FFF8EE;
+            padding-bottom: 160px
+        }
+
+        .page {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden
+        }
+
+        .top {
+            width: 100%;
+            background: #1A1512;
+            color: #fff;
+            padding: 22px 18px 28px;
+            border-radius: 0 0 28px 28px;
+            text-align: center
+        }
+
+        .top-inner {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto
+        }
+
+        .top .logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #C9A227;
+            color: #1A1512;
+            font-size: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 900
+        }
+
+        .top h1 {
+            font-size: 21px
+        }
+
+        .top h1 span {
+            color: #C9A227
+        }
+
+        .top p {
+            color: #D8CFC0;
+            font-size: 13px;
+            margin-top: 6px;
+            line-height: 1.5
+        }
+
+        .wrap {
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            width: 100%
+        }
+
+        .suggestions button {
+            white-space: nowrap;
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 20px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-shrink: 0
+        }
+
+        .suggestions button:active {
+            background: #C9A227
+        }
+
+        .chat {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 300px
+        }
+
+        .msg {
+            max-width: 85%;
+            padding: 12px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word
+        }
+
+        .msg.muna {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start
+        }
+
+        .msg.moi {
+            background: #1A1512;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+            align-self: flex-end
+        }
+
+        .msg small {
+            display: block;
+            font-size: 11px;
+            color: #999;
+            margin-top: 6px
+        }
+
+        .msg.moi small {
+            color: #D8CFC0
+        }
+
+        .msg .btn-resto {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            background: #C9A227;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px
+        }
+
+        .msg .btn-quartier {
+            display: inline-block;
+            margin: 4px 4px 0 0;
+            background: #FFF3CD;
+            border: 1px solid #C9A227;
+            border-radius: 20px;
+            padding: 7px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .barre {
+            position: fixed;
+            bottom: 58px;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #F1E3C8;
+            padding: 10px 12px;
+            display: flex;
+            gap: 8px;
+            z-index: 20;
+            width: 100%
+        }
+
+        .barre-inner {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 8px
+        }
+
+        .barre input {
+            flex: 1;
+            border: 1px solid #E5D5B8;
+            border-radius: 20px;
+            padding: 12px 14px;
+            font-size: 14px;
+            outline: none;
+            min-width: 0
+        }
+
+        .barre input:focus {
+            border-color: #C9A227
+        }
+
+        .barre button {
+            background: #C9A227;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            flex-shrink: 0
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #F1E3C8;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 14px;
+            z-index: 10;
+            width: 100%
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #888;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700
+        }
+
+        .nav a.active {
+            color: #C9A227
+        }
+
+        .nav a div {
+            font-size: 22px
+        }
+
+        .typing {
+            font-size: 13px;
+            color: #888;
+            font-style: italic
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="top">
+            <div class="top-inner">
+                <div class="logo">M</div>
+                <h1>Bonjour, je suis <span>Müna</span></h1>
+                <p id="bonjourMuna">Ton assistante Restaurant By Mali.<br>Je te demande d'abord ton quartier, ensuite je
+                    te propose le restaurant le plus proche.</p>
+            </div>
+        </div>
+
+        <div class="wrap">
+            <div class="suggestions">
+                <button onclick="envoyerSuggestion('Salut Müna')">👋 Salut Müna</button>
+                <button onclick="envoyerSuggestion('Je veux des tacos')">🌮 Je veux des tacos</button>
+                <button onclick="envoyerSuggestion('Je suis à Faladié')">📍 Je suis à Faladié</button>
+                <button onclick="envoyerSuggestion('Je veux du poulet braisé')">🍗 Poulet braisé</button>
+                <button onclick="envoyerSuggestion('Je veux une pizza')">🍕 Pizza</button>
+            </div>
+            <div class="chat" id="chat"></div>
+            <p id="typing" class="typing" style="display:none">Müna écrit...</p>
+        </div>
+    </div>
+
+    <div class="barre">
+        <div class="barre-inner">
+            <input id="question" placeholder="Écris à Müna... Ex : Je veux des tacos"
+                onkeydown="if(event.key==='Enter') envoyer()">
+            <button onclick="envoyer()">➤</button>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="accueil.html">
+            <div>🏠</div>Accueil
+        </a>
+        <a href="profil.html">
+            <div>👤</div>Profil
+        </a>
+        <a href="ia.html" class="active">
+            <div>🤖</div>IA
+        </a>
+        <a href="jeux.html">
+            <div>🎮</div>Jeux
+        </a>
+        <a href="commandes.html">
+            <div>🧾</div>Commandes
+        </a>
+    </div>
+
+    <script>
+        if (!localStorage.getItem("rbm_client_connecte")) { window.location.href = "login.html"; }
+        let client = JSON.parse(localStorage.getItem("rbm_client_connecte") || "{}");
+        document.getElementById("bonjourMuna").innerHTML = "Bonjour " + (client.nom || "") + ", je suis <b>Müna</b>.<br>Je te demande d'abord ton quartier, ensuite je te propose le restaurant le plus proche.";
+
+        // ─── CERVEAU UNIQUE DE MÜNA — EXACTEMENT LE MÊME QUE DANS Admin/fonctionnalite-ia.html ───
+        let INFOS_MUNA = {
+            "Le Grill - Bamako": { plats: "Poulet braisé, Poisson braisé, Riz", prix: "A partir de 3000 FCFA", livraison: 1000, quartier: "Hamdallaye", ville: "Bamako" },
+            "Sandwich+": { plats: "Sandwich, Tacos, Burger, Shawarma", prix: "A partir de 2000 FCFA", livraison: 800, quartier: "Banankabougou", ville: "Bamako" },
+            "Le Relax": { plats: "Pizza, Pâtes, Salade, Jus", prix: "A partir de 4000 FCFA", livraison: 1000, quartier: "ACI 2000", ville: "Bamako" },
+            "Maquis Le Savana": { plats: "Poulet, Poisson, Riz, Soupe", prix: "A partir de 2500 FCFA", livraison: 1000, quartier: "Magnambougou", ville: "Bamako" },
+            "Chez Fatoumata": { plats: "Riz, Mafé, Tô, Soupe", prix: "A partir de 2000 FCFA", livraison: 1500, quartier: "Faladié", ville: "Bamako" },
+            "Le Faso": { plats: "Riz, Poulet, Poisson, Yassa", prix: "A partir de 2500 FCFA", livraison: 1500, quartier: "Badalabougou", ville: "Bamako" },
+            "Maquis Kati": { plats: "Poulet braisé, Riz, Poisson, Brochettes", prix: "A partir de 2500 FCFA", livraison: 1200, quartier: "Kati", ville: "Kati" },
+            "Douceur Sucrée": { plats: "Gâteaux, Croissant, Jus, Glace", prix: "A partir de 1500 FCFA", livraison: 800, quartier: "ACI 2000", ville: "Bamako" }
+        };
+        let REGLE_MUNA = "Tu es Müna, assistante Restaurant By Mali. RÈGLE NUMÉRO 1 : tu demandes D'ABORD le quartier du client si tu ne le connais pas. RÈGLE NUMÉRO 2 : ensuite seulement, tu proposes le restaurant le plus proche qui vend le plat demandé. Tu ne parles QUE des 8 restaurants ci-dessus. Tu n'inventes JAMAIS un restaurant, un plat ou un prix. Si le sujet est très sensible, tu arrêtes tout de suite.";
+        let MOTS_SENSIBLES_MUNA = ["suicide", "se tuer", "me tuer", "viol", "agression sexuelle", "drogue", "cocaïne", "héroïne", "terroriste", "attentat", "tuer quelqu", "bombe", "arme", "porno", "sexe"];
+        function estSensibleMuna(q) { let t = q.toLowerCase(); return MOTS_SENSIBLES_MUNA.some(m => t.includes(m)); }
+
+        let restos = Object.keys(INFOS_MUNA).map(n => { let v = INFOS_MUNA[n]; return { nom: n, quartier: v.quartier, ville: v.ville, plats: v.plats, prix: v.prix, livraison: v.livraison }; });
+
+        // ─── CE QUE LE CLIENT VEUT + SON QUARTIER — MÜNA RETIENT ───
+        let platDemande = null; // ex : { nom:"Sandwich+", plat:"Tacos" }
+        let quartierClient = client.quartier || ""; // si son profil a déjà un quartier, on l'utilise
+        let aDemandeQuartier = false;
+
+        let QUARTIERS = ["Hamdallaye", "Banankabougou", "ACI 2000", "Magnambougou", "Faladié", "Badalabougou", "Kati", "Centre-ville", "ACI", "Faladie", "Bamako", "Ségou", "Segou", "Kayes"];
+        function trouverQuartierDansTexte(t) {
+            let bas = t.toLowerCase();
+            // On cherche le vrai quartier : Faladié, ACI 2000, Hamdallaye...
+            for (let r of restos) { if (bas.includes(r.quartier.toLowerCase())) return r.quartier; }
+            if (bas.includes("aci")) return "ACI 2000";
+            if (bas.includes("faladi")) return "Faladié";
+            if (bas.includes("hamdallaye")) return "Hamdallaye";
+            if (bas.includes("kati")) return "Kati";
+            if (bas.includes("badalabougou")) return "Badalabougou";
+            if (bas.includes("magnambougou")) return "Magnambougou";
+            if (bas.includes("banankabougou")) return "Banankabougou";
+            return "";
+        }
+
+        function ajouterMsg(texte, qui) {
+            let chat = document.getElementById("chat");
+            let div = document.createElement("div");
+            div.className = "msg " + (qui === "moi" ? "moi" : "muna");
+            div.innerHTML = texte.replace(/\n/g, "<br>") + "<small>" + (qui === "moi" ? "Toi" : "Müna • " + new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })) + "</small>";
+            chat.appendChild(div);
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+            return div;
+        }
+        function ajouterMsgResto(texte, resto) {
+            let div = ajouterMsg(texte, "muna");
+            if (resto) {
+                let btn = document.createElement("button");
+                btn.className = "btn-resto";
+                btn.textContent = "🍽️ VOIR LE MENU DE " + resto.toUpperCase();
+                btn.onclick = function () { localStorage.setItem("rbm_ouvrir_menu", resto); window.location.href = "accueil.html"; };
+                div.appendChild(btn);
+            }
+            return div;
+        }
+        function ajouterQuestionQuartier(texte) {
+            let div = ajouterMsg(texte, "muna");
+            let quartiersBtns = ["Faladié", "ACI 2000", "Hamdallaye", "Banankabougou", "Badalabougou", "Magnambougou", "Kati"];
+            quartiersBtns.forEach(q => {
+                let b = document.createElement("button");
+                b.className = "btn-quartier";
+                b.textContent = "📍 " + q;
+                b.onclick = function () { document.getElementById("question").value = "Je suis à " + q; envoyer(); };
+                div.appendChild(b);
+            });
+            return div;
+        }
+
+        function trouverPlat(t) {
+            let platsMap = [
+                { mots: ["tacos", "taco", "sandwich", "sandwicht", "sandwiche"], nom: "Sandwich+", plat: "Tacos" },
+                { mots: ["burger"], nom: "Sandwich+", plat: "Burger" },
+                { mots: ["shawarma"], nom: "Sandwich+", plat: "Shawarma" },
+                { mots: ["pizza"], nom: "Le Relax", plat: "Pizza" },
+                { mots: ["poulet braisé", "poulet"], nom: "Le Grill - Bamako", plat: "Poulet braisé" },
+                { mots: ["poisson braisé", "poisson"], nom: "Le Grill - Bamako", plat: "Poisson braisé" },
+                { mots: ["brochette"], nom: "Maquis Kati", plat: "Brochettes" },
+                { mots: ["maf"], nom: "Chez Fatoumata", plat: "Riz + Mafé" },
+                { mots: ["tô"], nom: "Chez Fatoumata", plat: "Tô + Sauce" },
+                { mots: ["yassa"], nom: "Le Faso", plat: "Yassa poulet" },
+                { mots: ["gâteau", "gateau", "croissant", "pâtisserie", "patisserie"], nom: "Douceur Sucrée", plat: "Gâteaux / Croissant" },
+                { mots: ["glace"], nom: "Douceur Sucrée", plat: "Glace" },
+                { mots: ["jus"], nom: "Le Relax", plat: "Jus naturel" },
+                { mots: ["riz"], nom: "Chez Fatoumata", plat: "Riz" },
+                { mots: ["soupe"], nom: "Maquis Le Savana", plat: "Soupe" },
+                { mots: ["pâtes", "pates", "salade"], nom: "Le Relax", plat: "Pâtes / Salade" }
+            ];
+            for (let p of platsMap) { if (p.mots.some(m => t.includes(m))) return p; }
+            return null;
+        }
+
+        function proposerRestaurant(platInfo, quartier) {
+            let r = restos.find(x => x.nom === platInfo.nom);
+            if (!r) return { texte: "Je n'ai pas trouvé ce plat.", resto: null };
+            // Le restaurant est-il dans le même quartier que le client ?
+            let memeQuartier = (r.quartier.toLowerCase() === quartier.toLowerCase());
+            // On cherche aussi s'il y a un restaurant du MÊME quartier qui vend le même plat
+            let texte = "";
+            if (memeQuartier) {
+                texte = "Parfait ! Tu es à " + quartier + ", et le restaurant est juste à côté de toi :\n\n🍽️ " + r.nom + " — LE PLUS PROCHE DE TOI ✅\n📍 " + r.quartier + " — " + r.ville + " (ton quartier)\n🍲 " + r.plats + "\n💰 " + r.prix + "\n🚚 Livraison : " + r.livraison + " FCFA\n\nTu veux voir son menu et commander ?";
+            } else {
+                // On calcule : quel est le restaurant le plus proche ? Ici : celui qui vend le plat, et on dit clairement la distance en quartier
+                texte = "Merci ! Tu es à " + quartier + ".\n\nPour « " + platInfo.plat + " », le plus proche de toi c'est :\n\n🍽️ " + r.nom + "\n📍 " + r.quartier + " — " + r.ville + "\n🍲 " + r.plats + "\n💰 " + r.prix + "\n🚚 Livraison : " + r.livraison + " FCFA\n\nC'est le restaurant qui vend ce plat et qui est le plus proche de " + quartier + ".\n\nTu veux voir son menu et commander ?";
+            }
+            return { texte: texte, resto: r.nom };
+        }
+
+        function reponseLocale(q) {
+            let t = q.toLowerCase();
+
+            if (t.includes("salut") || t.includes("bonjour") || t.includes("coucou") || t.includes("bonsoir")) {
+                platDemande = null;
+                // Si on connait déjà son quartier (profil), on ne redemande pas
+                if (quartierClient) {
+                    return { texte: "Bonjour " + (client.nom || "") + " ! 😊\nJe vois que tu es à " + quartierClient + ".\n\nDis-moi ce que tu veux manger, je te propose le restaurant le plus proche de " + quartierClient + ".", resto: null, demanderQuartier: false };
+                }
+                return { texte: "Bonjour " + (client.nom || "") + " ! 😊\n\nTu es dans quel quartier ?", resto: null, demanderQuartier: true };
+            }
+            if (t.includes("merci")) {
+                return { texte: "De rien " + (client.nom || "") + " ! 😊\nTu veux autre chose ? Dis-moi ton plat et ton quartier.", resto: null, demanderQuartier: false };
+            }
+
+            // 1. Le client donne son quartier ?
+            let quartierDansMsg = trouverQuartierDansTexte(t);
+            if (quartierDansMsg) {
+                quartierClient = quartierDansMsg;
+                // S'il avait déjà demandé un plat avant, on lui propose MAINTENANT le plus proche
+                if (platDemande) {
+                    let rep = proposerRestaurant(platDemande, quartierClient);
+                    platDemande = null;
+                    aDemandeQuartier = false;
+                    return { texte: rep.texte, resto: rep.resto, demanderQuartier: false };
+                }
+                // Sinon, on a le quartier, on demande le plat
+                return { texte: "Super, tu es à " + quartierClient + " ! 📍\n\nTu veux manger quoi ?\nEx : tacos, poulet braisé, pizza, mafé...", resto: null, demanderQuartier: false };
+            }
+
+            // 2. Le client demande un plat ?
+            let plat = trouverPlat(t);
+            if (plat) {
+                platDemande = plat;
+                // S'il a déjà un quartier (profil ou déjà donné), on propose tout de suite le plus proche
+                if (quartierClient && !t.includes("je suis")) {
+                    let rep = proposerRestaurant(plat, quartierClient);
+                    platDemande = null;
+                    return { texte: rep.texte, resto: rep.resto, demanderQuartier: false };
+                }
+                // Sinon, ON DEMANDE D'ABORD LE QUARTIER — on ne propose pas encore
+                aDemandeQuartier = true;
+                return { texte: "Super, tu veux « " + plat.plat + " » ! 😋\n\nTu es dans quel quartier ?\nComme ça je te propose le restaurant le plus proche de toi qui vend ça.", resto: null, demanderQuartier: true };
+            }
+
+            // 3. Il demande juste les restaurants ?
+            if (t.includes("restaurant") || t.includes("manger") || t.includes("faim")) {
+                if (!quartierClient) {
+                    return { texte: "Tu es dans quel quartier ?\nComme ça je te propose les restaurants les plus proches de toi.", resto: null, demanderQuartier: true };
+                }
+                let liste = restos.map(r => "• " + r.nom + " — " + r.quartier + " (" + r.prix + ")").join("\n");
+                return { texte: "Tu es à " + quartierClient + ", voici les restaurants :\n\n" + liste + "\n\nDis-moi ce que tu veux manger, je te dis le plus proche.", resto: null, demanderQuartier: false };
+            }
+
+            if (t.includes("moins cher") || t.includes("pas cher")) {
+                if (!quartierClient) {
+                    platDemande = { nom: "Douceur Sucrée", plat: "le moins cher" };
+                    return { texte: "Tu es dans quel quartier ?\nComme ça je te propose le moins cher le plus proche de toi.", resto: null, demanderQuartier: true };
+                }
+                let r = restos.find(x => x.nom === "Douceur Sucrée");
+                return { texte: "Tu es à " + quartierClient + ".\nLe moins cher le plus proche c'est :\n\n🍽️ " + r.nom + "\n📍 " + r.quartier + " — " + r.ville + "\n🍲 " + r.plats + "\n💰 " + r.prix + "\n🚚 Livraison : " + r.livraison + " FCFA", resto: r.nom, demanderQuartier: false };
+            }
+
+            if (t.includes("livraison") || t.includes("livrer") || t.includes("commande")) {
+                return { texte: "Pour commander :\n1. Va sur Accueil\n2. Clique sur « Voir le menu » du restaurant\n3. Clique sur le plat que tu veux\n4. Clique sur « CONFIRMER LA COMMANDE »\n\nLe prix se calcule tout seul.", resto: null, demanderQuartier: false };
+            }
+
+            // Par défaut : on demande le quartier
+            if (!quartierClient) {
+                return { texte: "Je suis Müna, je ne parle que des restaurants de l'app. 😊\n\nTu es dans quel quartier ?", resto: null, demanderQuartier: true };
+            }
+            return { texte: "Dis-moi ce que tu veux manger, je te propose le restaurant le plus proche de " + quartierClient + ".\n\nEx : tacos, poulet braisé, pizza...", resto: null, demanderQuartier: false };
+        }
+
+        function envoyerSuggestion(texte) {
+            document.getElementById("question").value = texte;
+            envoyer();
+        }
+
+        async function envoyer() {
+            let input = document.getElementById("question");
+            let q = input.value.trim();
+            if (!q) return;
+            input.value = "";
+            ajouterMsg(q, "moi");
+
+            if (estSensibleMuna(q)) {
+                ajouterMsg("Je suis désolée, je ne peux pas continuer sur ce sujet.\n\nJe suis Müna, je ne parle que des restaurants de l'app.\n\nSi tu es en danger, appelle vite quelqu'un de confiance autour de toi ou les secours.", "muna");
+                return;
+            }
+
+            document.getElementById("typing").style.display = "block";
+
+            // ─── On utilise D'ABORD la logique quartier → plus proche (locale), qui est la règle n°1 ───
+            // La vraie IA Groq ne doit jamais sauter l'étape quartier.
+            // Donc : si le client n'a pas encore donné son quartier, ou s'il demande un plat, on répond en local.
+            let tBas = q.toLowerCase();
+            let aUnQuartier = !!trouverQuartierDansTexte(tBas) || !!quartierClient;
+            let aUnPlat = !!trouverPlat(tBas);
+
+            if (!aUnQuartier || aUnPlat || platDemande) {
+                setTimeout(function () {
+                    document.getElementById("typing").style.display = "none";
+                    let rep = reponseLocale(q);
+                    if (rep.demanderQuartier) ajouterQuestionQuartier(rep.texte);
+                    else ajouterMsgResto(rep.texte, rep.resto);
+                }, 500);
+                return;
+            }
+
+            // ─── Sinon (quartier déjà connu + question générale), on peut utiliser Groq ───
+            try {
+                let res = await fetch("../config/muna.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: q, regle: REGLE_MUNA, restos: INFOS_MUNA, client: client.nom || "", quartier: quartierClient })
+                });
+                let data = await res.json();
+                let repGroq = (data && data.reponse) ? data.reponse.trim() : "";
+                let estGenerique = !repGroq || repGroq.length < 20 || repGroq.toLowerCase().includes("pose-moi une question") || repGroq.toLowerCase().includes("pose moi une question");
+                if (!estGenerique) {
+                    document.getElementById("typing").style.display = "none";
+                    let rTrouve = restos.find(r => repGroq.includes(r.nom));
+                    ajouterMsgResto(repGroq, rTrouve ? rTrouve.nom : null);
+                    return;
+                }
+            } catch (e) { }
+
+            setTimeout(function () {
+                document.getElementById("typing").style.display = "none";
+                let rep = reponseLocale(q);
+                if (rep.demanderQuartier) ajouterQuestionQuartier(rep.texte);
+                else ajouterMsgResto(rep.texte, rep.resto);
+            }, 500);
+        }
+
+        window.onload = function () {
+            if (quartierClient) {
+                ajouterMsg("Bonjour " + (client.nom || "") + " ! Je suis Müna 😊\n\nJe vois que tu es à " + quartierClient + ".\n\nDis-moi ce que tu veux manger, je te propose le restaurant le plus proche de " + quartierClient + ".", "muna");
+            } else {
+                ajouterMsg("Bonjour " + (client.nom || "") + " ! Je suis Müna 😊\n\nTu es dans quel quartier ?", "muna");
+                // Boutons quartiers dès le début
+                let div = document.getElementById("chat").lastChild;
+                let quartiersBtns = ["Faladié", "ACI 2000", "Hamdallaye", "Banankabougou", "Badalabougou", "Magnambougou", "Kati"];
+                quartiersBtns.forEach(q => {
+                    let b = document.createElement("button");
+                    b.className = "btn-quartier";
+                    b.textContent = "📍 " + q;
+                    b.style.cssText = "background:#FFF3CD;border:1px solid #C9A227;border-radius:20px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:4px 4px 0 0";
+                    b.onclick = function () { document.getElementById("question").value = "Je suis à " + q; envoyer(); };
+                    div.appendChild(b);
+                });
+            }
+            document.getElementById("question").focus();
+        };
+    </script>
+</body>
+
+</html>

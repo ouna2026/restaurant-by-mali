@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Admin - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            background: #1A1512
+        }
+
+        .gauche {
+            flex: 1.1;
+            background: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1000&q=80') center/cover;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px
+        }
+
+        .gauche::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .85), rgba(0, 0, 0, .15))
+        }
+
+        .gauche div {
+            position: relative;
+            z-index: 2
+        }
+
+        .gauche h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 42px;
+            line-height: 1.1
+        }
+
+        .gauche h1 span {
+            color: #C9A227
+        }
+
+        .gauche p {
+            color: #ddd;
+            margin-top: 12px;
+            font-size: 15px;
+            line-height: 1.5;
+            max-width: 420px
+        }
+
+        .badge {
+            display: inline-block;
+            background: #C9A227;
+            color: #1A1512;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding: 7px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px
+        }
+
+        .droite {
+            flex: 1;
+            background: #FFF8EE;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px
+        }
+
+        .box {
+            width: 100%;
+            max-width: 380px
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            color: #1A1512;
+            text-align: center
+        }
+
+        .logo b {
+            color: #C9A227
+        }
+
+        .sous {
+            color: #888;
+            text-align: center;
+            font-size: 13px;
+            margin: 8px 0 28px
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            color: #1A1512;
+            margin: 16px 0 7px;
+            text-transform: uppercase
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 16px;
+            border: 1px solid #E8DCC2;
+            border-radius: 14px;
+            font-size: 15px;
+            outline: none;
+            background: #fff
+        }
+
+        input:focus {
+            border-color: #C9A227;
+            box-shadow: 0 0 0 3px rgba(201, 162, 39, .15)
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 26px;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: #1A1512;
+            color: #fff;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            letter-spacing: .3px
+        }
+
+        .btn:hover {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .msg {
+            text-align: center;
+            color: #A83200;
+            font-size: 13px;
+            margin-top: 14px;
+            min-height: 18px
+        }
+
+        .retour {
+            text-align: center;
+            margin-top: 22px
+        }
+
+        .retour a {
+            color: #999;
+            font-size: 13px;
+            text-decoration: none
+        }
+
+        @media(max-width:800px) {
+            body {
+                flex-direction: column
+            }
+
+            .gauche {
+                min-height: 280px;
+                padding: 24px
+            }
+
+            .gauche h1 {
+                font-size: 32px
+            }
+
+            .droite {
+                padding: 26px 20px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="gauche">
+        <div>
+            <span class="badge">✦ ESPACE ADMINISTRATEUR</span>
+            <h1>Savourez<br><span>l'Excellence</span> à Bamako</h1>
+            <p>Gérez vos restaurants, vos clients, vos paiements et vos commandes. Tout votre business, dans un seul
+                endroit élégant.</p>
+        </div>
+    </div>
+
+    <div class="droite">
+        <div class="box">
+            <div class="logo">Restaurant <b>By Mali</b></div>
+            <div class="sous">Connectez-vous pour gérer votre plateforme</div>
+
+            <label>Téléphone Admin</label>
+            <input id="telephone" type="text" placeholder="+22364716909" value="+22364716909">
+
+            <label>Mot de passe</label>
+            <input id="mot_de_passe" type="password" placeholder="••••••••" value="admin123">
+
+            <button class="btn" onclick="seConnecter()">Se connecter →</button>
+            <div class="msg" id="msg"></div>
+
+            <div class="retour"><a href="../index.html">← Retour aux 3 portes</a></div>
+        </div>
+    </div>
+
+    <script>
+        async function seConnecter() {
+            let tel = document.getElementById("telephone").value.trim();
+            let mdp = document.getElementById("mot_de_passe").value.trim();
+            let msg = document.getElementById("msg");
+            msg.textContent = "Vérification...";
+            try {
+                let res = await fetch("../config/connexion_admin.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({telephone: tel, mot_de_passe: mdp})
+                });
+                let data = await res.json();
+                if (data.ok) {
+                    localStorage.setItem("rbm_admin", JSON.stringify(data.admin));
+                    window.location.href = "dashboard.html";
+                } else {msg.textContent = data.message;}
+            } catch (e) {msg.textContent = "Erreur : ouvre avec http://localhost:8080/...";}
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            color: #1A1512
+        }
+
+        .header {
+            background: #1A1512;
+            color: #fff;
+            padding: 20px;
+            text-align: center
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-weight: 400;
+            font-size: 24px
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 4px
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 16px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 14px
+        }
+
+        .card img.couv {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px
+        }
+
+        .photo-rond {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #C9A227
+        }
+
+        .flex {
+            display: flex;
+            gap: 14px;
+            align-items: center
+        }
+
+        .galerie {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .galerie img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px
+        }
+
+        .galerie small {
+            display: block;
+            text-align: center;
+            color: #888;
+            font-size: 11px;
+            margin-top: 4px
+        }
+
+        .plat {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border-bottom: 1px solid #F1E3C8;
+            padding: 12px 0
+        }
+
+        .plat img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px
+        }
+
+        .plat b {
+            font-size: 14px
+        }
+
+        .plat small {
+            color: #888;
+            font-size: 12px
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-blanc {
+            background: #fff;
+            border: 2px solid #F1E3C8
+        }
+
+        @media(max-width:600px) {
+            .galerie {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 id="nomResto">Restaurant</h1>
+        <p id="sousResto">Bamako - Restaurant By Mali</p>
+    </div>
+    <div class="main">
+        <div class="card">
+            <img id="photoCouv" class="couv"
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop">
+            <div class="flex" style="margin-top:14px">
+                <img id="photoProfil" class="photo-rond"
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=300&fit=crop">
+                <div>
+                    <h3 id="nom2" style="font-family:Georgia,serif;font-weight:400;font-size:20px"></h3>
+                    <p id="info" style="font-size:14px;line-height:1.7;color:#555"></p>
+                </div>
+            </div>
+            <p id="desc" style="font-size:13px;color:#888;margin-top:10px;line-height:1.6"></p>
+            <button class="btn btn-or" onclick="allerMenu()">VOIR MENU ↓</button>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Les coins du restaurant</h3>
+            <p style="font-size:13px;color:#888;margin-top:6px">Photos de <span id="nomCoin"></span> — Salle, Terrasse,
+                Cuisine</p>
+            <div class="galerie">
+                <div><img id="coin1" src=""><small>Salle</small></div>
+                <div><img id="coin2" src=""><small>Terrasse</small></div>
+                <div><img id="coin3" src=""><small>Cuisine</small></div>
+            </div>
+        </div>
+
+        <div class="card" id="blocMenu">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Menu du restaurant</h3>
+            <p style="font-size:13px;color:#888;margin-top:6px">Clique un plat pour commander. Le prix est celui du
+                restaurant.</p>
+            <p id="infoMenu" style="font-size:12px;color:#C9A227;font-weight:700;margin-top:8px"></p>
+            <div id="listeMenu"></div>
+        </div>
+
+        <button class="btn btn-blanc" onclick="history.back()">← Retour aux restaurants</button>
+        <button class="btn btn-noir" onclick="location.href='accueil.html'">Voir tous les restaurants</button>
+    </div>
+    <script>
+        let DONNEES = {
+            "Le Grill - Bamako": { quartier: "ACI 2000 - Bamako", tel: "+223 70 11 22 33", desc: "Grillades, poulet braisé, brochettes", photo: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"], menu: [{ nom: "Poulet braisé", prix: 5000, img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=300&h=300&fit=crop" }, { nom: "Brochettes", prix: 3000, img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop" }, { nom: "Capitaine braisé", prix: 8000, img: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=300&h=300&fit=crop" }] },
+            "Sandwich+": { quartier: "Hippodrome - Bamako", tel: "+223 65 44 33 22", desc: "Sandwichs, tacos, burgers", photo: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"], menu: [{ nom: "Tacos", prix: 2500, img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300&h=300&fit=crop" }, { nom: "Sandwich", prix: 2000, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&h=300&fit=crop" }, { nom: "Burger", prix: 3500, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=300&fit=crop" }] },
+            "Le Relax": { quartier: "Badalabougou - Bamako", tel: "+223 76 12 34 56", desc: "Plats calmes, jus, grillades", photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop"], menu: [{ nom: "Poulet braisé", prix: 5000, img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=300&h=300&fit=crop" }, { nom: "Jus de bissap", prix: 1000, img: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=300&h=300&fit=crop" }, { nom: "Riz gras", prix: 2000, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop" }] },
+            "Maquis Le Savana": { quartier: "Sotuba - Bamako", tel: "+223 78 90 12 34", desc: "Maquis, capitaine braisé, attiéké", photo: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"], menu: [{ nom: "Capitaine braisé", prix: 8000, img: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=300&h=300&fit=crop" }, { nom: "Attiéké", prix: 2500, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop" }, { nom: "Brochettes", prix: 3000, img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop" }] },
+            "Chez Fatoumata": { quartier: "Bamako Coura - Bamako", tel: "+223 66 55 44 33", desc: "Riz, sauce feuille, mafé", photo: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1540189549336-e6e99c4299bd?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"], menu: [{ nom: "Mafé", prix: 2500, img: "https://images.unsplash.com/photo-1540189549336-e6e99c4299bd?w=300&h=300&fit=crop" }, { nom: "Riz sauce feuille", prix: 2000, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop" }, { nom: "Tô", prix: 1500, img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop" }] },
+            "Le Faso": { quartier: "Kati - Bamako", tel: "+223 79 11 22 33", desc: "Plats du Faso, tô, riz gras", photo: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"], menu: [{ nom: "Tô", prix: 1500, img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop" }, { nom: "Riz gras", prix: 2000, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop" }, { nom: "Poulet bicyclette", prix: 4500, img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=300&h=300&fit=crop" }] },
+            "Maquis Kati": { quartier: "Kati", tel: "+223 70 99 88 77", desc: "Maquis, viande braisée", photo: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"], menu: [{ nom: "Viande braisée", prix: 6000, img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=300&h=300&fit=crop" }, { nom: "Brochettes", prix: 3000, img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop" }, { nom: "Attiéké", prix: 2500, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop" }] },
+            "Douceur Sucrée": { quartier: "ACI 2000 - Bamako", tel: "+223 77 66 55 44", desc: "Desserts, jus, gâteaux", photo: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"], menu: [{ nom: "Gâteau", prix: 3000, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=300&fit=crop" }, { nom: "Jus de mangue", prix: 1500, img: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=300&h=300&fit=crop" }, { nom: "Dessert", prix: 2500, img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=300&h=300&fit=crop" }] },
+            "LAIT KOUNDAR": { quartier: "Bamako", tel: "+223 70 00 00 00", desc: "Lait, bouillie, plats locaux", photo: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop"], menu: [{ nom: "Bouillie", prix: 1500, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop" }, { nom: "Lait caillé", prix: 2000, img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=300&h=300&fit=crop" }, { nom: "Riz au lait", prix: 2500, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop" }] }
+        };
+
+        let params = new URLSearchParams(location.search);
+        let nom = params.get("nom") || localStorage.getItem("rbm_client_choix_resto") || "Le Grill - Bamako";
+        nom = decodeURIComponent(nom);
+        let data = DONNEES[nom] || { quartier: "Bamako", tel: "+223 70 00 00 00", desc: "Restaurant By Mali", photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop", coins: ["https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"], menu: [{ nom: "Plat du jour", prix: 2500, img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop" }] };
+
+        let vraiePhoto = localStorage.getItem("rbm_resto_photo_" + nom);
+        if (vraiePhoto) { data.photo = vraiePhoto; }
+        let vraieQuartier = localStorage.getItem("rbm_resto_quartier_" + nom);
+        if (vraieQuartier) data.quartier = vraieQuartier;
+        let vraiTel = localStorage.getItem("rbm_resto_tel_" + nom);
+        if (vraiTel) data.tel = vraiTel;
+
+        document.getElementById("nomResto").textContent = nom;
+        document.getElementById("nom2").textContent = nom;
+        document.getElementById("nomCoin").textContent = nom;
+        document.getElementById("sousResto").textContent = data.quartier + " - Restaurant By Mali";
+        document.getElementById("info").innerHTML = "Quartier : " + data.quartier + "<br>Téléphone : " + data.tel + "<br><b>Appeler : " + data.tel + "</b>";
+        document.getElementById("desc").textContent = data.desc;
+        document.getElementById("photoCouv").src = data.photo;
+        document.getElementById("photoProfil").src = data.photo;
+
+        try {
+            let coinsResto = JSON.parse(localStorage.getItem("rbm_resto_coins_" + nom) || "[]");
+            if (coinsResto[0]) data.coins[0] = coinsResto[0];
+            if (coinsResto[1]) data.coins[1] = coinsResto[1];
+            if (coinsResto[2]) data.coins[2] = coinsResto[2];
+        } catch (e) { }
+        document.getElementById("coin1").src = data.coins[0];
+        document.getElementById("coin2").src = data.coins[1];
+        document.getElementById("coin3").src = data.coins[2];
+
+        // ===== MENU : C'EST ICI QUE ÇA NE S'AFFICHIAIT PAS =====
+        // Avant on regardait seulement rbm_menu_NOM, qui est vide si le restaurant n'a rien ajouté.
+        // Maintenant : si le restaurant a son vrai menu, on prend le sien. Sinon on prend son menu par défaut ci-dessus. Donc jamais vide.
+        let menu = data.menu;
+        let menuPerso = [];
+        try { menuPerso = JSON.parse(localStorage.getItem("rbm_menu_" + nom) || "[]"); } catch (e) { menuPerso = []; }
+        if (menuPerso.length > 0) {
+            menu = menuPerso;
+            document.getElementById("infoMenu").textContent = "Menu du restaurant — " + menu.length + " plat(s)";
+        } else {
+            document.getElementById("infoMenu").textContent = "Menu du restaurant — " + menu.length + " plat(s)";
+        }
+        document.getElementById("listeMenu").innerHTML = menu.map(function (m, i) {
+            return "<div class='plat'><img src='" + (m.img || data.photo) + "' onerror=\"this.src='" + data.photo + "'\"><div style='flex:1'><b>" + m.nom + "</b><br><small>" + m.prix + " F — " + nom + "</small></div><button class='btn btn-or' style='width:auto;padding:10px 16px;margin:0' onclick='commander(" + i + ")'>Commander</button></div>";
+        }).join("");
+
+        function allerMenu() {
+            document.getElementById("blocMenu").scrollIntoView({ behavior: "smooth" });
+        }
+        function commander(i) {
+            let plat = menu[i];
+            localStorage.setItem("rbm_client_choix_resto", nom);
+            localStorage.setItem("rbm_client_choix_plat", JSON.stringify(plat));
+            alert("Tu as choisi : " + plat.nom + " — " + plat.prix + " F\nRestaurant : " + nom + "\n\nVa dans Commandes pour valider.");
+            location.href = "commandes.html";
+        }
+    </script>
+</body>
+
+</html>

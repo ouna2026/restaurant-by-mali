@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilisateurs Clients — Restaurant By Mali — Sous Surveillance</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh;
+            color: #1A1512
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 23px
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #9A938A;
+            font-size: 12px;
+            margin: 8px 0 20px
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1.2px;
+            font-weight: 800;
+            margin: 18px 0 8px;
+            text-transform: uppercase
+        }
+
+        .sidebar a {
+            color: #D8D2C9;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13.5px
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px solid #2A231E
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 36px 40px;
+            max-width: 1200px
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        .top h2 {
+            font-family: Georgia, serif;
+            font-size: 32px;
+            font-weight: 400
+        }
+
+        .top h2 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .top p {
+            color: #7A7268;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6
+        }
+
+        .top .date {
+            font-size: 12px;
+            color: #9A938A;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            padding-top: 8px
+        }
+
+        .surveillance {
+            background: #1A1512;
+            color: #fff;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-top: 22px;
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-left: 6px solid #A83200
+        }
+
+        .surveillance b {
+            color: #C9A227
+        }
+
+        .surveillance p {
+            font-size: 13px;
+            color: #D8D2C9;
+            margin-top: 4px;
+            line-height: 1.6
+        }
+
+        .surveillance .pill {
+            background: #A83200;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .6px;
+            white-space: nowrap
+        }
+
+        .kpi {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 22px
+        }
+
+        .kpi-card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 20px
+        }
+
+        .kpi-card small {
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9A938A;
+            font-weight: 700
+        }
+
+        .kpi-card h3 {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            margin: 10px 0 4px;
+            font-weight: 400
+        }
+
+        .kpi-card p {
+            color: #7A7268;
+            font-size: 13px
+        }
+
+        .kpi-card.noir {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .kpi-card.noir small {
+            color: #C9A227
+        }
+
+        .kpi-card.noir p {
+            color: #C9A227
+        }
+
+        .barre {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 22px
+        }
+
+        .barre input {
+            flex: 1;
+            min-width: 220px;
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px
+        }
+
+        .barre select {
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 18px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-rouge {
+            background: #A83200;
+            color: #fff
+        }
+
+        .form-box {
+            display: none;
+            background: #fff;
+            border: 2px solid #C9A227;
+            border-radius: 18px;
+            padding: 22px;
+            margin-top: 18px
+        }
+
+        .form-box h3 {
+            font-family: Georgia, serif;
+            margin-bottom: 12px;
+            font-weight: 400;
+            font-size: 20px
+        }
+
+        .form-box label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 12px 0 5px;
+            text-transform: uppercase;
+            color: #555
+        }
+
+        .form-box input,
+        .form-box select {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 10px;
+            outline: none;
+            background: #fff;
+            font-size: 14px
+        }
+
+        .form-box .ligne {
+            display: flex;
+            gap: 12px
+        }
+
+        .form-box .ligne div {
+            flex: 1
+        }
+
+        .btn-save {
+            background: #C9A227;
+            border: none;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 16px
+        }
+
+        .btn-cancel {
+            background: #eee;
+            border: none;
+            padding: 13px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 16px;
+            margin-left: 8px
+        }
+
+        .liste {
+            margin-top: 22px;
+            display: grid;
+            gap: 14px
+        }
+
+        .client-card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center
+        }
+
+        .client-card.suspendu {
+            border-left: 6px solid #A83200;
+            background: #FFFEF8
+        }
+
+        .client-card.actif {
+            border-left: 6px solid #1B6B2E
+        }
+
+        .client-card h4 {
+            font-size: 16px
+        }
+
+        .client-card p {
+            color: #666;
+            font-size: 13.5px;
+            margin-top: 5px;
+            line-height: 1.6
+        }
+
+        .client-card small {
+            font-size: 12px;
+            color: #9A938A
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge.actif {
+            background: #D8F3DC;
+            color: #1B6B2E;
+            border: 1.5px solid #1B6B2E
+        }
+
+        .badge.suspendu {
+            background: #FCE4E4;
+            color: #8A1A1A;
+            border: 1.5px solid #A83200
+        }
+
+        .badge.client {
+            background: #FFF3CD;
+            color: #7A5A00
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 170px
+        }
+
+        .btn-petit {
+            padding: 9px 11px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 12px;
+            width: 100%;
+            text-align: center
+        }
+
+        .btn-modifier {
+            background: #C9A227;
+            color: #1A1512;
+            border: 2px solid #1A1512
+        }
+
+        .btn-debloquer {
+            background: #1B6B2E;
+            color: #fff;
+            border: 2px solid #0F3D1A
+        }
+
+        .btn-bloquer {
+            background: #A83200;
+            color: #fff;
+            border: 2px solid #5A0F0F
+        }
+
+        .btn-statut {
+            background: #1A1512;
+            color: #fff;
+            border: 2px solid #C9A227
+        }
+
+        .btn-supprimer {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #1A1512;
+            color: #C9A227;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Georgia, serif;
+            font-size: 20px;
+            flex-shrink: 0
+        }
+
+        .lien-retour {
+            margin-top: 20px;
+            display: inline-block;
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 13px
+        }
+
+        @media(max-width:900px) {
+            .kpi {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .sidebar {
+                width: 220px
+            }
+
+            .main {
+                margin-left: 220px;
+                padding: 24px
+            }
+        }
+
+        @media(max-width:600px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px
+            }
+
+            .kpi {
+                grid-template-columns: 1fr
+            }
+
+            .form-box .ligne {
+                flex-direction: column
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html" class="active">Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html">Muna IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="top">
+            <div>
+                <h2>Utilisateurs <span>— Clients</span></h2>
+                <p>Les vrais clients inscrits sur l'application. Chaque action est enregistree et envoyee dans
+                    Notifications Utilisateurs.</p>
+                <p id="infoSync" style="color:#C9A227;font-weight:700;font-size:13px;margin-top:8px"></p>
+            </div>
+            <div class="date" id="dateJour"></div>
+        </div>
+        <div class="surveillance">
+            <div><b>ZONE SOUS SURVEILLANCE — ADMIN UNIQUEMENT</b>
+                <p>Tu as tous les droits sur les clients. Chaque action est enregistree avec date et heure.</p>
+            </div>
+            <div class="pill">SURVEILLANCE ACTIVE</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-card noir"><small>Total clients</small>
+                <h3 id="nbTotal">0</h3>
+                <p>Tous les clients inscrits</p>
+            </div>
+            <div class="kpi-card"><small>Actifs</small>
+                <h3 id="nbActifs">0</h3>
+                <p>Peuvent commander</p>
+            </div>
+            <div class="kpi-card"><small>Suspendus</small>
+                <h3 id="nbSuspendus">0</h3>
+                <p>Ne peuvent pas commander</p>
+            </div>
+            <div class="kpi-card"><small>Total points jeux</small>
+                <h3 id="nbPoints">0</h3>
+                <p>Points de tous les clients</p>
+            </div>
+        </div>
+        <div class="barre">
+            <input id="search" placeholder="Rechercher : nom, telephone, quartier..." oninput="afficher()">
+            <select id="filtreStatut" onchange="afficher()">
+                <option value="">Tous les statuts</option>
+                <option value="Actif">Actif</option>
+                <option value="Suspendu">Suspendu</option>
+            </select>
+            <button class="btn btn-or" onclick="afficher()">Rechercher</button>
+            <button class="btn btn-noir" onclick="ouvrirForm()">+ Ajouter un client</button>
+        </div>
+        <div class="form-box" id="formBox">
+            <h3 id="formTitre">Ajouter un client</h3>
+            <input type="hidden" id="editId">
+            <label>Nom du client</label>
+            <input id="f_nom" placeholder="Ex : Awa Diallo">
+            <div class="ligne">
+                <div><label>Telephone</label><input id="f_tel" placeholder="+223 ..."></div>
+                <div><label>Statut</label><select id="f_statut">
+                        <option value="Actif">Actif</option>
+                        <option value="Suspendu">Suspendu</option>
+                    </select></div>
+            </div>
+            <div class="ligne">
+                <div><label>Quartier / Adresse</label><input id="f_adresse" placeholder="Ex : ACI 2000, Bamako"></div>
+                <div><label>Points jeux</label><input id="f_points" type="number" value="0"></div>
+            </div>
+            <button class="btn-save" onclick="enregistrer()">Enregistrer</button>
+            <button class="btn-cancel" onclick="fermerForm()">Annuler</button>
+        </div>
+        <div class="liste" id="listeClients"></div>
+        <p id="vide"
+            style="display:none;color:#888;margin-top:12px;text-align:center;padding:30px;background:#fff;border-radius:16px">
+            Aucun client. Clique sur + Ajouter un client.</p>
+        <a class="lien-retour" href="dashboard.html">Retour au Tableau de bord</a>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        document.getElementById("dateJour").textContent = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+        function getClients() { return JSON.parse(localStorage.getItem("rbm_clients") || "[]"); }
+        function saveClients(d) { localStorage.setItem("rbm_clients", JSON.stringify(d)); }
+        // Si c'est vide, on met TES 2 clients de base. Si tu as deja 2 clients, on ne touche a rien.
+        if (getClients().length === 0) {
+            saveClients([
+                { id: 1, nom: "Awa Diallo", tel: "+223 70 11 22 33", adresse: "ACI 2000, Bamako", points: 120, statut: "Actif" },
+                { id: 2, nom: "Moussa Traoré", tel: "+223 65 44 33 22", adresse: "Hippodrome, Bamako", points: 45, statut: "Actif" }
+            ]);
+        }
+        function pushNotifUsers(titre, texte, type) {
+            let n = JSON.parse(localStorage.getItem("rbm_notif_users") || "[]");
+            n.unshift({ id: Date.now(), titre: titre, texte: texte, type: type || "Client", date: "A l'instant", lu: false });
+            localStorage.setItem("rbm_notif_users", JSON.stringify(n));
+        }
+        function afficher() {
+            let v = document.getElementById("search").value.toLowerCase();
+            let fs = document.getElementById("filtreStatut").value;
+            let all = getClients();
+            let data = all.filter(c => {
+                let txt = (c.nom + " " + c.tel + " " + (c.adresse || "")).toLowerCase();
+                return (!v || txt.includes(v)) && (!fs || c.statut === fs);
+            });
+            document.getElementById("nbTotal").textContent = all.length;
+            document.getElementById("nbActifs").textContent = all.filter(c => c.statut === "Actif").length;
+            document.getElementById("nbSuspendus").textContent = all.filter(c => c.statut === "Suspendu").length;
+            document.getElementById("nbPoints").textContent = all.reduce((s, c) => s + (parseInt(c.points) || 0), 0);
+            document.getElementById("infoSync").textContent = "Synchronise : " + all.length + " clients — Notifications Utilisateurs — Rapport Clients et Restaurants";
+            document.getElementById("vide").style.display = data.length === 0 ? "block" : "none";
+            let box = document.getElementById("listeClients"); box.innerHTML = "";
+            data.forEach(c => {
+                let estActif = c.statut === "Actif";
+                let badge = estActif ? "<span class='badge actif'>ACTIF</span>" : "<span class='badge suspendu'>SUSPENDU</span>";
+                let lettre = (c.nom || "C").charAt(0).toUpperCase();
+                // UN SEUL bouton Bloquer OU Debloquer — jamais les 2 en meme temps
+                let btnBloqueDebloque = estActif
+                    ? "<button class='btn-petit btn-bloquer' onclick='bloquer(" + c.id + ")'>BLOQUER</button>"
+                    : "<button class='btn-petit btn-debloquer' onclick='debloquer(" + c.id + ")'>DEBLOQUER</button>";
+                box.innerHTML += "<div class='client-card " + (estActif ? "actif" : "suspendu") + "'><div style='display:flex;gap:14px;flex:1;min-width:280px'><div class='avatar'>" + lettre + "</div><div style='flex:1'><h4>" + c.nom + " <span class='badge client'>CLIENT</span> " + badge + "</h4><p>Telephone : <b>" + c.tel + "</b><br>Adresse : " + (c.adresse || "-") + "<br>Points jeux : <b>" + (c.points || 0) + " pts</b></p><small>Surveillance : chaque action est enregistree</small></div></div><div class='actions'><button class='btn-petit btn-modifier' onclick='modifier(" + c.id + ")'>MODIFIER</button>" + btnBloqueDebloque + "<button class='btn-petit btn-statut' onclick='changerStatut(" + c.id + ")'>CHANGER STATUT</button><button class='btn-petit btn-supprimer' onclick='supprimer(" + c.id + ")'>SUPPRIMER</button></div></div>";
+            });
+        }
+        function ouvrirForm() {
+            document.getElementById("formTitre").textContent = "Ajouter un client";
+            document.getElementById("editId").value = "";
+            document.getElementById("f_nom").value = ""; document.getElementById("f_tel").value = "";
+            document.getElementById("f_adresse").value = ""; document.getElementById("f_points").value = "0";
+            document.getElementById("f_statut").value = "Actif";
+            document.getElementById("formBox").style.display = "block"; window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        function fermerForm() { document.getElementById("formBox").style.display = "none"; }
+        function enregistrer() {
+            let id = document.getElementById("editId").value;
+            let nom = document.getElementById("f_nom").value.trim();
+            let tel = document.getElementById("f_tel").value.trim();
+            if (!nom || !tel) { alert("Remplis le nom et le telephone"); return; }
+            let data = getClients();
+            let adresse = document.getElementById("f_adresse").value;
+            let points = parseInt(document.getElementById("f_points").value || 0);
+            let statut = document.getElementById("f_statut").value;
+            if (id) {
+                let c = data.find(x => x.id == id);
+                c.nom = nom; c.tel = tel; c.adresse = adresse; c.points = points; c.statut = statut;
+                pushNotifUsers("Client modifie : " + nom, "Le client " + nom + " a ete modifie par l'Admin. Statut : " + statut + ".", "Client");
+            } else {
+                data.push({ id: Date.now(), nom: nom, tel: tel, adresse: adresse, points: points, statut: statut });
+                pushNotifUsers("Nouveau client : " + nom, "Nouveau client inscrit : " + nom + " — " + tel + " — " + adresse, "Client");
+            }
+            saveClients(data); fermerForm(); afficher();
+        }
+        function modifier(id) {
+            let c = getClients().find(x => x.id === id);
+            document.getElementById("formTitre").textContent = "Modifier : " + c.nom;
+            document.getElementById("editId").value = c.id;
+            document.getElementById("f_nom").value = c.nom; document.getElementById("f_tel").value = c.tel;
+            document.getElementById("f_adresse").value = c.adresse || ""; document.getElementById("f_points").value = c.points || 0;
+            document.getElementById("f_statut").value = c.statut;
+            document.getElementById("formBox").style.display = "block"; window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        function bloquer(id) {
+            let data = getClients(); let c = data.find(x => x.id === id);
+            let raison = prompt("BLOQUER " + c.nom + " ?\n\nIl ne pourra plus commander.\nEcris la raison :");
+            if (raison === null) return; if (!raison.trim()) { alert("Tu dois ecrire la raison."); return; }
+            c.statut = "Suspendu"; saveClients(data);
+            pushNotifUsers("Compte bloque : " + c.nom, "Le client " + c.nom + " a ete bloque par l'Admin. Raison : " + raison + ". Acces BLOQUE.", "Client");
+            afficher(); alert(c.nom + " BLOQUE. Raison : " + raison);
+        }
+        function debloquer(id) {
+            let data = getClients(); let c = data.find(x => x.id === id);
+            if (!confirm("DEBLOQUER " + c.nom + " ?\n\nIl pourra commander a nouveau.")) return;
+            c.statut = "Actif"; saveClients(data);
+            pushNotifUsers("Compte debloque : " + c.nom, "Le client " + c.nom + " a ete debloque par l'Admin. Acces AUTORISE.", "Client");
+            afficher(); alert(c.nom + " DEBLOQUE.");
+        }
+        function changerStatut(id) {
+            let data = getClients(); let c = data.find(x => x.id === id);
+            c.statut = c.statut === "Actif" ? "Suspendu" : "Actif";
+            saveClients(data);
+            pushNotifUsers("Statut change : " + c.nom, "Le client " + c.nom + " est maintenant : " + c.statut + ".", "Client");
+            afficher(); alert(c.nom + " est maintenant : " + c.statut);
+        }
+        function supprimer(id) {
+            let data = getClients(); let c = data.find(x => x.id === id);
+            if (confirm("Vraiment SUPPRIMER " + c.nom + " ?\n\nATTENTION : C'est enregistre dans la surveillance.")) {
+                saveClients(data.filter(x => x.id !== id));
+                pushNotifUsers("Client supprime : " + c.nom, "Le client " + c.nom + " a ete supprime par l'Admin.", "Client");
+                afficher();
+            }
+        }
+        afficher();
+    </script>
+</body>
+
+</html>

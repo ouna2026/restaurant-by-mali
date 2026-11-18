@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil — Restaurant By Mali — Sous Surveillance</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 10
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 21px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #9A938A;
+            font-size: 12px;
+            margin: 8px 0 16px;
+            word-break: break-word
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase;
+            word-break: break-word
+        }
+
+        .sidebar a {
+            color: #D8D2C9;
+            text-decoration: none;
+            padding: 10px 10px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid #2A231E
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 250px;
+            padding: 28px 22px;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: hidden
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .top h2 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            font-weight: 400;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .top h2 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .top p {
+            color: #7A7268;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 720px;
+            word-break: break-word
+        }
+
+        .top .date {
+            font-size: 12px;
+            color: #9A938A;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: normal
+        }
+
+        .surveillance {
+            background: #1A1512;
+            color: #fff;
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-left: 6px solid #A83200;
+            width: 100%
+        }
+
+        .surveillance b {
+            color: #C9A227;
+            word-break: break-word
+        }
+
+        .surveillance p {
+            font-size: 13px;
+            color: #D8D2C9;
+            margin-top: 4px;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        .surveillance .pill {
+            background: #A83200;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .6px;
+            white-space: nowrap
+        }
+
+        .profil-head {
+            background: #1A1512;
+            color: #fff;
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            min-width: 90px;
+            border-radius: 50%;
+            background: #C9A227;
+            color: #1A1512;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 800;
+            flex-shrink: 0;
+            overflow: hidden
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .profil-head h3 {
+            font-size: 24px;
+            word-break: break-word;
+            line-height: 1.3
+        }
+
+        .profil-head p {
+            color: #C9A227;
+            font-size: 14px;
+            margin-top: 4px;
+            word-break: break-word
+        }
+
+        .profil-head small {
+            color: #aaa;
+            word-break: break-word
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: normal;
+            word-break: break-word;
+            display: inline-block;
+            line-height: 1.3
+        }
+
+        .badge.vert {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.admin {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .kpi {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .kpi-card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            min-width: 0;
+            word-break: break-word
+        }
+
+        .kpi-card small {
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9A938A;
+            font-weight: 700
+        }
+
+        .kpi-card h3 {
+            font-family: Georgia, serif;
+            font-size: 24px;
+            margin: 10px 0 4px;
+            font-weight: 400;
+            word-break: break-word
+        }
+
+        .kpi-card p {
+            color: #7A7268;
+            font-size: 13px;
+            word-break: break-word
+        }
+
+        .kpi-card.noir {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .kpi-card.noir small {
+            color: #C9A227
+        }
+
+        .kpi-card.noir p {
+            color: #C9A227
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 18px;
+            width: 100%
+        }
+
+        .form-box {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 22px;
+            min-width: 0
+        }
+
+        .form-box h3 {
+            margin-bottom: 12px;
+            font-family: Georgia, serif;
+            font-weight: 400;
+            font-size: 20px;
+            word-break: break-word
+        }
+
+        .form-box label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 12px 0 5px;
+            text-transform: uppercase;
+            color: #555
+        }
+
+        .form-box input,
+        .form-box textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            background: #fff
+        }
+
+        .form-box textarea {
+            min-height: 80px;
+            resize: vertical
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 16px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .btn-gris {
+            background: #eee;
+            color: #1A1512
+        }
+
+        .btn-rouge {
+            background: #A83200;
+            color: #fff
+        }
+
+        .activite {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 18px;
+            width: 100%
+        }
+
+        .activite h3 {
+            margin-bottom: 12px;
+            font-family: Georgia, serif;
+            font-weight: 400
+        }
+
+        .activite li {
+            list-style: none;
+            padding: 10px 0;
+            border-bottom: 1px solid #F1E3C8;
+            font-size: 14px;
+            color: #444;
+            word-break: break-word;
+            line-height: 1.6
+        }
+
+        .activite li b {
+            color: #1A1512
+        }
+
+        .lien-retour {
+            margin-top: 20px;
+            display: inline-block;
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 13px
+        }
+
+        @media(max-width:1100px) {
+            .kpi {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .grid2 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:850px) {
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px 14px
+            }
+        }
+
+        @media(max-width:650px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 16px 12px
+            }
+
+            .kpi {
+                grid-template-columns: 1fr
+            }
+
+            .profil-head {
+                flex-direction: column;
+                text-align: left
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html" class="active">Mon Profil</a>
+        <a href="securite-connexion.html">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html">Muna IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="top">
+            <div>
+                <h2><span>Mon Profil</span> — Le Patron</h2>
+                <p>C'est toi l'Admin. Toi seul peux tout changer ici. Synchronise avec les 8 restaurants + 2 clients.
+                </p>
+                <p id="infoSync" style="color:#C9A227;font-weight:700;font-size:13px;margin-top:8px"></p>
+            </div>
+            <div class="date" id="dateJour"></div>
+        </div>
+        <div class="surveillance">
+            <div><b>ZONE SOUS SURVEILLANCE — ADMIN UNIQUEMENT</b>
+                <p>Ton profil est protege. Personne d'autre ne peut le modifier.</p>
+            </div>
+            <div class="pill">SURVEILLANCE ACTIVE</div>
+        </div>
+        <div class="profil-head">
+            <div class="avatar" id="avatarBox"><span id="avatarLettre">M</span></div>
+            <div style="flex:1;min-width:0">
+                <h3 id="nomAffiche">Admin Restaurant By Mali</h3>
+                <p id="telAffiche">+22364716909</p>
+                <small id="emailAffiche">admin@restaurantbymali.com • Bamako, Mali</small><br><br>
+                <span class="badge admin">ADMINISTRATEUR — ACCES TOTAL</span>
+                <span style="color:#aaa;font-size:12px;margin-left:8px;word-break:break-word" id="derniereCo">Derniere
+                    connexion : aujourd'hui</span>
+                <p id="bioAffiche"
+                    style="color:#D8D2C9;font-size:13px;margin-top:12px;line-height:1.6;word-break:break-word"></p>
+            </div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-card noir"><small>Restaurants</small>
+                <h3 id="nbRestos">0</h3>
+                <p>Sur la plateforme — Les 8</p>
+            </div>
+            <div class="kpi-card"><small>Clients</small>
+                <h3 id="nbClients">0</h3>
+                <p>Inscrits — Tes 2 clients</p>
+            </div>
+            <div class="kpi-card"><small>Chiffre d'affaires</small>
+                <h3 id="caTotal">0 FCFA</h3>
+                <p>Paiements Payes</p>
+            </div>
+            <div class="kpi-card"><small>Comptes connectes</small>
+                <h3 id="nbConnectes">0</h3>
+                <p>Admin + Restaurants + Clients</p>
+            </div>
+        </div>
+        <div class="grid2">
+            <div class="form-box">
+                <h3>Modifier mes infos</h3>
+                <label>Ton nom</label><input id="f_nom" placeholder="Ex : Mali Admin">
+                <label>Telephone admin</label><input id="f_tel" placeholder="+22364716909">
+                <label>Email</label><input id="f_email" placeholder="admin@restaurantbymali.com">
+                <label>Ville</label><input id="f_ville" placeholder="Bamako">
+                <label>Photo de profil (lien de photo)</label><input id="f_photo"
+                    placeholder="Ex : photo.jpg ou colle le lien">
+                <label>Presentation</label><textarea id="f_bio"
+                    placeholder="Ex : Je gere Restaurant By Mali, je valide les restaurants..."></textarea>
+                <button class="btn btn-or" onclick="sauverProfil()">ENREGISTRER MES INFOS</button>
+                <span id="msgProfil" style="color:#1B6B2E;font-weight:700;margin-left:10px"></span>
+            </div>
+            <div class="form-box">
+                <h3>Changer mon mot de passe</h3>
+                <label>Ancien mot de passe</label><input id="oldPass" type="password"
+                    placeholder="Ton ancien mot de passe">
+                <label>Nouveau mot de passe</label><input id="newPass" type="password"
+                    placeholder="Nouveau mot de passe">
+                <label>Confirme le nouveau</label><input id="confirmPass" type="password"
+                    placeholder="Re-tape le nouveau">
+                <button class="btn btn-noir" onclick="changerMdp()">CHANGER LE MOT DE PASSE</button>
+                <button class="btn btn-gris"
+                    onclick="document.getElementById('oldPass').value='';document.getElementById('newPass').value='';document.getElementById('confirmPass').value=''">EFFACER</button>
+                <span id="msgMdp"
+                    style="color:#1B6B2E;font-weight:700;margin-left:10px;display:block;margin-top:10px"></span>
+                <hr style="margin:18px 0;border:none;border-top:1px solid #F1E3C8">
+                <h3>Numero pour les paiements</h3>
+                <p style="color:#777;font-size:13px;line-height:1.6;word-break:break-word">C'est ce numero que les
+                    restaurants voient pour payer leur abonnement.<br><b id="numeroPaiement">+223 64 71 69 09</b></p>
+                <label>Changer le numero de paiement</label><input id="f_numero_paiement" placeholder="+22364716909">
+                <button class="btn btn-vert" onclick="sauverNumero()">ENREGISTRER LE NUMERO</button>
+            </div>
+        </div>
+        <div class="activite">
+            <h3>Mon activite recente</h3>
+            <ul id="listeActivite"></ul>
+            <button class="btn btn-noir" onclick="voirSecurite()" style="margin-top:12px">VOIR SECURITE ET
+                CONNEXION</button>
+            <button class="btn btn-or" onclick="voirNotifications()" style="margin-top:12px">VOIR NOTIFICATIONS
+                UTILISATEURS</button>
+        </div>
+        <a class="lien-retour" href="dashboard.html">Retour au Tableau de bord</a>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        document.getElementById("dateJour").textContent = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+        function getRestos() {
+            let r = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]");
+            if (r.length < 8) {
+                r = [
+                    { id: 1, nom: "Le Grill - Bamako", quartier: "ACI 2000, Bamako", code: "+223 70 00 00 01", statut: "Actif" },
+                    { id: 2, nom: "Sandwich+", quartier: "Banankabougou, Bamako", code: "+223 70 00 00 02", statut: "Actif" },
+                    { id: 3, nom: "Le Relax", quartier: "Hippodrome, Bamako", code: "+223 70 00 00 03", statut: "Actif" },
+                    { id: 4, nom: "Maquis Le Savana", quartier: "Badalabougou, Bamako", code: "+223 70 00 00 04", statut: "Actif" },
+                    { id: 5, nom: "Chez Fatoumata", quartier: "Magnambougou, Bamako", code: "+223 70 00 00 05", statut: "Actif" },
+                    { id: 6, nom: "Le Faso", quartier: "Hamdalaye, Bamako", code: "+223 70 00 00 06", statut: "Actif" },
+                    { id: 7, nom: "Maquis Kati", quartier: "Kati", code: "+223 70 00 00 07", statut: "Actif" },
+                    { id: 8, nom: "Douceur Sucrée", quartier: "ACI 2000, Bamako", code: "+223 70 00 00 08", statut: "Actif" }
+                ];
+                localStorage.setItem("rbm_restaurants", JSON.stringify(r));
+            }
+            return r;
+        }
+        function getClients() {
+            let c = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+            if (c.length === 0) {
+                c = [
+                    { id: 1, nom: "Awa Diallo", tel: "+223 70 11 22 33", adresse: "ACI 2000, Bamako", points: 120, statut: "Actif" },
+                    { id: 2, nom: "Moussa Traoré", tel: "+223 65 44 33 22", adresse: "Hippodrome, Bamako", points: 45, statut: "Actif" }
+                ];
+                localStorage.setItem("rbm_clients", JSON.stringify(c));
+            }
+            return c;
+        }
+        function getAdmin() {
+            let a = JSON.parse(localStorage.getItem("rbm_admin") || "{}");
+            if (!a.telephone) a = { nom: "Admin Restaurant By Mali", telephone: "+22364716909", email: "admin@restaurantbymali.com", ville: "Bamako", bio: "Je gere Restaurant By Mali, je valide les restaurants et je controle tout.", photo: "", numero_paiement: "+22364716909", password: "admin123" };
+            return a;
+        }
+        function afficherProfil() {
+            let a = getAdmin();
+            document.getElementById("nomAffiche").textContent = a.nom || "Admin Restaurant By Mali";
+            document.getElementById("telAffiche").textContent = a.telephone || "+22364716909";
+            document.getElementById("emailAffiche").textContent = (a.email || "admin@restaurantbymali.com") + " • " + (a.ville || "Bamako") + ", Mali";
+            document.getElementById("f_nom").value = a.nom || "";
+            document.getElementById("f_tel").value = a.telephone || "";
+            document.getElementById("f_email").value = a.email || "";
+            document.getElementById("f_ville").value = a.ville || "";
+            document.getElementById("f_photo").value = a.photo || "";
+            document.getElementById("f_bio").value = a.bio || "";
+            document.getElementById("bioAffiche").textContent = a.bio || "";
+            document.getElementById("numeroPaiement").textContent = a.numero_paiement || "+223 64 71 69 09";
+            document.getElementById("f_numero_paiement").value = a.numero_paiement || "";
+            let lettre = (a.nom || "M").trim().charAt(0).toUpperCase();
+            if (a.photo) {
+                document.getElementById("avatarBox").innerHTML = '<img src="' + a.photo + '" onerror="this.outerHTML=\'<span>' + lettre + '</span>\'">';
+            } else {
+                document.getElementById("avatarBox").innerHTML = '<span id="avatarLettre">' + lettre + '</span>';
+            }
+            let restos = getRestos();
+            let clients = getClients();
+            let paiements = JSON.parse(localStorage.getItem("rbm_paiements") || "[]");
+            let conns = JSON.parse(localStorage.getItem("rbm_connexions") || "[]");
+            document.getElementById("nbRestos").textContent = restos.length;
+            document.getElementById("nbClients").textContent = clients.length;
+            document.getElementById("nbConnectes").textContent = conns.filter(c => c.connecte && !c.bloque).length || (restos.length + clients.length + 1);
+            document.getElementById("infoSync").textContent = "Synchronise : " + restos.length + " restaurants — " + clients.length + " clients — " + paiements.length + " paiements";
+            let ca = 0;
+            paiements.forEach(p => { if (p.statut === "Payé" || p.statut === "Paye") ca += parseInt(p.montant) || 0; });
+            document.getElementById("caTotal").textContent = ca.toLocaleString("fr-FR") + " FCFA";
+            let derniere = localStorage.getItem("rbm_derniere_co") || "Aujourd'hui";
+            document.getElementById("derniereCo").textContent = "Derniere connexion : " + derniere;
+            let act = JSON.parse(localStorage.getItem("rbm_activite_admin") || "[]");
+            if (act.length === 0) {
+                act = [
+                    { txt: "Tu as active la page de <b>Le Grill - Bamako</b>", date: "Aujourd'hui" },
+                    { txt: "Tu as valide un paiement de <b>20 000 FCFA</b> — Mensuel", date: "Hier" },
+                    { txt: "Tu as modifie le design de <b>Sandwich+</b>", date: "Hier" }
+                ];
+            }
+            document.getElementById("listeActivite").innerHTML = act.map(x => "<li>" + x.txt + " <span style='color:#999;font-size:12px'>- " + x.date + "</span></li>").join("");
+        }
+        function sauverProfil() {
+            let a = getAdmin();
+            a.nom = document.getElementById("f_nom").value.trim() || a.nom;
+            a.telephone = document.getElementById("f_tel").value.trim() || a.telephone;
+            a.email = document.getElementById("f_email").value.trim() || a.email;
+            a.ville = document.getElementById("f_ville").value.trim() || a.ville;
+            a.photo = document.getElementById("f_photo").value.trim();
+            a.bio = document.getElementById("f_bio").value.trim();
+            localStorage.setItem("rbm_admin", JSON.stringify(a));
+            document.getElementById("msgProfil").textContent = "Enregistre !";
+            setTimeout(() => { document.getElementById("msgProfil").textContent = ""; }, 2000);
+            afficherProfil();
+        }
+        function sauverNumero() {
+            let a = getAdmin();
+            let num = document.getElementById("f_numero_paiement").value.trim();
+            if (!num) { alert("Ecris le numero"); return; }
+            a.numero_paiement = num;
+            localStorage.setItem("rbm_admin", JSON.stringify(a));
+            afficherProfil();
+            alert("Numero de paiement enregistre : " + num);
+        }
+        function changerMdp() {
+            let oldP = document.getElementById("oldPass").value;
+            let newP = document.getElementById("newPass").value;
+            let conf = document.getElementById("confirmPass").value;
+            if (!oldP || !newP || !conf) { alert("Remplis les 3 champs"); return; }
+            if (newP !== conf) { alert("Les 2 nouveaux mots de passe ne sont pas pareils"); return; }
+            if (newP.length < 4) { alert("Mot de passe trop court, mets au moins 4 caracteres"); return; }
+            let a = getAdmin();
+            let vraiAncien = a.password || "admin123";
+            if (oldP !== vraiAncien) { alert("Ancien mot de passe incorrect"); return; }
+            a.password = newP;
+            localStorage.setItem("rbm_admin", JSON.stringify(a));
+            document.getElementById("msgMdp").textContent = "Mot de passe change ! Prochaine connexion, utilise le nouveau.";
+            document.getElementById("oldPass").value = ""; document.getElementById("newPass").value = ""; document.getElementById("confirmPass").value = "";
+        }
+        function voirSecurite() { window.location.href = "securite-connexion.html"; }
+        function voirNotifications() { window.location.href = "notifications-utlisateurs.html"; }
+        afficherProfil();
+    </script>
+</body>
+
+</html>

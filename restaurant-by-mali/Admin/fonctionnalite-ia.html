@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muna IA - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh
+        }
+
+        .sidebar {
+            width: 270px;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-size: 22px
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #888;
+            font-size: 12px;
+            margin: 6px 0 18px
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase
+        }
+
+        .sidebar a {
+            color: #ddd;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13.5px
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 270px;
+            padding: 32px 36px
+        }
+
+        .top h2 {
+            font-size: 28px
+        }
+
+        .top h2 span {
+            color: #C9A227
+        }
+
+        .top p {
+            color: #777;
+            margin-top: 6px
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px
+        }
+
+        .card b {
+            font-size: 14px
+        }
+
+        .card h3 {
+            font-size: 26px;
+            margin: 8px 0
+        }
+
+        .card p {
+            color: #888;
+            font-size: 13px
+        }
+
+        .card.noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .card.noir p {
+            color: #C9A227
+        }
+
+        .boite {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px
+        }
+
+        .boite h3 {
+            margin-bottom: 10px
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px
+        }
+
+        .btn {
+            background: #C9A227;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 12px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 12px
+        }
+
+        .chat {
+            background: #FFF8EE;
+            border: 1px solid #F1E3C8;
+            border-radius: 14px;
+            padding: 14px;
+            min-height: 200px;
+            max-height: 380px;
+            overflow-y: auto
+        }
+
+        .msg {
+            padding: 10px 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 88%
+        }
+
+        .msg.muna {
+            background: #fff;
+            border: 1px solid #F1E3C8
+        }
+
+        .msg.user {
+            background: #1A1512;
+            color: #fff;
+            margin-left: auto;
+            text-align: right
+        }
+
+        .msg.bloque {
+            background: #FCE4E4;
+            border: 1px solid #F5A3A3
+        }
+
+        .chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px
+        }
+
+        .chips button {
+            padding: 8px 12px;
+            border: 1px solid #E8DCC2;
+            background: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 12px
+        }
+
+        .statut {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px
+        }
+
+        .statut.ok {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .statut.erreur {
+            background: #FCE4E4;
+            color: #8A1A1A
+        }
+
+        @media(max-width:900px) {
+            .cards {
+                grid-template-columns: 1fr
+            }
+
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px
+            }
+        }
+
+        @media(max-width:600px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html" class="active">Muna IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="top">
+            <h2><span>Muna</span> IA - Vraie IA</h2>
+            <p>Muna comprend maintenant les phrases comme un humain. Elle parle uniquement des restaurants presents sur
+                l'application.</p>
+            <span class="statut ok" id="statutIA">Vraie IA activee - Groq</span>
+        </div>
+        <div class="cards">
+            <div class="card"><b>Mode</b>
+                <h3>Vraie IA</h3>
+                <p>Comprend le langage naturel</p>
+            </div>
+            <div class="card"><b>Limite</b>
+                <h3>Restaurants only</h3>
+                <p>Ne parle que de l'app</p>
+            </div>
+            <div class="card noir"><b>Statut</b>
+                <h3>Active</h3>
+                <p>Visible pour les clients</p>
+            </div>
+        </div>
+        <div class="boite">
+            <h3>Tester Muna ici (comme un client)</h3>
+            <p style="color:#777;font-size:13px">Parle-lui normalement : "J'ai faim, je suis a Magnambougou, tu me
+                conseilles quoi ?"</p>
+            <div class="chat" id="chat">
+                <div class="msg muna">Bonjour ! Je suis Muna, la vraie assistante de Restaurant By Mali. Dis-moi ce que
+                    tu as envie de manger, et ou tu es, je te conseille le meilleur restaurant.</div>
+            </div>
+            <div class="chips">
+                <button onclick="envoyerRapide('J ai faim, je suis a Magnambougou, tu me conseilles quoi ?')">J'ai faim
+                    a Magnambougou</button>
+                <button onclick="envoyerRapide('J ai envie de quelque chose de leger ce soir')">Quelque chose de
+                    leger</button>
+                <button onclick="envoyerRapide('Quel restaurant est le plus proche de moi ?')">Le plus proche ?</button>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+                <input id="question" placeholder="Parle a Muna comme a une personne..."
+                    onkeydown="if(event.key==='Enter') envoyer()">
+                <button class="btn" onclick="envoyer()" style="margin-top:0;white-space:nowrap">Envoyer</button>
+            </div>
+            <button class="btn-noir" id="btnRecommencer" onclick="recommencer()" style="display:none">Recommencer une
+                discussion saine</button>
+        </div>
+        <p style="margin-top:16px"><a href="dashboard.html" style="color:#C9A227;font-weight:700;">Retour au Tableau de
+                bord</a></p>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        let historique = [];
+        let bloque = false;
+        let interdits = ["sexe", "porno", "sexy", "nude", "drogue", "cocaine", "cannabis", "tuer", "suicide", "meurtre", "viol", "pute", "con", "merde"];
+        function ajouterMsg(t, classe) {
+            let chat = document.getElementById("chat");
+            chat.innerHTML += "<div class='msg " + classe + "'>" + t + "</div>";
+            chat.scrollTop = chat.scrollHeight;
+        }
+        function envoyerRapide(t) { document.getElementById("question").value = t; envoyer(); }
+        function recommencer() {
+            bloque = false; historique = [];
+            document.getElementById("btnRecommencer").style.display = "none";
+            document.getElementById("chat").innerHTML = "<div class='msg muna'>On recommence sur une bonne base ! Dis-moi ce que tu as envie de manger, et ou tu es.</div>";
+        }
+        async function envoyer() {
+            let input = document.getElementById("question");
+            let texte = input.value.trim();
+            if (!texte) return;
+            if (bloque) { alert("Discussion bloquee. Clique sur Recommencer."); return; }
+            ajouterMsg(texte, "user");
+            input.value = "";
+            let bas = texte.toLowerCase();
+            if (interdits.some(m => bas.includes(m))) {
+                bloque = true;
+                ajouterMsg("Je ne peux pas continuer sur ce sujet. On arrete cette discussion ici. Si tu veux, on peut recommencer sur une discussion saine, sur les restaurants.", "bloque");
+                document.getElementById("btnRecommencer").style.display = "block";
+                return;
+            }
+            ajouterMsg("Muna reflechit...", "muna");
+            let chat = document.getElementById("chat");
+            try {
+                let res = await fetch("../config/muna.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question: texte, historique: historique })
+                });
+                let data = await res.json();
+                chat.removeChild(chat.lastChild);
+                if (data.reponse === "ERREUR_CLE") {
+                    ajouterMsg("Il manque la cle. Va dans config/muna.php et colle ta nouvelle cle Groq.", "bloque");
+                    document.getElementById("statutIA").textContent = "Cle manquante - Va dans config/muna.php";
+                    document.getElementById("statutIA").className = "statut erreur";
+                    return;
+                }
+                ajouterMsg(data.reponse.replace(/\*\*/g, ""), "muna");
+                historique.push({ role: "user", text: texte });
+                historique.push({ role: "assistant", text: data.reponse });
+                if (historique.length > 10) historique = historique.slice(-10);
+            } catch (e) {
+                chat.removeChild(chat.lastChild);
+                ajouterMsg("Desole, Muna a eu un petit probleme de connexion. Verifie que XAMPP est lance et que tu ouvres avec http://localhost:8080/...", "bloque");
+            }
+        }
+    </script>
+</body>
+
+</html>

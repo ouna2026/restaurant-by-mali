@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            padding-bottom: 95px
+        }
+
+        .top {
+            background: #1A1512;
+            color: #fff;
+            padding: 24px 18px 34px;
+            border-radius: 0 0 28px 28px;
+            text-align: center
+        }
+
+        .top .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #C9A227;
+            color: #1A1512;
+            font-size: 38px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            border: 4px solid #fff
+        }
+
+        .top h1 {
+            font-size: 21px
+        }
+
+        .top h1 span {
+            color: #C9A227
+        }
+
+        .top p {
+            color: #D8CFC0;
+            font-size: 13px;
+            margin-top: 6px
+        }
+
+        .wrap {
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto
+        }
+
+        .carte {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 14px
+        }
+
+        .carte h3 {
+            font-size: 15px;
+            margin-bottom: 12px
+        }
+
+        .ligne {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 14px
+        }
+
+        .ligne:last-child {
+            border-bottom: none
+        }
+
+        .ligne span {
+            color: #888
+        }
+
+        .ligne b {
+            text-align: right;
+            word-break: break-word
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800
+        }
+
+        .badge-vert {
+            background: #D4EDDA;
+            color: #155724
+        }
+
+        .badge-or {
+            background: #FFF3CD;
+            color: #856404
+        }
+
+        .stat {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px
+        }
+
+        .stat div {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 14px 8px;
+            text-align: center
+        }
+
+        .stat div b {
+            font-size: 22px;
+            color: #C9A227;
+            display: block
+        }
+
+        .stat div span {
+            font-size: 11px;
+            color: #888;
+            font-weight: 700
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 8px
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-rouge {
+            background: #fff;
+            color: #C0392B;
+            border: 2px solid #C0392B
+        }
+
+        .btn-gris {
+            background: #eee;
+            color: #333
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E5D5B8;
+            border-radius: 10px;
+            margin-top: 6px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            outline: none
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #C9A227
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #333
+        }
+
+        .vide {
+            text-align: center;
+            color: #888;
+            padding: 20px;
+            line-height: 1.6;
+            font-size: 13px
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #F1E3C8;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 14px;
+            z-index: 10
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #888;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700
+        }
+
+        .nav a.active {
+            color: #C9A227
+        }
+
+        .nav a div {
+            font-size: 22px
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top">
+        <div class="avatar" id="avatar">?</div>
+        <h1 id="nomProfil">Bonjour</h1>
+        <p id="sousTitre">Client — Restaurant By Mali</p>
+    </div>
+
+    <div class="wrap">
+
+        <div class="stat">
+            <div><b id="nbCommandes">0</b><span>Commandes</span></div>
+            <div><b id="totalDepense">0</b><span>FCFA dépensés</span></div>
+            <div><b id="nbLivrees">0</b><span>Livrées</span></div>
+        </div>
+
+        <div class="carte">
+            <h3>👤 Mes informations</h3>
+            <div class="ligne"><span>Nom complet</span><b id="infoNom">—</b></div>
+            <div class="ligne"><span>Téléphone</span><b id="infoTel">—</b></div>
+            <div class="ligne"><span>Quartier</span><b id="infoQuartier">—</b></div>
+            <div class="ligne"><span>Ville</span><b id="infoVille">—</b></div>
+            <div class="ligne"><span>Compte</span><b><span class="badge badge-vert">ACTIF</span></b></div>
+        </div>
+
+        <div class="carte">
+            <h3>✏️ Modifier mes informations</h3>
+            <label>Nom complet</label>
+            <input id="modNom" placeholder="Ton nom complet">
+            <label>Téléphone</label>
+            <input id="modTel" placeholder="Ex : 70 00 00 00">
+            <label>Quartier</label>
+            <input id="modQuartier" placeholder="Ex : Faladié, ACI 2000...">
+            <label>Ville</label>
+            <select id="modVille">
+                <option value="Bamako">Bamako</option>
+                <option value="Segou">Ségou</option>
+                <option value="Kayes">Kayes</option>
+                <option value="Kati">Kati</option>
+                <option value="Sikasso">Sikasso</option>
+                <option value="Mopti">Mopti</option>
+            </select>
+            <button class="btn btn-or" onclick="enregistrerProfil()">💾 ENREGISTRER MES MODIFICATIONS</button>
+            <p style="font-size:12px;color:#888;text-align:center;margin-top:8px">Tes modifications sont enregistrées
+                tout de suite, et l'Admin les voit aussi.</p>
+        </div>
+
+        <div class="carte">
+            <h3>🧾 Mes dernières commandes</h3>
+            <div id="listeCommandes"></div>
+        </div>
+
+        <button class="btn btn-noir" onclick="allerCommandes()">🧾 VOIR TOUTES MES COMMANDES</button>
+        <button class="btn btn-gris" onclick="allerAccueil()">🏠 RETOUR À L'ACCUEIL</button>
+        <button class="btn btn-rouge" onclick="deconnecter()">🚪 SE DÉCONNECTER</button>
+
+        <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">Restaurant By Mali — Bamako, Ségou,
+            Kayes, Kati — Tout le Mali</p>
+    </div>
+
+    <div class="nav">
+        <a href="accueil.html">
+            <div>🏠</div>Accueil
+        </a>
+        <a href="profil.html" class="active">
+            <div>👤</div>Profil
+        </a>
+        <a href="ia.html">
+            <div>🤖</div>IA
+        </a>
+        <a href="jeux.html">
+            <div>🎮</div>Jeux
+        </a>
+        <a href="commandes.html">
+            <div>🧾</div>Commandes
+        </a>
+    </div>
+
+    <script>
+        // ─── VRAI CLIENT CONNECTÉ — SINON RETOUR LOGIN ───
+        if (!localStorage.getItem("rbm_client_connecte")) { window.location.href = "login.html"; }
+        let client = JSON.parse(localStorage.getItem("rbm_client_connecte") || "{}");
+
+        function afficherProfil() {
+            let nom = client.nom || "Client";
+            document.getElementById("avatar").textContent = nom.trim().charAt(0).toUpperCase() || "?";
+            document.getElementById("nomProfil").innerHTML = "Bonjour <span>" + nom + "</span>";
+            document.getElementById("sousTitre").textContent = (client.quartier || "") + (client.ville ? " — " + client.ville : "") + " • Client — Restaurant By Mali";
+            document.getElementById("infoNom").textContent = nom;
+            document.getElementById("infoTel").textContent = client.telephone || "—";
+            document.getElementById("infoQuartier").textContent = client.quartier || "—";
+            document.getElementById("infoVille").textContent = client.ville || "Bamako";
+            document.getElementById("modNom").value = client.nom || "";
+            document.getElementById("modTel").value = client.telephone || "";
+            document.getElementById("modQuartier").value = client.quartier || "";
+            document.getElementById("modVille").value = client.ville || "Bamako";
+
+            // ─── VRAIES COMMANDES DE CE CLIENT UNIQUEMENT ───
+            let toutes = [];
+            try { toutes = JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); if (!Array.isArray(toutes)) toutes = []; } catch (e) { toutes = []; }
+            let miennes = toutes.filter(c => (c.client || "") === client.nom || (c.telephone_client || "") === (client.telephone || "___"));
+            let total = 0, livrees = 0;
+            miennes.forEach(c => {
+                total += Number(c.montant || c.prix || 0);
+                let s = (c.statut || c.livraison || "").toLowerCase();
+                if (s.includes("livr")) livrees++;
+            });
+            document.getElementById("nbCommandes").textContent = miennes.length;
+            document.getElementById("totalDepense").textContent = total.toLocaleString("fr-FR");
+            document.getElementById("nbLivrees").textContent = livrees;
+
+            let html = "";
+            miennes.slice(0, 3).forEach(c => {
+                html += "<div class='ligne'><span>" + (c.resto || c.restaurant || "Restaurant") + "<br><small style='color:#aaa'>" + (c.commande || c.plat || "") + "</small></span><b>" + Number(c.montant || c.prix || 0).toLocaleString("fr-FR") + " FCFA<br><span class='badge badge-or'>" + (c.statut || "En attente") + "</span></b></div>";
+            });
+            document.getElementById("listeCommandes").innerHTML = html || "<div class='vide'>Tu n'as pas encore commandé.<br>Va sur l'accueil et choisis ton restaurant.</div>";
+        }
+
+        function enregistrerProfil() {
+            let nom = document.getElementById("modNom").value.trim();
+            let tel = document.getElementById("modTel").value.trim();
+            let quartier = document.getElementById("modQuartier").value.trim();
+            let ville = document.getElementById("modVille").value;
+            if (!nom) { alert("Mets ton nom complet."); return; }
+            if (!tel) { alert("Mets ton téléphone."); return; }
+            let ancienNom = client.nom;
+            client.nom = nom; client.telephone = tel; client.quartier = quartier; client.ville = ville;
+            localStorage.setItem("rbm_client_connecte", JSON.stringify(client));
+
+            // ─── ON MET À JOUR AUSSI LA LISTE DES CLIENTS QUE L'ADMIN VOIT ───
+            try {
+                let liste = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+                if (Array.isArray(liste)) {
+                    let trouve = false;
+                    liste = liste.map(c => {
+                        if (c.nom === ancienNom || c.telephone === client.telephone || c.nom === nom) {
+                            trouve = true;
+                            return { ...c, nom: nom, telephone: tel, quartier: quartier, ville: ville };
+                        }
+                        return c;
+                    });
+                    if (!trouve) liste.push(client);
+                    localStorage.setItem("rbm_clients", JSON.stringify(liste));
+                }
+            } catch (e) { }
+
+            // ─── ON MET À JOUR SES ANCIENNES COMMANDES AVEC LE NOUVEAU NOM ───
+            try {
+                let cmds = JSON.parse(localStorage.getItem("rbm_commandes") || "[]");
+                if (Array.isArray(cmds)) {
+                    cmds = cmds.map(c => {
+                        if (c.client === ancienNom) c.client = nom;
+                        if (c.telephone_client && ancienNom && c.client === nom) c.telephone_client = tel;
+                        return c;
+                    });
+                    localStorage.setItem("rbm_commandes", JSON.stringify(cmds));
+                }
+            } catch (e) { }
+
+            alert("✅ Tes informations sont enregistrées !\n\nNom : " + nom + "\nTéléphone : " + tel + "\nQuartier : " + quartier + "\nVille : " + ville);
+            afficherProfil();
+        }
+
+        function allerCommandes() { window.location.href = "commandes.html"; }
+        function allerAccueil() { window.location.href = "accueil.html"; }
+        function deconnecter() {
+            if (!confirm("Tu veux vraiment te déconnecter ?")) return;
+            localStorage.removeItem("rbm_client_connecte");
+            window.location.href = "login.html";
+        }
+        afficherProfil();
+    </script>
+</body>
+
+</html>

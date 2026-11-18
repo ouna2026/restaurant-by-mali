@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corbeille - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .header {
+            background: #1A1512;
+            color: #fff;
+            padding: 22px 20px;
+            text-align: center
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: 400
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 4px
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 14px 20px;
+            justify-content: center
+        }
+
+        .nav a {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            padding: 9px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #1A1512;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px 30px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 14px;
+            overflow: hidden
+        }
+
+        .msg {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            border-bottom: 1px solid #F1E3C8;
+            padding: 14px 0
+        }
+
+        .msg:last-child {
+            border-bottom: none
+        }
+
+        .msg img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0
+        }
+
+        .msg .texte {
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
+            font-size: 13px;
+            line-height: 1.7
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .badge-rouge {
+            background: #A83200;
+            color: #fff
+        }
+
+        .badge-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-bordeaux {
+            background: #7A0C1A;
+            color: #fff;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .btn-bordeaux-clair {
+            background: #fff;
+            color: #7A0C1A;
+            border: 2px solid #7A0C1A;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 8px
+        }
+
+        .btn-vert {
+            background: #1B6B2E;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 8px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .vide {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            padding: 20px
+        }
+
+        .ligne-btn {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .ligne-btn button {
+            flex: 1;
+            min-width: 140px
+        }
+
+        @media print {
+
+            .nav,
+            .btn-bordeaux,
+            .btn-bordeaux-clair,
+            .btn-vert,
+            .btn-noir {
+                display: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 id="titreNom">Corbeille</h1>
+        <p>Tes messages supprimés. Tu peux les restaurer.</p>
+    </div>
+    <div class="nav">
+        <a href="accueil.html">Accueil</a>
+        <a href="commandes.html">Mes Commandes</a>
+        <a href="ia.html">IA Müna</a>
+        <a href="jeux.html">Jeux</a>
+        <a href="profil.html">Profil</a>
+        <a href="message.html">Messages</a>
+        <a href="corbeille.html">Corbeille</a>
+    </div>
+    <div class="main">
+        <div class="card">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Messages supprimés — <span id="nb">0</span></h3>
+            <p style="font-size:13px;color:#888;margin-top:6px">Restaurer = le message revient dans Messages. Supprimer
+                définitivement = effacé pour toujours.</p>
+            <div id="liste"></div>
+            <button class="btn-bordeaux" onclick="viderCorbeille()">🗑 Vider la corbeille — Tout supprimer
+                définitivement</button>
+            <button class="btn-noir" onclick="location.href='message.html'">← Retour aux Messages</button>
+            <p id="msgInfo" style="font-size:13px;text-align:center;margin-top:10px;color:#7A0C1A;font-weight:700"></p>
+        </div>
+    </div>
+    <script>
+        let client = localStorage.getItem("rbm_client_connecte") || "";
+        if (!client) location.href = "login.html";
+        document.getElementById("titreNom").textContent = "Corbeille — " + client;
+        function propre(v) {
+            if (!v) return "—";
+            v = String(v).trim();
+            if (v.charAt(0) === "{") {
+                try { let o = JSON.parse(v); if (o.nom) return o.nom; } catch (e) { }
+                let m = v.match(/"nom"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "—";
+            }
+            return v;
+        }
+        function getCorbeille() { try { return JSON.parse(localStorage.getItem("rbm_corbeille") || "[]"); } catch (e) { return []; } }
+        function setCorbeille(a) { localStorage.setItem("rbm_corbeille", JSON.stringify(a)); }
+        function mesItems() {
+            let tous = getCorbeille();
+            let res = [];
+            tous.forEach(function (item, i) {
+                if (item.dossier === "client" && (String(item.pour) === String(client) || String(item.pourNom) === String(client) || propre(item.pour) === client)) {
+                    res.push({ item: item, idx: i });
+                }
+            });
+            return res;
+        }
+        function afficher() {
+            let liste = mesItems();
+            document.getElementById("nb").textContent = liste.length;
+            let zone = document.getElementById("liste");
+            if (liste.length === 0) {
+                zone.innerHTML = "<div class='vide'>Corbeille vide.</div>";
+                return;
+            }
+            zone.innerHTML = liste.map(function (obj) {
+                let m = obj.item;
+                let badge = (m.type || "").indexOf("échoué") !== -1 || (m.type || "").indexOf("Échoué") !== -1 ? "badge-rouge" : ((m.type || "").indexOf("reçu") !== -1 || (m.type || "").indexOf("validée") !== -1 ? "badge-vert" : "badge-or");
+                let img = (m.img && m.img.length > 10) ? m.img : "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop";
+                return "<div class='msg'><img src='" + img + "' onerror=\"this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop'\"><div class='texte'><b>" + propre(m.restaurant || m.de || "Restaurant") + "</b> — <span class='badge " + badge + "'>" + (m.type || "Message") + "</span><br>" + (m.texte || "") + "<br><small style='color:#888'>Supprimé le : " + (m.dateSuppression || "—") + " — Date d'origine : " + (m.date || "—") + "</small><div class='ligne-btn'><button class='btn-vert' onclick='restaurer(" + obj.idx + ")'>↩ Restaurer</button><button class='btn-bordeaux-clair' onclick='supprimerDefinitif(" + obj.idx + ")'>🗑 Supprimer définitivement</button></div></div></div>";
+            }).join("");
+        }
+        afficher();
+        function restaurer(idx) {
+            let tous = getCorbeille();
+            let item = tous[idx];
+            if (!item) return;
+            let msgs = [];
+            try { msgs = JSON.parse(localStorage.getItem("rbm_messages") || "[]"); } catch (e) { msgs = []; }
+            let original = item.original || { pour: item.pour, pourNom: item.pourNom, de: item.de, restaurant: item.restaurant, type: item.type, texte: item.texte, plat: item.plat, img: item.img, total: item.total, date: item.date, lu: false };
+            msgs.push(original);
+            localStorage.setItem("rbm_messages", JSON.stringify(msgs));
+            tous.splice(idx, 1);
+            setCorbeille(tous);
+            document.getElementById("msgInfo").textContent = "Message restauré dans Messages.";
+            afficher();
+        }
+        function supprimerDefinitif(idx) {
+            if (!confirm("Supprimer définitivement ce message ? Impossible de le récupérer.")) return;
+            let tous = getCorbeille();
+            tous.splice(idx, 1);
+            setCorbeille(tous);
+            document.getElementById("msgInfo").textContent = "Message supprimé définitivement.";
+            afficher();
+        }
+        function viderCorbeille() {
+            let liste = mesItems();
+            if (liste.length === 0) { document.getElementById("msgInfo").textContent = "Corbeille déjà vide."; return; }
+            if (!confirm("Vider la corbeille ? Supprimer définitivement les " + liste.length + " messages ?")) return;
+            let tous = getCorbeille();
+            let aGarder = tous.filter(function (item) {
+                return !(item.dossier === "client" && (String(item.pour) === String(client) || String(item.pourNom) === String(client)));
+            });
+            setCorbeille(aGarder);
+            document.getElementById("msgInfo").textContent = "Corbeille vidée.";
+            afficher();
+        }
+    </script>
+</body>
+
+</html>

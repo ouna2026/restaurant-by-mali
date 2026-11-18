@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport du Mois - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .header {
+            background: #1A1512;
+            color: #fff;
+            padding: 22px 20px;
+            text-align: center
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: 400
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 4px
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 14px 20px;
+            justify-content: center
+        }
+
+        .nav a {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            padding: 9px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #1A1512;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap
+        }
+
+        .main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px 30px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 14px;
+            overflow: hidden
+        }
+
+        .resume {
+            font-size: 14px;
+            line-height: 2
+        }
+
+        .resume b {
+            color: #1A1512
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #7A7268;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            display: block;
+            margin-top: 12px
+        }
+
+        select {
+            width: 100%;
+            border: 1.5px solid #F1E3C8;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            outline: none;
+            margin-top: 8px
+        }
+
+        /* ===== TABLEAU QUI NE DÉBORDE PLUS ===== */
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 12px;
+            border: 1px solid #F1E3C8;
+            border-radius: 12px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            min-width: 640px
+        }
+
+        th {
+            background: #1A1512;
+            color: #fff;
+            font-size: 12px;
+            text-align: left;
+            padding: 10px 8px;
+            white-space: nowrap
+        }
+
+        td {
+            font-size: 12px;
+            padding: 10px 8px;
+            border-bottom: 1px solid #F1E3C8;
+            vertical-align: top;
+            word-break: break-word;
+            overflow-wrap: break-word
+        }
+
+        td small {
+            color: #888;
+            font-size: 11px
+        }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 90px
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 130px
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 140px
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 70px
+        }
+
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 70px
+        }
+
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 140px
+        }
+
+        .badge-paye {
+            background: #1B6B2E;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge-attente {
+            background: #C9A227;
+            color: #1A1512;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge-echoue {
+            background: #A83200;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge-livre {
+            background: #1B6B2E;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge-nonlivre {
+            background: #eee;
+            color: #666;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .btn {
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-livre {
+            background: #1B6B2E;
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 12px;
+            border: none;
+            white-space: nowrap;
+            width: 100%
+        }
+
+        .btn-annuler-livraison {
+            background: #fff;
+            color: #7A0C1A;
+            border: 1.5px solid #7A0C1A;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 11px;
+            white-space: nowrap;
+            width: 100%;
+            margin-top: 6px
+        }
+
+        .vide {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            padding: 20px
+        }
+
+        @media print {
+
+            .nav,
+            .btn,
+            .btn-livre,
+            .btn-annuler-livraison,
+            select {
+                display: none !important
+            }
+
+            body {
+                background: #fff
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 id="titreNom">Rapport du Mois</h1>
+        <p>Choisis le mois. Coche Livré quand tu as livré.</p>
+    </div>
+    <div class="nav">
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="notification-commande.html">Commandes</a>
+        <a href="notification-paiement.html">Notifications Paiements</a>
+        <a href="paiement.html">Mes Paiements</a>
+        <a href="historique.html">Historique</a>
+        <a href="rapport-mois.html">Rapport du Mois</a>
+        <a href="corbeille.html">🗑 Corbeille</a>
+    </div>
+    <div class="main">
+        <div class="card">
+            <label>Mois à afficher</label>
+            <select id="mois" onchange="afficher()">
+                <option value="2026-11">novembre 2026</option>
+                <option value="2026-10">octobre 2026</option>
+                <option value="2026-09">septembre 2026</option>
+                <option value="2026-08">août 2026</option>
+                <option value="2026-07">juillet 2026</option>
+                <option value="2026-06">juin 2026</option>
+                <option value="2026-05">mai 2026</option>
+                <option value="2026-04">avril 2026</option>
+                <option value="2026-03">mars 2026</option>
+                <option value="2026-02">février 2026</option>
+                <option value="2026-01">janvier 2026</option>
+                <option value="2025-12">décembre 2025</option>
+                <option value="2025-11">novembre 2025</option>
+            </select>
+            <div class="resume" id="resume"></div>
+        </div>
+        <div class="card">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Détail des commandes</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Client</th>
+                            <th>Commande</th>
+                            <th>Total</th>
+                            <th>Paiement</th>
+                            <th>Livrée</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+            <div id="vide" class="vide" style="display:none">Aucune commande pour ce mois.</div>
+            <button class="btn btn-noir" onclick="window.print()">🖨 IMPRIMER CE RAPPORT</button>
+            <p id="msgInfo" style="font-size:13px;text-align:center;margin-top:10px;color:#1B6B2E;font-weight:700"></p>
+        </div>
+    </div>
+    <script>
+        let nom = localStorage.getItem("rbm_resto_connecte") || "";
+        if (!nom) location.href = "login.html";
+        document.getElementById("titreNom").textContent = "Rapport — " + nom;
+
+        // ===== CORRIGE LE JSON : {"id":..., "nom":"Dyjo Diakité"} → Dyjo Diakité =====
+        function propreNom(val) {
+            if (!val) return "Client";
+            val = String(val).trim();
+            if (val.charAt(0) === "{") {
+                try { let o = JSON.parse(val); if (o.nom) return o.nom; } catch (e) { }
+                let m = val.match(/"nom"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "Client";
+            }
+            if (val === "[object Object]") return "Client";
+            return val;
+        }
+        function propreTel(val) {
+            if (!val) return "—";
+            val = String(val).trim();
+            if (val.charAt(0) === "{") {
+                try { let o = JSON.parse(val); if (o.telephone) return o.telephone; if (o.tel) return o.tel; } catch (e) { }
+                let m = val.match(/"telephone"\s*:\s*"([^"]+)"/) || val.match(/"tel"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "—";
+            }
+            if (val === "[object Object]") return "—";
+            if (val.indexOf("{") !== -1) { let m2 = val.match(/\+223[0-9 ]+/); if (m2) return m2[0]; return "—"; }
+            return val;
+        }
+        function proprePlat(val) {
+            if (!val) return "Commande";
+            val = String(val).trim();
+            if (val.charAt(0) === "{") {
+                try { let o = JSON.parse(val); if (o.nom) return o.nom; } catch (e) { }
+                let m = val.match(/"nom"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "Commande";
+            }
+            return val;
+        }
+        function getCommandes() { try { return JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); } catch (e) { return []; } }
+
+        function moisDe(dateStr) {
+            // date = "18/11/2026 15:55:38" ou "2026-11-18"
+            if (!dateStr) return "";
+            dateStr = String(dateStr).trim();
+            let m = dateStr.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+            if (m) return m[3] + "-" + m[2];
+            let m2 = dateStr.match(/^(\d{4})-(\d{2})/);
+            if (m2) return m2[1] + "-" + m2[2];
+            let d = new Date(dateStr);
+            if (!isNaN(d)) return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+            return "";
+        }
+
+        function afficher() {
+            let moisChoisi = document.getElementById("mois").value;
+            let toutes = getCommandes().filter(function (c) { return (c.restaurant || c.resto) === nom; });
+            let duMois = toutes.filter(function (c) { return moisDe(c.date) === moisChoisi; });
+            duMois.sort(function (a, b) { return new Date(b.date || 0) - new Date(a.date || 0); });
+
+            let total = duMois.reduce(function (s, c) { return s + (parseInt(c.total || c.prix || 0) || 0); }, 0);
+            let payes = duMois.filter(function (c) { return c.paiement === "Payé"; }).length;
+            let livres = duMois.filter(function (c) { return c.livree === true || c.statut === "Livrée"; }).length;
+            let nonLivres = duMois.length - livres;
+
+            let nomMois = document.getElementById("mois").options[document.getElementById("mois").selectedIndex].text;
+            document.getElementById("resume").innerHTML =
+                "Restaurant : <b>" + nom + "</b><br>" +
+                "Mois : <b>" + nomMois + "</b><br>" +
+                "Total commandes : <b>" + duMois.length + "</b><br>" +
+                "Revenu total : <b>" + total.toLocaleString("fr-FR") + " F</b><br>" +
+                "Livrées : <b>" + livres + "</b> — Non livrées : <b>" + nonLivres + "</b><br>" +
+                "Paiements reçus : <b>" + payes + "</b>";
+
+            let tbody = document.getElementById("tbody");
+            let vide = document.getElementById("vide");
+            if (duMois.length === 0) {
+                tbody.innerHTML = "";
+                vide.style.display = "block";
+                return;
+            }
+            vide.style.display = "none";
+            tbody.innerHTML = duMois.map(function (c) {
+                let toutes2 = getCommandes();
+                let idx = toutes2.indexOf(c);
+                if (idx === -1) { idx = toutes2.findIndex(function (x) { return (x.restaurant || x.resto) === nom && String(x.client) === String(c.client) && String(x.date) === String(c.date); }); }
+                let nomClient = propreNom(c.client);
+                let telClient = propreTel(c.telephone || c.tel || c.client);
+                let nomPlat = proprePlat(c.plat || c.commande);
+                let badgePaiement = c.paiement === "Payé" ? "badge-paye" : (c.paiement === "Échoué" ? "badge-echoue" : "badge-attente");
+                let textePaiement = c.paiement === "Payé" ? "Payé" : (c.paiement || "En attente");
+                let estLivree = c.livree === true || c.statut === "Livrée";
+                // ===== BOUTON LIVRÉ =====
+                let blocLivre = "";
+                if (estLivree) {
+                    blocLivre = "<span class='badge-livre'>✅ Livrée</span><button class='btn-annuler-livraison' onclick='annulerLivraison(" + idx + ")'>Annuler livraison</button>";
+                } else {
+                    blocLivre = "<span class='badge-nonlivre'>Non</span><button class='btn-livre' onclick='marquerLivre(" + idx + ")'>📦 Marquer Livré</button>";
+                }
+                return "<tr><td>" + (c.date || "—") + "</td><td><b>" + nomClient + "</b><br><small>" + telClient + "<br>" + (c.quartier || "") + "</small></td><td>" + nomPlat + " x " + (c.quantite || c.qty || 1) + "</td><td><b>" + (c.total || c.prix || "—") + " F</b></td><td><span class='" + badgePaiement + "'>" + textePaiement + "</span></td><td>" + blocLivre + "</td></tr>";
+            }).join("");
+        }
+        afficher();
+
+        function marquerLivre(idx) {
+            if (!confirm("Tu confirmes que tu as livré cette commande ?")) return;
+            let toutes = getCommandes();
+            let c = toutes[idx];
+            if (!c) return;
+            c.livree = true;
+            c.statut = "Livrée";
+            c.dateLivraison = new Date().toLocaleString("fr-FR");
+            localStorage.setItem("rbm_commandes", JSON.stringify(toutes));
+            // Message au client
+            let msgs = [];
+            try { msgs = JSON.parse(localStorage.getItem("rbm_messages") || "[]"); } catch (e) { msgs = []; }
+            msgs.push({ pour: c.client, pourNom: propreNom(c.client), de: nom, restaurant: nom, type: "Commande livrée", texte: "Ta commande " + proprePlat(c.plat || c.commande) + " x " + (c.quantite || c.qty || 1) + " — " + (c.total || c.prix) + " F a été livrée par " + nom + ". Bon appétit !", plat: proprePlat(c.plat || c.commande), img: c.img || "", total: c.total || c.prix, date: new Date().toLocaleString("fr-FR"), lu: false });
+            localStorage.setItem("rbm_messages", JSON.stringify(msgs));
+            document.getElementById("msgInfo").textContent = "Marqué Livré. Message envoyé au client.";
+            afficher();
+        }
+        function annulerLivraison(idx) {
+            if (!confirm("Annuler la livraison ? La commande repasse en Validée / Non livrée.")) return;
+            let toutes = getCommandes();
+            let c = toutes[idx];
+            if (!c) return;
+            c.livree = false;
+            if (c.paiement === "Payé") c.statut = "Validée";
+            else c.statut = "En attente";
+            localStorage.setItem("rbm_commandes", JSON.stringify(toutes));
+            document.getElementById("msgInfo").textContent = "Livraison annulée.";
+            afficher();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilisateurs Restaurants - Admin - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex
+        }
+
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background: #1A1512;
+            color: #fff;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto
+        }
+
+        .sidebar h2 {
+            color: #C9A227;
+            font-size: 18px;
+            margin-bottom: 20px
+        }
+
+        .sidebar a {
+            display: block;
+            color: #D8CFC0;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 4px
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512;
+            font-weight: 800
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 24px;
+            flex: 1;
+            max-width: 1000px;
+            width: 100%
+        }
+
+        .main h1 {
+            font-size: 22px;
+            margin-bottom: 6px
+        }
+
+        .main .sous {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 16px;
+            line-height: 1.5
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 14px
+        }
+
+        .card h3 {
+            font-size: 15px;
+            margin-bottom: 10px
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 800;
+            color: #555;
+            display: block;
+            margin: 12px 0 6px;
+            text-transform: uppercase
+        }
+
+        input,
+        select {
+            width: 100%;
+            border: 2px solid #F1E3C8;
+            border-radius: 10px;
+            padding: 11px;
+            font-size: 14px;
+            outline: none
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #C9A227
+        }
+
+        .btn {
+            border: none;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            margin-right: 6px;
+            margin-bottom: 6px
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-vert {
+            background: #1A7A2E;
+            color: #fff
+        }
+
+        .btn-rouge {
+            background: #C0392B;
+            color: #fff
+        }
+
+        .btn-blanc {
+            background: #fff;
+            border: 2px solid #F1E3C8
+        }
+
+        .btn-orange {
+            background: #E67E22;
+            color: #fff
+        }
+
+        .choix {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px
+        }
+
+        .choix button {
+            border: 2px solid #F1E3C8;
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px 6px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 13px
+        }
+
+        .choix button.sel {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .choix button.sel span {
+            color: #C9A227
+        }
+
+        .choix span {
+            display: block;
+            color: #C9A227;
+            font-size: 12px;
+            margin-top: 4px
+        }
+
+        .pay {
+            border: 2px solid #F1E3C8;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            cursor: pointer
+        }
+
+        .pay.sel {
+            border-color: #1A1512;
+            background: #FFF8EE
+        }
+
+        .pay b {
+            font-size: 14px
+        }
+
+        .pay small {
+            font-size: 12px;
+            color: #555
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px
+        }
+
+        .badge-ok {
+            background: #E8F5E9;
+            color: #1A7A2E
+        }
+
+        .badge-bloque {
+            background: #FDECEA;
+            color: #C0392B
+        }
+
+        .ligne {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px
+        }
+
+        .ligne b {
+            font-size: 14px
+        }
+
+        .ligne small {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.5
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                display: none
+            }
+
+            .main {
+                margin-left: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Restaurant By Mali<br><small style="color:#D8CFC0;font-size:11px">Admin</small></h2>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Profil Admin</a>
+        <a href="securite-connexion.html">Sécurité / Connexion</a>
+        <a href="utilisateurs-restaurants.html" class="active">Restaurants</a>
+        <a href="utilisateurs-clients.html">Clients</a>
+        <a href="finance-paiement.html">Finance / Paiement</a>
+        <a href="fonctionnalite-site.html">Fonctionnalité Site</a>
+        <a href="fonctionnalite-ia.html">Fonctionnalité IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalité Jeux</a>
+        <a href="fonctionnalite-page.html">Studio Design Page</a>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <a href="rapport-clients-restaurants.html">Rapport Clients / Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <a href="deconnecter.html">Déconnecter</a>
+        <a href="login.html">Se déconnecter (Admin)</a>
+    </div>
+
+    <div class="main">
+        <h1>Utilisateurs — Restaurants</h1>
+        <p class="sous">L'Admin peut ajouter un restaurant <b>exactement comme</b> un restaurant peut s'inscrire tout
+            seul. Même formulaire, mêmes champs.</p>
+
+        <div class="card">
+            <h3>Ajouter un restaurant — Même formulaire que l'inscription</h3>
+            <p style="font-size:12px;color:#888;line-height:1.5">Tu remplis pour lui, comme s'il s'inscrivait lui-même.
+                S'il a payé, il est AUTORISÉ tout de suite. S'il n'a pas payé, il est BLOQUÉ.</p>
+
+            <label>Nom de l'entreprise *</label>
+            <input type="text" id="adminNom" placeholder="Ex : Le Grill - Bamako">
+
+            <label>Téléphone *</label>
+            <input type="text" id="adminTel" placeholder="Ex : +223 70 00 00 00">
+
+            <label>Quartier / Ville *</label>
+            <input type="text" id="adminQuartier" placeholder="Ex : ACI 2000 - Bamako">
+
+            <label>Mot de passe *</label>
+            <input type="text" id="adminMdp" placeholder="Mot de passe que tu lui donnes">
+
+            <label>Choisis son abonnement *</label>
+            <div class="choix">
+                <button type="button" id="btnMensuel" onclick="choisirAboAdmin('Mensuel',15000)">Mensuel<span>15 000
+                        F</span></button>
+                <button type="button" id="btnTrimestriel"
+                    onclick="choisirAboAdmin('Trimestriel',40000)">Trimestriel<span>40 000 F</span></button>
+                <button type="button" id="btnAnnuel" onclick="choisirAboAdmin('Annuel',150000)">Annuel<span>150 000
+                        F</span></button>
+            </div>
+
+            <label>Il paie avec quoi ? *</label>
+            <div class="pay" id="payWaveAdmin" onclick="choisirPayAdmin('Wave')">
+                <b>Wave</b><br><small>Envoie à : <b>+22364716909</b></small>
+            </div>
+            <div class="pay" id="paySamaAdmin" onclick="choisirPayAdmin('Sama')">
+                <b>Sama Money</b><br><small>Envoie à : <b>+22399335928</b></small>
+            </div>
+            <div class="pay" id="payNonAdmin" onclick="choisirPayAdmin('Pas encore payé')">
+                <b>Pas encore payé</b><br><small>Compte créé mais BLOQUÉ</small>
+            </div>
+
+            <label>Numéro qui a envoyé l'argent</label>
+            <input type="text" id="adminPayeur" placeholder="Ex : +223 70 00 00 00 — Laisse vide si pas encore payé">
+
+            <button class="btn btn-or" style="width:100%;margin-top:14px" onclick="adminAjouterResto()">AJOUTER LE
+                RESTAURANT</button>
+            <p id="msgAdminResto" style="font-size:13px;text-align:center;margin-top:10px;display:none"></p>
+        </div>
+
+        <div class="card">
+            <h3>Demandes en attente — Restaurants qui se sont inscrits tout seuls</h3>
+            <div id="listeDemandes"></div>
+        </div>
+
+        <div class="card">
+            <h3>Tous les restaurants (<span id="nbResto">0</span>)</h3>
+            <div id="listeRestos"></div>
+        </div>
+    </div>
+
+    <script>
+        let RESTOS_BASE = [
+            { nom: "Le Grill - Bamako", tel: "+223 70 00 00 01", quartier: "Bamako" },
+            { nom: "Sandwich+", tel: "+223 70 00 00 02", quartier: "Bamako" },
+            { nom: "Le Relax", tel: "+223 70 00 00 03", quartier: "Bamako" },
+            { nom: "Maquis Le Savana", tel: "+223 70 00 00 04", quartier: "Bamako" },
+            { nom: "Chez Fatoumata", tel: "+223 70 00 00 05", quartier: "Bamako" },
+            { nom: "Le Faso", tel: "+223 70 00 00 06", quartier: "Bamako" },
+            { nom: "Maquis Kati", tel: "+223 70 00 00 07", quartier: "Kati" },
+            { nom: "Douceur Sucrée", tel: "+223 70 00 00 08", quartier: "Bamako" },
+        ];
+        let aboAdmin = ""; let montantAdmin = 0; let payAdmin = "";
+        function choisirAboAdmin(abo, montant) {
+            aboAdmin = abo; montantAdmin = montant;
+            document.getElementById("btnMensuel").classList.toggle("sel", abo === "Mensuel");
+            document.getElementById("btnTrimestriel").classList.toggle("sel", abo === "Trimestriel");
+            document.getElementById("btnAnnuel").classList.toggle("sel", abo === "Annuel");
+        }
+        function choisirPayAdmin(p) {
+            payAdmin = p;
+            document.getElementById("payWaveAdmin").classList.toggle("sel", p === "Wave");
+            document.getElementById("paySamaAdmin").classList.toggle("sel", p === "Sama");
+            document.getElementById("payNonAdmin").classList.toggle("sel", p === "Pas encore payé");
+        }
+        function getStatut(nom) { return localStorage.getItem("rbm_resto_statut_" + nom) || "AUTORISE"; }
+        function getAbo(nom) { return localStorage.getItem("rbm_resto_abo_" + nom) || "Mensuel - 15 000 F - Wave"; }
+        function getTel(nom, defaut) { return localStorage.getItem("rbm_resto_tel_" + nom) || defaut; }
+        function getQuartier(nom, defaut) { return localStorage.getItem("rbm_resto_quartier_" + nom) || defaut; }
+
+        function adminAjouterResto() {
+            let nom = document.getElementById("adminNom").value.trim();
+            let tel = document.getElementById("adminTel").value.trim();
+            let quartier = document.getElementById("adminQuartier").value.trim();
+            let mdp = document.getElementById("adminMdp").value.trim();
+            let payeur = document.getElementById("adminPayeur").value.trim();
+            let msg = document.getElementById("msgAdminResto");
+            if (!nom || !tel || !quartier || !mdp || !aboAdmin || !payAdmin) {
+                msg.textContent = "Remplis tout : nom, téléphone, quartier, mot de passe, abonnement, Wave / Sama / Pas encore payé.";
+                msg.style.display = "block"; msg.style.color = "#C0392B"; return;
+            }
+            localStorage.setItem("rbm_resto_tel_" + nom, tel);
+            localStorage.setItem("rbm_resto_quartier_" + nom, quartier);
+            localStorage.setItem("rbm_resto_mdp_" + nom, mdp);
+            localStorage.setItem("rbm_resto_abo_" + nom, aboAdmin + " - " + montantAdmin + " F - " + payAdmin);
+            localStorage.setItem("rbm_resto_payeur_" + nom, payeur);
+            localStorage.setItem("rbm_resto_accepte_le_" + nom, new Date().toLocaleString("fr-FR"));
+            if (payAdmin === "Pas encore payé") {
+                localStorage.setItem("rbm_resto_statut_" + nom, "BLOQUE");
+                msg.textContent = "Restaurant ajouté pour " + nom + " mais BLOQUÉ car pas encore payé.";
+            } else {
+                localStorage.setItem("rbm_resto_statut_" + nom, "AUTORISE");
+                msg.textContent = "Restaurant ajouté pour " + nom + ". Il peut se connecter tout de suite avec le mot de passe : " + mdp;
+            }
+            msg.style.display = "block"; msg.style.color = "#1A7A2E";
+            document.getElementById("adminNom").value = "";
+            document.getElementById("adminTel").value = "";
+            document.getElementById("adminQuartier").value = "";
+            document.getElementById("adminMdp").value = "";
+            document.getElementById("adminPayeur").value = "";
+            aboAdmin = ""; montantAdmin = 0; payAdmin = "";
+            document.querySelectorAll(".choix button").forEach(b => b.classList.remove("sel"));
+            document.querySelectorAll(".pay").forEach(b => b.classList.remove("sel"));
+            afficherRestos();
+        }
+
+        function afficherDemandes() {
+            let demandes = [];
+            try { demandes = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]"); } catch (e) { demandes = []; }
+            let zone = document.getElementById("listeDemandes");
+            if (demandes.length === 0) { zone.innerHTML = "<p style='color:#888;font-size:13px'>Aucune demande en attente.</p>"; return; }
+            zone.innerHTML = demandes.map((d, i) => `
+    <div class="ligne">
+      <b>${d.nom}</b> — ${d.quartier} — ${d.tel}<br>
+      <small>Abonnement : ${d.abo} — ${d.montant} F — Payé par ${d.payPar} (${d.payeur})<br>Date : ${d.date}</small><br><br>
+      <button class="btn btn-vert" onclick="accepterDemande(${i})">ACCEPTER — 4 sec après il peut se connecter</button>
+      <button class="btn btn-rouge" onclick="refuserDemande(${i})">REFUSER</button>
+    </div>
+  `).join("");
+        }
+        function accepterDemande(i) {
+            let demandes = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]");
+            let d = demandes[i];
+            localStorage.setItem("rbm_resto_statut_" + d.nom, "AUTORISE");
+            localStorage.setItem("rbm_resto_abo_" + d.nom, d.abo + " - " + d.montant + " F - " + d.payPar);
+            localStorage.setItem("rbm_resto_tel_" + d.nom, d.tel);
+            localStorage.setItem("rbm_resto_quartier_" + d.nom, d.quartier);
+            localStorage.setItem("rbm_resto_accepte_le_" + d.nom, new Date().toLocaleString("fr-FR"));
+            demandes.splice(i, 1);
+            localStorage.setItem("rbm_demandes_resto", JSON.stringify(demandes));
+            alert("Accepté pour " + d.nom + ". Dans 4 secondes, il peut se connecter.");
+            setTimeout(() => { afficherDemandes(); afficherRestos(); }, 4000);
+            afficherDemandes(); afficherRestos();
+        }
+        function refuserDemande(i) {
+            let demandes = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]");
+            let d = demandes[i];
+            localStorage.setItem("rbm_resto_statut_" + d.nom, "BLOQUE");
+            demandes.splice(i, 1);
+            localStorage.setItem("rbm_demandes_resto", JSON.stringify(demandes));
+            alert("Refusé pour " + d.nom);
+            afficherDemandes(); afficherRestos();
+        }
+        function afficherRestos() {
+            let noms = [...RESTOS_BASE.map(r => r.nom)];
+            for (let k in localStorage) {
+                if (k.startsWith("rbm_resto_statut_")) {
+                    let n = k.replace("rbm_resto_statut_", "");
+                    if (!noms.includes(n)) noms.push(n);
+                }
+            }
+            document.getElementById("nbResto").textContent = noms.length;
+            let zone = document.getElementById("listeRestos");
+            zone.innerHTML = noms.map(nom => {
+                let base = RESTOS_BASE.find(r => r.nom === nom) || { tel: "", quartier: "" };
+                let statut = getStatut(nom);
+                let badge = statut === "AUTORISE" ? '<span class="badge badge-ok">AUTORISÉ</span>' : '<span class="badge badge-bloque">BLOQUÉ</span>';
+                return `
+    <div class="ligne">
+      <b>${nom}</b> — ${badge}<br>
+      <small>Tél : ${getTel(nom, base.tel)} • Quartier : ${getQuartier(nom, base.quartier)}<br>
+      Abonnement : ${getAbo(nom)}<br>
+      Accès compte : ${statut === "AUTORISE" ? "AUTORISÉ" : "BLOQUÉ"}</small><br><br>
+      <button class="btn btn-blanc" onclick="modifierResto('${nom}')">Modifier</button>
+      <button class="btn btn-vert" onclick="changerStatut('${nom}','AUTORISE')">Débloquer</button>
+      <button class="btn btn-orange" onclick="changerStatut('${nom}','BLOQUE')">Bloquer</button>
+      <button class="btn btn-noir" onclick="changerStatutPrompt('${nom}')">Changer statut</button>
+      <button class="btn btn-rouge" onclick="supprimerResto('${nom}')">Supprimer</button>
+    </div>
+    `;
+            }).join("");
+        }
+        function modifierResto(nom) {
+            let nouveauTel = prompt("Nouveau téléphone pour " + nom + " :", getTel(nom, ""));
+            if (nouveauTel !== null) localStorage.setItem("rbm_resto_tel_" + nom, nouveauTel);
+            let nouveauQuartier = prompt("Nouveau quartier pour " + nom + " :", getQuartier(nom, ""));
+            if (nouveauQuartier !== null) localStorage.setItem("rbm_resto_quartier_" + nom, nouveauQuartier);
+            alert("Modifié pour " + nom);
+            afficherRestos();
+        }
+        function changerStatut(nom, nouveau) {
+            localStorage.setItem("rbm_resto_statut_" + nom, nouveau);
+            alert(nom + " est maintenant : " + nouveau);
+            afficherRestos();
+        }
+        function changerStatutPrompt(nom) {
+            let n = prompt("Nouveau statut pour " + nom + " (AUTORISE ou BLOQUE) :", getStatut(nom));
+            if (n && (n === "AUTORISE" || n === "BLOQUE")) changerStatut(nom, n);
+        }
+        function supprimerResto(nom) {
+            if (!confirm("Supprimer vraiment " + nom + " ?")) return;
+            localStorage.removeItem("rbm_resto_statut_" + nom);
+            localStorage.removeItem("rbm_resto_tel_" + nom);
+            localStorage.removeItem("rbm_resto_quartier_" + nom);
+            localStorage.removeItem("rbm_resto_mdp_" + nom);
+            localStorage.removeItem("rbm_resto_abo_" + nom);
+            alert("Supprimé : " + nom);
+            afficherRestos();
+        }
+        afficherDemandes();
+        afficherRestos();
+    </script>
+</body>
+
+</html>

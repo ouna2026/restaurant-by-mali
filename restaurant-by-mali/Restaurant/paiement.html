@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .header {
+            background: #1A1512;
+            color: #fff;
+            padding: 22px 20px;
+            text-align: center
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: 400
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 4px
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 14px 20px;
+            justify-content: center
+        }
+
+        .nav a {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            padding: 9px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #1A1512;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px 30px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 14px;
+            overflow: hidden
+        }
+
+        .offre {
+            border: 2px solid #F1E3C8;
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 10px;
+            cursor: pointer
+        }
+
+        .offre.sel {
+            border-color: #C9A227;
+            background: #FFF8EE
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-blanc {
+            background: #fff;
+            border: 2px solid #F1E3C8
+        }
+
+        .btn-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .btn-rouge {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        input,
+        select {
+            width: 100%;
+            border: 1.5px solid #F1E3C8;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            outline: none;
+            margin-top: 8px
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #7A7268;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            display: block;
+            margin-top: 12px
+        }
+
+        .badge-paye {
+            background: #1B6B2E;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            text-align: center
+        }
+
+        .badge-attente {
+            background: #C9A227;
+            color: #1A1512;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            text-align: center
+        }
+
+        .badge-echoue {
+            background: #A83200;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            text-align: center
+        }
+
+        /* ===== COLONNE STATUT : badge + MODIFIER juste en bas ===== */
+        .statut-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            flex-shrink: 0
+        }
+
+        .btn-modif-petit {
+            background: #fff;
+            border: 2px dashed #C9A227;
+            color: #1A1512;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 12px;
+            white-space: nowrap
+        }
+
+        .ligne-paiement {
+            border-bottom: 1px solid #F1E3C8;
+            padding: 14px 0
+        }
+
+        .ligne-paiement .haut-ligne {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start
+        }
+
+        .ligne-paiement img.photo-plat {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0
+        }
+
+        .ligne-paiement .texte {
+            flex: 1;
+            min-width: 0;
+            word-break: break-word
+        }
+
+        .ligne-paiement .haut {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: flex-start;
+            flex-wrap: wrap
+        }
+
+        .ligne-paiement .detail {
+            font-size: 13px;
+            line-height: 1.8;
+            margin-top: 6px;
+            color: #333;
+            word-break: break-word
+        }
+
+        @media print {
+
+            .nav,
+            .btn,
+            .btn-modif-petit,
+            .no-print {
+                display: none !important
+            }
+
+            body {
+                background: #fff
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 id="titreNom">Mes Paiements</h1>
+        <p>MODIFIER est juste en bas de chaque statut.</p>
+    </div>
+    <div class="nav no-print">
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="notification-commande.html">Commandes</a>
+        <a href="notification-paiement.html">Notifications Paiements</a>
+        <a href="paiement.html">Mes Paiements</a>
+        <a href="historique.html">Historique</a>
+        <a href="rapport-mois.html">Rapport du Mois</a>
+        <a href="login.html" onclick="localStorage.removeItem('rbm_resto_connecte')">Se déconnecter</a>
+    </div>
+    <div class="main">
+        <div class="card" style="display:flex;gap:12px;text-align:center">
+            <div style="flex:1"><b id="totalClient">0 F</b><br><small>Reçu de mes clients</small></div>
+            <div style="flex:1"><b id="nbClient">0</b><br><small>Paiements clients</small></div>
+            <div style="flex:1"><b id="statutAbo">—</b><br><small>Mon abonnement</small></div>
+        </div>
+        <div class="card">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Paiements de mes clients</h3>
+            <p style="font-size:13px;color:#888;margin-top:6px">Si la connexion a buggé et que l'argent arrive en
+                retard, clique <b>✏️ Modifier</b> juste en bas du statut. Le Client recevra un message de correction.
+            </p>
+            <div id="listeClients" style="margin-top:10px"></div>
+            <button class="btn btn-blanc no-print" onclick="location.reload()">↻ Actualiser</button>
+            <button class="btn btn-noir no-print" onclick="window.print()">🖨 IMPRIMER MES PAIEMENTS</button>
+        </div>
+        <div class="card">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Mon Abonnement — Ce que je paie à l'Admin</h3>
+            <p id="statut" style="font-size:14px;line-height:1.8;margin-top:8px"></p>
+            <h4 style="margin-top:14px;font-size:15px">1. Choisir mon abonnement</h4>
+            <div class="offre sel" onclick="choisir('Mensuel',15000,this)"><b>Mensuel — 15 000 F</b><br><small>1 mois
+                    d'accès</small></div>
+            <div class="offre" onclick="choisir('Trimestriel',40000,this)"><b>Trimestriel — 40 000 F</b><br><small>3
+                    mois d'accès</small></div>
+            <div class="offre" onclick="choisir('Annuel',150000,this)"><b>Annuel — 150 000 F</b><br><small>12 mois
+                    d'accès</small></div>
+            <label>2. Moyen de paiement *</label>
+            <select id="moyen">
+                <option value="Wave">Wave — +223 64 71 69 09</option>
+                <option value="Sama">Sama — +223 99 33 59 28</option>
+            </select>
+            <p style="font-size:13px;color:#888;margin-top:8px;line-height:1.6">Envoie <b id="montantTexte">15 000 F</b>
+                sur <b id="numeroTexte">Wave +223 64 71 69 09</b>, puis clique ci-dessous.</p>
+            <label>Mon numéro qui a envoyé *</label>
+            <input type="text" id="monTel" placeholder="Ex : +223 70 00 00 00">
+            <button class="btn btn-or no-print" onclick="envoyerPaiement()">J'AI ENVOYÉ LE PAIEMENT</button>
+            <p id="msg" style="font-size:13px;text-align:center;margin-top:10px;color:#1B6B2E;font-weight:700"></p>
+        </div>
+        <div class="card">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Historique de mon abonnement</h3>
+            <div id="historique"></div>
+        </div>
+    </div>
+    <script>
+        let nom = localStorage.getItem("rbm_resto_connecte") || "";
+        if (!nom) location.href = "login.html";
+        document.getElementById("titreNom").textContent = "Paiements — " + nom;
+        function propreNom(val) {
+            if (!val) return "Client";
+            val = String(val).trim();
+            if (val.charAt(0) === "{") {
+                try { let o = JSON.parse(val); if (o.nom) return o.nom; } catch (e) { }
+                let m = val.match(/"nom"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "Client";
+            }
+            if (val === "[object Object]") return "Client";
+            return val;
+        }
+        function propreTel(val) {
+            if (!val) return "—";
+            val = String(val).trim();
+            if (val.charAt(0) === "{") {
+                try { let o = JSON.parse(val); if (o.telephone) return o.telephone; if (o.tel) return o.tel; } catch (e) { }
+                let m = val.match(/"telephone"\s*:\s*"([^"]+)"/) || val.match(/"tel"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "—";
+            }
+            if (val === "[object Object]") return "—";
+            if (val.indexOf("{") !== -1) { let m = val.match(/\+223[0-9 ]+/); if (m) return m[0]; return "—"; }
+            return val;
+        }
+        function proprePlat(val) {
+            if (!val) return "Commande";
+            val = String(val).trim();
+            if (val.charAt(0) === "{") {
+                try { let o = JSON.parse(val); if (o.nom) return o.nom; } catch (e) { }
+                let m = val.match(/"nom"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "Commande";
+            }
+            return val;
+        }
+        function champ(p, noms, defaut) {
+            for (let i = 0; i < noms.length; i++) {
+                if (p[noms[i]] !== undefined && p[noms[i]] !== null && p[noms[i]] !== "") return p[noms[i]];
+            }
+            return defaut;
+        }
+        function photoPlat(c, nomPlat) {
+            if (c.img && c.img.length > 10) return c.img;
+            if (c.photo && c.photo.length > 10) return c.photo;
+            if (c.image && c.image.length > 10) return c.image;
+            try {
+                let menu = JSON.parse(localStorage.getItem("rbm_menu_" + nom) || "[]");
+                let t = menu.find(function (m) { return (m.nom || "") === nomPlat; });
+                if (t && t.img && t.img.length > 10) return t.img;
+            } catch (e) { }
+            let photoResto = localStorage.getItem("rbm_resto_photo_" + nom);
+            if (photoResto && photoResto.length > 10) return photoResto;
+            return "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop";
+        }
+        let choix = "Mensuel", montant = 15000;
+        function choisir(a, m, el) {
+            choix = a; montant = m;
+            document.querySelectorAll(".offre").forEach(function (o) { o.classList.remove("sel"); });
+            el.classList.add("sel");
+            document.getElementById("montantTexte").textContent = m.toLocaleString("fr-FR") + " F";
+            majNumero();
+        }
+        function majNumero() {
+            let moyen = document.getElementById("moyen").value;
+            document.getElementById("numeroTexte").textContent = moyen === "Sama" ? "Sama +223 99 33 59 28" : "Wave +223 64 71 69 09";
+        }
+        document.getElementById("moyen").addEventListener("change", majNumero);
+        function getPays() { try { return JSON.parse(localStorage.getItem("rbm_paiements") || "[]"); } catch (e) { return []; } }
+        function getCommandes() { try { return JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); } catch (e) { return []; } }
+
+        function refresh() {
+            let commandes = getCommandes().filter(function (c) { return (c.restaurant || c.resto) === nom; });
+            let avecPaiement = commandes.filter(function (c) { return c.paiement && c.paiement !== ""; });
+            avecPaiement.sort(function (a, b) { return new Date(b.date || 0) - new Date(a.date || 0); });
+            let totalRecu = avecPaiement.filter(function (c) { return c.paiement === "Payé"; }).reduce(function (s, c) { return s + (parseInt(c.total || c.prix || 0) || 0); }, 0);
+            document.getElementById("totalClient").textContent = totalRecu.toLocaleString("fr-FR") + " F";
+            document.getElementById("nbClient").textContent = avecPaiement.length;
+            let zone = document.getElementById("listeClients");
+            if (avecPaiement.length === 0) {
+                zone.innerHTML = "<p style='font-size:13px;color:#888;margin-top:10px'>Aucun paiement de client pour le moment.</p>";
+            } else {
+                zone.innerHTML = avecPaiement.map(function (c) {
+                    let toutes = getCommandes();
+                    let idx = toutes.indexOf(c);
+                    if (idx === -1) { idx = toutes.findIndex(function (x) { return (x.restaurant || x.resto) === nom && String(x.client) === String(c.client) && String(x.date) === String(c.date); }); }
+                    let nomClient = propreNom(c.client);
+                    let telClient = propreTel(c.telephone || c.tel);
+                    let nomPlat = proprePlat(c.plat || c.commande);
+                    let img = photoPlat(c, nomPlat);
+                    let cls = (c.paiement === "Payé") ? "badge-paye" : (c.paiement === "Échoué" ? "badge-echoue" : "badge-attente");
+                    let textePaiement = (c.paiement === "Payé") ? "Paiement reçu" : c.paiement;
+                    // ===== MODIFIER JUSTE EN BAS DU BADGE =====
+                    let blocStatut = "";
+                    if (c.paiement === "Payé") {
+                        blocStatut = "<div class='statut-col'><span class='" + cls + "'>" + textePaiement + "</span><button class='btn-modif-petit no-print' onclick='echouerPaiement(" + idx + ", true)'>✏️ Modifier</button></div>";
+                    } else if (c.paiement === "Échoué") {
+                        blocStatut = "<div class='statut-col'><span class='" + cls + "'>" + textePaiement + "</span><button class='btn-modif-petit no-print' onclick='validerPaiement(" + idx + ", true)'>✏️ Modifier</button></div>";
+                    } else {
+                        blocStatut = "<div class='statut-col'><span class='" + cls + "'>" + textePaiement + "</span></div>";
+                    }
+                    let boutonsBas = "";
+                    if (c.paiement === "En attente" || c.statut === "En attente") {
+                        boutonsBas = "<button class='btn btn-vert no-print' onclick='validerPaiement(" + idx + ", false)'>✅ J'AI REÇU L'ARGENT — VALIDER</button><button class='btn btn-rouge no-print' onclick='echouerPaiement(" + idx + ", false)'>❌ ARGENT NON REÇU — ÉCHOUÉ</button>";
+                    } else if (c.paiement === "Payé") {
+                        boutonsBas = "<p style='font-size:13px;color:#1B6B2E;font-weight:700;margin-top:8px'>✅ Commande validée — Message envoyé au client.</p>";
+                    } else {
+                        boutonsBas = "<p style='font-size:13px;color:#A83200;font-weight:700;margin-top:8px'>❌ Paiement échoué — Message envoyé au client.</p>";
+                    }
+                    if (c.modifiee) boutonsBas += "<p style='font-size:12px;color:#888;margin-top:6px'>Modifié le : " + c.dateModification + (c.raisonModification ? " — " + c.raisonModification : "") + "</p>";
+                    return "<div class='ligne-paiement'><div class='haut-ligne'><img class='photo-plat' src='" + img + "' onerror=\"this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop'\"><div class='texte'><div class='haut'><b>" + nomClient + " — " + nomPlat + " x " + (c.quantite || c.qty || 1) + "</b>" + blocStatut + "</div><div class='detail'>Montant : <b>" + (c.total || c.prix || "—") + " F</b><br>Client : " + nomClient + "<br>Tél : " + telClient + "<br>Quartier : " + (c.quartier || "—") + "<br>Date : " + (c.date || "—") + "<br>Moyen : " + (c.moyenPaiement || c.moyen || "Wave / Sama") + "<br>Statut commande : " + (c.statut || "En attente") + "</div></div></div>" + boutonsBas + "</div>";
+                }).join("");
+            }
+            let pays = getPays().filter(function (p) { return p.nom === nom; });
+            let dernier = pays[pays.length - 1];
+            if (!dernier) {
+                document.getElementById("statut").innerHTML = "Aucun paiement d'abonnement pour le moment.";
+                document.getElementById("statutAbo").textContent = "Non payé";
+            } else {
+                let abo = champ(dernier, ["abonnement", "type", "formule", "plan"], "Abonnement");
+                let mont = champ(dernier, ["montant", "prix", "amount"], "—");
+                let moy = champ(dernier, ["moyen", "methode", "mode"], "—");
+                let stat = champ(dernier, ["statut", "status"], "En attente");
+                let dat = champ(dernier, ["date", "date_paiement"], "—");
+                let cls = stat === "Payé" ? "badge-paye" : "badge-attente";
+                document.getElementById("statut").innerHTML = "Dernier : <span class='" + cls + "'>" + stat + "</span><br>" + abo + " — " + mont + " F — " + moy + " — " + dat + "<br>" + (stat === "Payé" ? "<b style='color:#1B6B2E'>AUTORISÉ</b>" : "<b style='color:#A83200'>En attente de l'Admin</b>");
+                document.getElementById("statutAbo").textContent = stat;
+            }
+            document.getElementById("historique").innerHTML = pays.length === 0 ? "<p style='font-size:13px;color:#888'>Aucun paiement.</p>" : pays.slice().reverse().map(function (p) {
+                let abo = champ(p, ["abonnement", "type", "formule", "plan"], "Abonnement");
+                let mont = champ(p, ["montant", "prix", "amount"], "—");
+                let moy = champ(p, ["moyen", "methode", "mode"], "—");
+                let stat = champ(p, ["statut", "status"], "En attente");
+                let dat = champ(p, ["date", "date_paiement"], "—");
+                return "<div style='border-bottom:1px solid #F1E3C8;padding:10px 0;font-size:13px;line-height:1.7'><b>" + abo + " — " + mont + " F</b> — " + stat + "<br>" + moy + " — " + dat + "</div>";
+            }).join("");
+        }
+        refresh();
+        function envoyerMessageClient(c, type, texte) {
+            let msgs = [];
+            try { msgs = JSON.parse(localStorage.getItem("rbm_messages") || "[]"); } catch (e) { msgs = []; }
+            msgs.push({ pour: c.client, pourNom: propreNom(c.client), de: nom, restaurant: nom, type: type, texte: texte, plat: proprePlat(c.plat || c.commande), img: photoPlat(c, proprePlat(c.plat || c.commande)), total: c.total || c.prix, date: new Date().toLocaleString("fr-FR"), lu: false });
+            localStorage.setItem("rbm_messages", JSON.stringify(msgs));
+        }
+        function validerPaiement(idx, estCorrection) {
+            let msgConfirm = estCorrection ? "L'argent est bien arrivé en retard à cause de la connexion ? On passe de ÉCHOUÉ → VALIDÉ et le Client recevra un message de correction." : "Tu confirmes que tu as bien reçu l'argent ?";
+            if (!confirm(msgConfirm)) return;
+            let toutes = getCommandes();
+            let c = toutes[idx];
+            if (!c) return alert("Commande introuvable.");
+            c.statut = "Validée"; c.paiement = "Payé"; c.dateValidation = new Date().toLocaleString("fr-FR");
+            if (estCorrection) { c.modifiee = true; c.dateModification = new Date().toLocaleString("fr-FR"); c.raisonModification = "Correction : argent arrivé en retard (connexion)"; }
+            localStorage.setItem("rbm_commandes", JSON.stringify(toutes));
+            if (estCorrection) {
+                envoyerMessageClient(c, "Correction — Paiement reçu", "Correction : l'argent est finalement arrivé en retard à cause de la connexion. Ta commande " + proprePlat(c.plat || c.commande) + " x " + (c.quantite || c.qty || 1) + " — " + (c.total || c.prix) + " F est maintenant VALIDÉE chez " + nom + ". Merci pour ta patience !");
+            } else {
+                envoyerMessageClient(c, "Paiement reçu — Commande validée", "Paiement reçu : " + proprePlat(c.plat || c.commande) + " x " + (c.quantite || c.qty || 1) + " — " + (c.total || c.prix) + " F. Ta commande est validée chez " + nom + ". Merci !");
+            }
+            alert(estCorrection ? "Corrigé ! ÉCHOUÉ → VALIDÉ. Message de correction envoyé au client." : "Validé ! Message envoyé au client.");
+            location.reload();
+        }
+        function echouerPaiement(idx, estCorrection) {
+            let msgConfirm = estCorrection ? "Tu confirmes que tu n'as finalement PAS reçu l'argent ? On passe de VALIDÉ → ÉCHOUÉ et le Client recevra un message de correction." : "Tu confirmes que tu n'as PAS reçu l'argent ?";
+            if (!confirm(msgConfirm)) return;
+            let toutes = getCommandes();
+            let c = toutes[idx];
+            if (!c) return alert("Commande introuvable.");
+            c.statut = "Annulée"; c.paiement = "Échoué";
+            if (estCorrection) { c.modifiee = true; c.dateModification = new Date().toLocaleString("fr-FR"); c.raisonModification = "Correction : argent finalement non reçu"; }
+            localStorage.setItem("rbm_commandes", JSON.stringify(toutes));
+            if (estCorrection) {
+                envoyerMessageClient(c, "Correction — Paiement échoué", "Correction : après vérification, nous n'avons finalement PAS reçu l'argent pour " + proprePlat(c.plat || c.commande) + " — " + (c.total || c.prix) + " F chez " + nom + ". Ta commande passe en ÉCHOUÉ. Merci de vérifier ton paiement.");
+            } else {
+                envoyerMessageClient(c, "Paiement échoué", "Paiement échoué : " + proprePlat(c.plat || c.commande) + " — " + (c.total || c.prix) + " F. Nous n'avons pas reçu l'argent chez " + nom + ".");
+            }
+            alert(estCorrection ? "Corrigé ! VALIDÉ → ÉCHOUÉ. Message de correction envoyé au client." : "Paiement marqué Échoué. Message envoyé au client.");
+            location.reload();
+        }
+        function envoyerPaiement() {
+            let tel = document.getElementById("monTel").value.trim();
+            if (!tel) { document.getElementById("msg").textContent = "Ecris ton numéro qui a envoyé."; return; }
+            let pays = getPays();
+            pays.push({ nom: nom, abonnement: choix, montant: montant, moyen: document.getElementById("moyen").value, tel: tel, statut: "En attente", date: new Date().toLocaleString("fr-FR") });
+            localStorage.setItem("rbm_paiements", JSON.stringify(pays));
+            document.getElementById("msg").textContent = "Paiement envoyé ! L'Admin va vérifier.";
+            refresh();
+        }
+    </script>
+</body>
+
+</html>

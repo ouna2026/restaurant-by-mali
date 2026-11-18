@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fonctionnalité Site - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh
+        }
+
+        .sidebar {
+            width: 270px;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 22px
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #888;
+            font-size: 12px;
+            margin: 6px 0 18px
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase
+        }
+
+        .sidebar a {
+            color: #ddd;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13.5px
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 270px;
+            padding: 32px 36px
+        }
+
+        .top h2 {
+            font-family: Georgia, serif;
+            font-size: 28px
+        }
+
+        .top h2 span {
+            color: #C9A227
+        }
+
+        .top p {
+            color: #777;
+            margin-top: 6px
+        }
+
+        .info {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 22px;
+            margin-top: 20px
+        }
+
+        .info h3 {
+            font-family: Georgia, serif;
+            margin-bottom: 12px
+        }
+
+        .info label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 12px 0 5px;
+            text-transform: uppercase
+        }
+
+        .info input,
+        .info textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 10px;
+            outline: none;
+            background: #FFFDF8
+        }
+
+        .info textarea {
+            height: 70px;
+            resize: vertical
+        }
+
+        .btn-save {
+            background: #C9A227;
+            border: none;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 16px
+        }
+
+        .liste {
+            margin-top: 20px;
+            display: grid;
+            gap: 14px
+        }
+
+        .fonct {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px
+        }
+
+        .fonct b {
+            font-size: 16px
+        }
+
+        .fonct p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 4px
+        }
+
+        .switch {
+            position: relative;
+            width: 58px;
+            height: 30px;
+            background: #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: .2s
+        }
+
+        .switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .2s
+        }
+
+        .switch.on {
+            background: #1A1512
+        }
+
+        .switch.on::after {
+            left: 31px;
+            background: #C9A227
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .badge.on {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.off {
+            background: #FCE4E4;
+            color: #8A1A1A
+        }
+
+        @media(max-width:850px) {
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px
+            }
+        }
+
+        @media(max-width:600px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">📊 Tableau de bord</a>
+        <a href="profil-admin.html">👤 Mon Profil</a>
+        <a href="securite-connexion.html">🔒 Sécurité & Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">🍽️ Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">👥 Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">💰 Finance & Paiement</a>
+        <div class="titre">Fonctionnalités</div>
+        <a href="fonctionnalite-site.html" class="active">⚙️ Fonctionnalité Site</a>
+        <a href="fonctionnalite-ia.html">🤖 Fonctionnalité IA</a>
+        <a href="fonctionnalite-jeux.html">🎮 Fonctionnalité Jeux</a>
+        <a href="fonctionnalite-page.html">📄 Fonctionnalité Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">🔔 Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">🔔 Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">📄 Rapport Clients & Restaurants</a>
+        <a href="rapport-financier.html">📄 Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">🚪 Déconnecter</a></div>
+    </div>
+
+    <div class="main">
+        <div class="top">
+            <h2>Fonctionnalité <span>du Site</span></h2>
+            <p>Allume ou éteins les fonctions de ton site. Ce que tu éteins ici ne s'affiche plus côté client.</p>
+        </div>
+
+        <div class="info">
+            <h3>Informations du site</h3>
+            <label>Nom du site</label>
+            <input id="site_nom" value="Restaurant By Mali">
+            <label>Slogan</label>
+            <input id="site_slogan" value="Savourez l'Excellence à Bamako">
+            <label>Description</label>
+            <textarea
+                id="site_desc">La meilleure app pour commander dans les meilleurs restaurants du Mali. Commande, paie, reçois ta livraison.</textarea>
+            <button class="btn-save" onclick="sauverInfos()">✅ Enregistrer les infos</button>
+            <p id="msgInfos" style="color:#1B6B2E;font-size:13px;margin-top:10px;"></p>
+        </div>
+
+        <div class="liste" id="liste"></div>
+        <p style="margin-top:16px"><a href="dashboard.html" style="color:#C9A227;font-weight:700;">← Retour au Tableau
+                de bord</a></p>
+    </div>
+
+    <script>
+        if (!localStorage.getItem("rbm_admin")) {window.location.href = "login.html";}
+
+        // Infos site
+        let infos = JSON.parse(localStorage.getItem("rbm_site_infos") || '{"nom":"Restaurant By Mali","slogan":"Savourez l\'Excellence à Bamako","desc":"La meilleure app pour commander dans les meilleurs restaurants du Mali. Commande, paie, reçois ta livraison."}');
+        document.getElementById("site_nom").value = infos.nom;
+        document.getElementById("site_slogan").value = infos.slogan;
+        document.getElementById("site_desc").value = infos.desc;
+        function sauverInfos() {
+            let n = {nom: document.getElementById("site_nom").value, slogan: document.getElementById("site_slogan").value, desc: document.getElementById("site_desc").value};
+            localStorage.setItem("rbm_site_infos", JSON.stringify(n));
+            document.getElementById("msgInfos").textContent = "✅ Infos enregistrées !";
+            setTimeout(() => document.getElementById("msgInfos").textContent = "", 2500);
+        }
+
+        // Fonctions ON / OFF
+        if (!localStorage.getItem("rbm_fonctions")) {
+            localStorage.setItem("rbm_fonctions", JSON.stringify([
+                {id: "commandes", nom: "Commandes", desc: "Les clients peuvent commander et payer", on: true},
+                {id: "paiement", nom: "Paiement en ligne", desc: "Orange Money, Wave, Moov Money", on: true},
+                {id: "ia", nom: "Mali Food IA", desc: "L'IA qui aide à choisir un plat", on: true},
+                {id: "jeux", nom: "Jeux & Points", desc: "Snake + Poursuite pour gagner des points", on: true},
+                {id: "livraison", nom: "Livraison", desc: "Livraison par coursier avec frais", on: true},
+                {id: "favoris", nom: "Favoris", desc: "Le client peut mettre un restaurant en favori", on: true}
+            ]));
+        }
+        function getF() {return JSON.parse(localStorage.getItem("rbm_fonctions"));}
+        function saveF(d) {localStorage.setItem("rbm_fonctions", JSON.stringify(d));}
+        function afficher() {
+            let liste = document.getElementById("liste");
+            liste.innerHTML = "";
+            getF().forEach(f => {
+                liste.innerHTML += `<div class="fonct">
+      <div><b>${f.nom}</b> <span class="badge ${f.on ? 'on' : 'off'}">${f.on ? 'Activé' : 'Éteint'}</span><p>${f.desc}</p></div>
+      <div class="switch ${f.on ? 'on' : ''}" onclick="toggle('${f.id}')"></div>
+    </div>`;
+            });
+        }
+        function toggle(id) {
+            let data = getF();
+            let f = data.find(x => x.id === id);
+            f.on = !f.on;
+            saveF(data); afficher();
+        }
+        afficher();
+    </script>
+</body>
+
+</html>

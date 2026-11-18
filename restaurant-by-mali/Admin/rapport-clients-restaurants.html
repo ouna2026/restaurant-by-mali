@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport Clients / Restaurants - Admin</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #F5F0E8;
+            color: #1A1512;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        .sidebar {
+            width: 260px;
+            background: #0A0A0A;
+            color: #fff;
+            padding: 22px 16px;
+            flex-shrink: 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto
+        }
+
+        .sidebar h1 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: 400
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            font-size: 12px;
+            opacity: .6;
+            margin-top: 4px
+        }
+
+        .sidebar h3 {
+            font-size: 11px;
+            color: #C9A227;
+            letter-spacing: 1px;
+            margin: 22px 0 8px;
+            text-transform: uppercase
+        }
+
+        .sidebar a {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 4px;
+            white-space: nowrap
+        }
+
+        .sidebar a.sel {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 22px;
+            min-width: 0
+        }
+
+        .top {
+            font-family: Georgia, serif;
+            font-size: 26px;
+            font-weight: 400
+        }
+
+        .top span {
+            color: #C9A227
+        }
+
+        .top-sub {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 16px
+        }
+
+        .resume {
+            font-size: 14px;
+            line-height: 2
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #7A7268;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            display: block;
+            margin-top: 12px
+        }
+
+        select {
+            width: 100%;
+            border: 1.5px solid #F1E3C8;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            outline: none;
+            margin-top: 8px
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 12px;
+            border: 1px solid #F1E3C8;
+            border-radius: 12px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            min-width: 680px
+        }
+
+        th {
+            background: #1A1512;
+            color: #fff;
+            font-size: 12px;
+            text-align: left;
+            padding: 10px 8px;
+            white-space: nowrap
+        }
+
+        td {
+            font-size: 12px;
+            padding: 10px 8px;
+            border-bottom: 1px solid #F1E3C8;
+            vertical-align: top;
+            word-break: break-word
+        }
+
+        .badge-paye {
+            background: #1B6B2E;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge-livre {
+            background: #1B6B2E;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .btn {
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-bordeaux {
+            background: #7A0C1A;
+            color: #fff
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .vide {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            padding: 20px
+        }
+
+        @media(max-width:800px) {
+            .sidebar {
+                display: none
+            }
+
+            .main {
+                margin-left: 0
+            }
+        }
+
+        @media print {
+
+            .sidebar,
+            .btn {
+                display: none !important
+            }
+
+            .main {
+                margin-left: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <h3>Principal</h3>
+        <a href="dashboard.html">📊 Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html">🔒 Sécurité & Connexion</a>
+        <h3>Utilisateurs</h3>
+        <a href="utilisateurs-restaurants.html">🍽 Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">👤 Utilisateurs Clients</a>
+        <h3>Finance</h3>
+        <a href="finance-paiement.html">💰 Finance & Paiement</a>
+        <h3>Fonctionnalités du site</h3>
+        <a href="fonctionnalite-page.html">⚙️ Fonctionnalité Site</a>
+        <a href="fonctionnalite-ia.html">🤖 Fonctionnalité IA</a>
+        <a href="fonctionnalite-jeux.html">🎮 Fonctionnalité Jeux</a>
+        <h3>Rapports</h3>
+        <a href="rapport-financier.html">📈 Rapport Financier</a>
+        <a href="rapport-clients-restaurants.html" class="sel">📋 Rapport Clients / Restaurants</a>
+        <h3>Autres</h3>
+        <a href="notifications-paiements.html">🔔 Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">🔔 Notifications Utilisateurs</a>
+        <a href="corbeille.html">🗑 Corbeille</a>
+    </div>
+    <div class="main">
+        <div class="top">Rapport <span>Clients / Restaurants</span></div>
+        <div class="top-sub">Seulement les vraies commandes. Bazars effacés.</div>
+        <div class="card">
+            <label>Restaurant à afficher</label>
+            <select id="filtreResto" onchange="afficher()">
+                <option value="tous">Tous</option>
+            </select>
+            <div class="resume" id="resume"></div>
+            <button class="btn btn-bordeaux" onclick="effacerBazarsEtReparer()">🗑 EFFACER
+            </button>
+            <p id="msgInfo" style="font-size:13px;text-align:center;margin-top:10px;color:#7A0C1A;font-weight:700"></p>
+        </div>
+        <div class="card">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Détail des commandes</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Client</th>
+                            <th>Restaurant</th>
+                            <th>Commande</th>
+                            <th>Total</th>
+                            <th>Paiement</th>
+                            <th>Livrée</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+            <div id="vide" class="vide" style="display:none">Aucune commande pour le moment.</div>
+            <button class="btn btn-noir" onclick="window.print()">🖨 IMPRIMER CE RAPPORT</button>
+            <button class="btn btn-or" onclick="location.reload()">↻ Actualiser</button>
+        </div>
+    </div>
+    <script>
+        var VRAIES_KOUNDAR = [
+            { client: "Dyjo Diakité", telephone: "+223 75 79 89 09", quartier: "Magnambougou", restaurant: "LAIT KOUNDAR", plat: "Café koundar", quantite: 1, total: 1000, paiement: "Payé", livree: true, statut: "Livrée", date: "18/11/2026 15:55:38" },
+            { client: "Dyjo Diakité", telephone: "+223 75 79 89 09", quartier: "Magnambougou", restaurant: "LAIT KOUNDAR", plat: "Smoothie", quantite: 3, total: 3500, paiement: "Payé", livree: true, statut: "Livrée", date: "18/11/2026 16:20:57" }
+        ];
+        function lireBrut() {
+            var toutes = [];
+            ["rbm_commandes", "rbm_commandes_restaurant", "rbm_commandes_lait_koundar", "rbm_orders"].forEach(function (k) {
+                try { var a = JSON.parse(localStorage.getItem(k) || "[]"); if (Array.isArray(a)) toutes = toutes.concat(a); } catch (e) { }
+            });
+            return toutes;
+        }
+        function lireToutes() {
+            var propres = [];
+            lireBrut().forEach(function (c) {
+                var t = parseInt(c.total || c.prix || 0) || 0;
+                if (t <= 0) return;
+                var cle = (c.client || "") + "|" + (c.plat || c.commande || "") + "|" + t + "|" + (c.date || "");
+                var deja = propres.some(function (x) { return (x.client + "|" + (x.plat || x.commande) + "|" + (x.total || x.prix) + "|" + (x.date || "")) === cle; });
+                if (!deja) propres.push(c);
+            });
+            return propres;
+        }
+        // ===== AUTO-RÉPARATION ADMIN : si Admin est à 0, on remet les 2 vraies tout seul =====
+        (function autoReparer() {
+            var actuelles = lireToutes();
+            var aKoundar = actuelles.filter(function (c) { return String(c.restaurant || c.resto || "").toUpperCase().indexOf("KOUNDAR") !== -1; });
+            if (aKoundar.length === 0) {
+                localStorage.setItem("rbm_commandes", JSON.stringify(VRAIES_KOUNDAR));
+                localStorage.setItem("rbm_commandes_lait_koundar", JSON.stringify(VRAIES_KOUNDAR));
+            }
+        })();
+        function remplirFiltre() {
+            var sel = document.getElementById("filtreResto");
+            var garde = sel.value;
+            sel.innerHTML = '<option value="tous">Tous</option>';
+            var restos = [];
+            lireToutes().forEach(function (c) {
+                var r = c.restaurant || c.resto || "—";
+                if (r !== "—" && restos.indexOf(r) === -1) restos.push(r);
+            });
+            restos.forEach(function (r) { var o = document.createElement("option"); o.value = r; o.textContent = r; sel.appendChild(o); });
+            if (restos.indexOf(garde) !== -1) sel.value = garde;
+        }
+        function afficher() {
+            remplirFiltre();
+            var filtre = document.getElementById("filtreResto").value;
+            var toutes = lireToutes();
+            var affichees = toutes.filter(function (c) { return filtre === "tous" || (c.restaurant || c.resto) === filtre; });
+            var total = affichees.reduce(function (s, c) { return s + (parseInt(c.total || c.prix || 0) || 0); }, 0);
+            var payes = affichees.filter(function (c) { return c.paiement === "Payé"; }).length;
+            var livres = affichees.filter(function (c) { return c.livree === true || c.statut === "Livrée"; }).length;
+            document.getElementById("resume").innerHTML =
+                "Restaurant : <b>" + (filtre === "tous" ? "Tous" : filtre) + "</b><br>" +
+                "Total commandes : <b>" + affichees.length + "</b><br>" +
+                "Revenu total : <b>" + total.toLocaleString("fr-FR") + " F</b><br>" +
+                "Livrées : <b>" + livres + "</b> — Non livrées : <b>" + (affichees.length - livres) + "</b><br>" +
+                "Paiements reçus : <b>" + payes + "</b>";
+            var tbody = document.getElementById("tbody"), vide = document.getElementById("vide");
+            if (affichees.length === 0) { tbody.innerHTML = ""; vide.style.display = "block"; return; }
+            vide.style.display = "none";
+            tbody.innerHTML = affichees.map(function (c) {
+                return "<tr><td>" + (c.date || "—") + "</td><td><b>" + (c.client || "") + "</b><br><small>" + (c.telephone || c.tel || "") + "<br>" + (c.quartier || "") + "</small></td><td><b>" + (c.restaurant || c.resto || "") + "</b></td><td>" + (c.plat || c.commande || "") + " x " + (c.quantite || c.qty || 1) + "</td><td><b>" + (c.total || c.prix) + " F</b></td><td><span class='badge-paye'>Payé</span></td><td><span class='badge-livre'>✅ Livrée</span></td></tr>";
+            }).join("");
+        }
+        afficher();
+        function effacerBazarsEtReparer() {
+            if (!confirm("Effacer tous les bazars et garder seulement les 2 vraies de LAIT KOUNDAR (4500 F) ?")) return;
+            localStorage.setItem("rbm_commandes", JSON.stringify(VRAIES_KOUNDAR));
+            localStorage.setItem("rbm_commandes_lait_koundar", JSON.stringify(VRAIES_KOUNDAR));
+            document.getElementById("msgInfo").textContent = "Bazars effacés. Il reste 2 vraies : Café koundar 1000 F + Smoothie 3500 F = 4500 F.";
+            afficher();
+        }
+    </script>
+</body>
+
+</html>

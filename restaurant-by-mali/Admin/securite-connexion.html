@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Securite et Connexion — Restaurant By Mali — Sous Surveillance</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 10
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 21px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #9A938A;
+            font-size: 12px;
+            margin: 8px 0 16px;
+            word-break: break-word
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase;
+            word-break: break-word
+        }
+
+        .sidebar a {
+            color: #D8D2C9;
+            text-decoration: none;
+            padding: 10px 10px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid #2A231E
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 250px;
+            padding: 28px 22px;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: hidden
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .top h2 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            font-weight: 400;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .top h2 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .top p {
+            color: #7A7268;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 720px;
+            word-break: break-word
+        }
+
+        .top .date {
+            font-size: 12px;
+            color: #9A938A;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: normal
+        }
+
+        .surveillance {
+            background: #1A1512;
+            color: #fff;
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-left: 6px solid #A83200;
+            width: 100%
+        }
+
+        .surveillance b {
+            color: #C9A227;
+            word-break: break-word
+        }
+
+        .surveillance p {
+            font-size: 13px;
+            color: #D8D2C9;
+            margin-top: 4px;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        .surveillance .pill {
+            background: #A83200;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .6px;
+            white-space: nowrap
+        }
+
+        .kpi {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .kpi-card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            min-width: 0;
+            word-break: break-word
+        }
+
+        .kpi-card small {
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9A938A;
+            font-weight: 700
+        }
+
+        .kpi-card h3 {
+            font-family: Georgia, serif;
+            font-size: 26px;
+            margin: 10px 0 4px;
+            font-weight: 400
+        }
+
+        .kpi-card p {
+            color: #7A7268;
+            font-size: 13px;
+            word-break: break-word
+        }
+
+        .kpi-card.noir {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .kpi-card.noir small {
+            color: #C9A227
+        }
+
+        .kpi-card.noir p {
+            color: #C9A227
+        }
+
+        .kpi-card.rouge {
+            background: #FFF5F5;
+            border-color: #FCE4E4
+        }
+
+        .kpi-card.rouge h3 {
+            color: #A83200
+        }
+
+        .barre {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .barre input {
+            flex: 1;
+            min-width: 180px;
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px
+        }
+
+        .barre select {
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px;
+            max-width: 100%
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 16px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-rouge {
+            background: #A83200;
+            color: #fff
+        }
+
+        .btn-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .config {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            width: 100%
+        }
+
+        .config b {
+            font-size: 15px;
+            word-break: break-word
+        }
+
+        .config p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 4px;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        .switch {
+            position: relative;
+            width: 58px;
+            height: 30px;
+            min-width: 58px;
+            background: #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            flex-shrink: 0
+        }
+
+        .switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%
+        }
+
+        .switch.on {
+            background: #1A1512
+        }
+
+        .switch.on::after {
+            left: 31px;
+            background: #C9A227
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: normal;
+            word-break: break-word;
+            display: inline-block;
+            line-height: 1.3
+        }
+
+        .badge.on {
+            background: #D8F3DC;
+            color: #1B6B2E;
+            border: 1.5px solid #1B6B2E
+        }
+
+        .badge.off {
+            background: #FCE4E4;
+            color: #8A1A1A;
+            border: 1.5px solid #A83200
+        }
+
+        .badge.admin {
+            background: #1A1512;
+            color: #C9A227
+        }
+
+        .badge.restaurant {
+            background: #FFF3CD;
+            color: #7A5A00
+        }
+
+        .badge.client {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.deco {
+            background: #FFE8CC;
+            color: #7A3A00;
+            border: 1.5px solid #E67E00
+        }
+
+        .section {
+            margin-top: 28px;
+            width: 100%
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #F1E3C8;
+            padding-bottom: 12px
+        }
+
+        .section-head h3 {
+            font-family: Georgia, serif;
+            font-size: 21px;
+            font-weight: 400;
+            word-break: break-word;
+            line-height: 1.3
+        }
+
+        .section-head p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 4px;
+            word-break: break-word
+        }
+
+        .liste {
+            margin-top: 14px;
+            display: grid;
+            gap: 12px;
+            width: 100%
+        }
+
+        .conn-card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            min-width: 0
+        }
+
+        .conn-card.bloque {
+            border-left: 6px solid #A83200;
+            background: #FFFEF8
+        }
+
+        .conn-card.ok {
+            border-left: 6px solid #1B6B2E
+        }
+
+        .conn-card.deco {
+            border-left: 6px solid #E67E00;
+            background: #FFFEF8
+        }
+
+        .conn-top {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            width: 100%;
+            min-width: 0
+        }
+
+        .conn-card h4 {
+            font-size: 15px;
+            line-height: 1.5;
+            word-break: break-word;
+            white-space: normal;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center
+        }
+
+        .conn-card p {
+            color: #666;
+            font-size: 13.5px;
+            margin-top: 6px;
+            line-height: 1.6;
+            word-break: break-word;
+            white-space: normal
+        }
+
+        .conn-card small {
+            font-size: 12px;
+            color: #9A938A;
+            word-break: break-word
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            flex-wrap: wrap;
+            width: 100%
+        }
+
+        .btn-petit {
+            padding: 10px 12px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 12px;
+            flex: 1;
+            min-width: 140px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.3
+        }
+
+        .btn-bloquer {
+            background: #A83200;
+            color: #fff;
+            border: 2px solid #5A0F0F
+        }
+
+        .btn-debloquer {
+            background: #1B6B2E;
+            color: #fff;
+            border: 2px solid #0F3D1A
+        }
+
+        .btn-voir {
+            background: #C9A227;
+            color: #1A1512;
+            border: 2px solid #1A1512
+        }
+
+        .btn-supprimer {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        .btn-connecter {
+            background: #1B6B2E;
+            color: #fff;
+            border: 2px solid #0F3D1A
+        }
+
+        .btn-deconnecter {
+            background: #E67E00;
+            color: #fff;
+            border: 2px solid #7A3A00
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 50%;
+            background: #1A1512;
+            color: #C9A227;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            flex-shrink: 0
+        }
+
+        .lien-retour {
+            margin-top: 20px;
+            display: inline-block;
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 13px
+        }
+
+        @media(max-width:1100px) {
+            .kpi {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media(max-width:850px) {
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px 14px
+            }
+        }
+
+        @media(max-width:650px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 16px 12px
+            }
+
+            .kpi {
+                grid-template-columns: 1fr
+            }
+
+            .btn-petit {
+                min-width: 100%;
+                flex: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html" class="active">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html">Muna IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="top">
+            <div>
+                <h2><span>Securite</span> et Connexion</h2>
+                <p>Toi seul vois qui se connecte, quand, et tu peux deconnecter tout le monde sauf toi, ou reconnecter
+                    tout le monde.</p>
+                <p id="infoSync" style="color:#C9A227;font-weight:700;font-size:13px;margin-top:8px"></p>
+            </div>
+            <div class="date" id="dateJour"></div>
+        </div>
+        <div class="surveillance">
+            <div><b>ZONE SOUS SURVEILLANCE — ADMIN UNIQUEMENT</b>
+                <p>Chaque connexion et deconnection est enregistree. Toi l'Admin, tu restes toujours connecte.</p>
+            </div>
+            <div class="pill">SURVEILLANCE ACTIVE</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-card noir"><small>Connectes maintenant</small>
+                <h3 id="nbConnectes">0</h3>
+                <p>Clients + Restaurants connectes</p>
+            </div>
+            <div class="kpi-card"><small>Deconnectes</small>
+                <h3 id="nbDeconnectes">0</h3>
+                <p>Deconnectes par l'Admin</p>
+            </div>
+            <div class="kpi-card"><small>Comptes bloques</small>
+                <h3 id="nbBloques">0</h3>
+                <p>Ne peuvent plus se connecter</p>
+            </div>
+            <div class="kpi-card rouge"><small>Alerte</small>
+                <h3 id="alerteTxt">RAS</h3>
+                <p id="alerteP">Rien de suspect</p>
+            </div>
+        </div>
+        <div class="config">
+            <div><b>Double securite par code</b> <span class="badge on" id="badgeDouble">Activee</span>
+                <p>Quand quelqu'un se connecte, il doit entrer un code en plus. Pour les restaurants, c'est leur code
+                    #RBM.</p>
+            </div>
+            <div class="switch on" id="switchDouble" onclick="toggleDouble()"></div>
+        </div>
+        <div class="config">
+            <div><b>Bloquer apres 3 mauvais mots de passe</b> <span class="badge on" id="badgeBlocage">Active</span>
+                <p>Si quelqu'un se trompe 3 fois, son compte se bloque tout seul.</p>
+            </div>
+            <div class="switch on" id="switchBlocage" onclick="toggleBlocage()"></div>
+        </div>
+        <div class="barre">
+            <input id="recherche" placeholder="Rechercher : nom, telephone, type... Ex : Le Grill" oninput="afficher()">
+            <select id="filtreType" onchange="afficher()">
+                <option value="">Tous — Admin + Restaurants + Clients</option>
+                <option value="Admin">Admin seulement</option>
+                <option value="Restaurant">Restaurants seulement</option>
+                <option value="Client">Clients seulement</option>
+            </select>
+            <select id="filtreResultat" onchange="afficher()">
+                <option value="">Tous les resultats</option>
+                <option value="Reussie">Connecte</option>
+                <option value="Deconnecte">Deconnecte</option>
+                <option value="Echouee">Echouee</option>
+                <option value="Bloquee">Bloquee</option>
+            </select>
+            <button class="btn btn-or" onclick="afficher()">Rechercher</button>
+            <button class="btn btn-vert" onclick="reparer()">REPARER — Afficher les 8 + 2</button>
+        </div>
+        <!-- LES 2 GROS BOUTONS -->
+        <div class="barre" style="margin-top:12px">
+            <button class="btn btn-rouge" onclick="deconnecterTout()" style="flex:1;min-width:220px">DECONNECTER TOUT LE
+                MONDE — SAUF MOI L'ADMIN</button>
+            <button class="btn btn-vert" onclick="connecterTout()" style="flex:1;min-width:220px">CONNECTER TOUT LE
+                MONDE</button>
+        </div>
+        <div class="section">
+            <div class="section-head">
+                <div>
+                    <h3>Historique des connexions — Les dernieres en premier</h3>
+                    <p id="nbLignes">0 connexion affichee</p>
+                </div><span style="font-size:12px;color:#9A938A;font-weight:700">SYNCHRONISE : RESTAURANTS + CLIENTS +
+                    NOTIFICATIONS</span>
+            </div>
+            <div class="liste" id="listeConnexions"></div>
+            <p id="vide"
+                style="display:none;color:#888;margin-top:12px;text-align:center;padding:30px;background:#fff;border-radius:16px">
+                Aucune connexion. Clique sur REPARER en haut.</p>
+        </div>
+        <div class="section">
+            <div class="section-head">
+                <div>
+                    <h3>Comptes bloques</h3>
+                    <p id="nbBloques2">0 compte bloque</p>
+                </div>
+            </div>
+            <div class="liste" id="listeBloques"></div>
+            <p id="msgBloques"
+                style="color:#888;font-size:13px;margin-top:10px;text-align:center;padding:20px;background:#fff;border-radius:16px">
+                Aucun compte bloque pour le moment.</p>
+        </div>
+        <div class="barre">
+            <button class="btn btn-noir" onclick="effacerHistorique()">EFFACER L'HISTORIQUE</button>
+        </div>
+        <a class="lien-retour" href="dashboard.html">Retour au Tableau de bord</a>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        document.getElementById("dateJour").textContent = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+        function getSecu() { return JSON.parse(localStorage.getItem("rbm_secu") || '{"double":true,"blocage":true}'); }
+        function saveSecu(s) { localStorage.setItem("rbm_secu", JSON.stringify(s)); }
+        function refreshSecu() {
+            let s = getSecu();
+            document.getElementById("switchDouble").className = "switch " + (s.double ? "on" : "");
+            document.getElementById("badgeDouble").textContent = s.double ? "Activee" : "Eteinte";
+            document.getElementById("badgeDouble").className = "badge " + (s.double ? "on" : "off");
+            document.getElementById("switchBlocage").className = "switch " + (s.blocage ? "on" : "");
+            document.getElementById("badgeBlocage").textContent = s.blocage ? "Active" : "Eteint";
+            document.getElementById("badgeBlocage").className = "badge " + (s.blocage ? "on" : "off");
+        }
+        function toggleDouble() { let s = getSecu(); s.double = !s.double; saveSecu(s); refreshSecu(); }
+        function toggleBlocage() { let s = getSecu(); s.blocage = !s.blocage; saveSecu(s); refreshSecu(); }
+        function getRestos() {
+            let r = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]");
+            if (r.length < 8) {
+                r = [
+                    { id: 1, nom: "Le Grill - Bamako", quartier: "ACI 2000, Bamako", code: "+223 70 00 00 01", statut: "Actif" },
+                    { id: 2, nom: "Sandwich+", quartier: "Banankabougou, Bamako", code: "+223 70 00 00 02", statut: "Actif" },
+                    { id: 3, nom: "Le Relax", quartier: "Hippodrome, Bamako", code: "+223 70 00 00 03", statut: "Actif" },
+                    { id: 4, nom: "Maquis Le Savana", quartier: "Badalabougou, Bamako", code: "+223 70 00 00 04", statut: "Actif" },
+                    { id: 5, nom: "Chez Fatoumata", quartier: "Magnambougou, Bamako", code: "+223 70 00 00 05", statut: "Actif" },
+                    { id: 6, nom: "Le Faso", quartier: "Hamdalaye, Bamako", code: "+223 70 00 00 06", statut: "Actif" },
+                    { id: 7, nom: "Maquis Kati", quartier: "Kati", code: "+223 70 00 00 07", statut: "Actif" },
+                    { id: 8, nom: "Douceur Sucrée", quartier: "ACI 2000, Bamako", code: "+223 70 00 00 08", statut: "Actif" }
+                ];
+                localStorage.setItem("rbm_restaurants", JSON.stringify(r));
+            }
+            return r;
+        }
+        function getClients() {
+            let c = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+            if (c.length === 0) {
+                c = [
+                    { id: 1, nom: "Awa Diallo", tel: "+223 70 11 22 33", adresse: "ACI 2000, Bamako", points: 120, statut: "Actif" },
+                    { id: 2, nom: "Moussa Traoré", tel: "+223 65 44 33 22", adresse: "Hippodrome, Bamako", points: 45, statut: "Actif" }
+                ];
+                localStorage.setItem("rbm_clients", JSON.stringify(c));
+            }
+            return c;
+        }
+        function getConnexions() { return JSON.parse(localStorage.getItem("rbm_connexions") || "[]"); }
+        function saveConnexions(d) { localStorage.setItem("rbm_connexions", JSON.stringify(d)); }
+        function pushNotifUsers(titre, texte, type) {
+            let n = JSON.parse(localStorage.getItem("rbm_notif_users") || "[]");
+            n.unshift({ id: Date.now(), titre: titre, texte: texte, type: type || "Client", date: "A l'instant", lu: false });
+            localStorage.setItem("rbm_notif_users", JSON.stringify(n));
+        }
+        function reparerAuto() {
+            let restos = getRestos();
+            let clients = getClients();
+            let conns = getConnexions();
+            let noms = conns.map(c => c.nom.toLowerCase());
+            let ajoute = 0;
+            if (!noms.includes("admin restaurant by mali")) {
+                conns.unshift({ id: 1, nom: "Admin Restaurant By Mali", type: "Admin", tel: "+22364716909", quand: "Aujourd'hui 15:00", resultat: "Reussie", bloque: false, connecte: true });
+                ajoute++;
+            }
+            restos.forEach((r) => {
+                if (!noms.includes(r.nom.toLowerCase())) {
+                    conns.push({ id: 100 + r.id, nom: r.nom, type: "Restaurant", tel: r.code || r.tel || "+223 70 00 00 0" + r.id, quand: "Aujourd'hui 12:30", resultat: "Reussie", bloque: (r.statut === "Suspendu"), connecte: true });
+                    ajoute++;
+                }
+            });
+            clients.forEach((c) => {
+                if (!noms.includes((c.nom || "").toLowerCase())) {
+                    conns.push({ id: 200 + c.id, nom: c.nom, type: "Client", tel: c.tel || c.telephone || "", quand: "Aujourd'hui 11:15", resultat: "Reussie", bloque: (c.statut === "Suspendu"), connecte: true });
+                    ajoute++;
+                }
+            });
+            if (ajoute > 0) saveConnexions(conns);
+            return ajoute;
+        }
+        function reparer() { let n = reparerAuto(); afficher(); alert("Repare ! " + n + " connexion(s) ajoutee(s).\nTu dois voir : Admin + 8 restaurants + 2 clients = 11 lignes."); }
+        reparerAuto();
+        function afficher() {
+            let q = (document.getElementById("recherche").value || "").toLowerCase();
+            let ft = document.getElementById("filtreType").value;
+            let fr = document.getElementById("filtreResultat").value;
+            let all = getConnexions();
+            let data = all.filter(c => {
+                let txt = (c.nom + " " + c.tel + " " + c.type + " " + c.resultat).toLowerCase();
+                let okQ = !q || txt.includes(q);
+                let okT = !ft || c.type === ft;
+                let okR = !fr || c.resultat.includes(fr);
+                return okQ && okT && okR;
+            });
+            document.getElementById("nbConnectes").textContent = all.filter(c => c.connecte && !c.bloque).length;
+            document.getElementById("nbDeconnectes").textContent = all.filter(c => !c.connecte).length;
+            document.getElementById("nbBloques").textContent = all.filter(c => c.bloque).length;
+            let echouees = all.filter(c => c.resultat.includes("Echouee")).length;
+            document.getElementById("alerteTxt").textContent = echouees >= 3 ? "Attention" : "RAS";
+            document.getElementById("alerteP").textContent = echouees >= 3 ? echouees + " tentatives echouees, verifie." : "Rien de suspect";
+            document.getElementById("infoSync").textContent = "Synchronise : " + getRestos().length + " restaurants — " + getClients().length + " clients — " + all.length + " connexions";
+            document.getElementById("nbLignes").textContent = data.length + " connexion affichee";
+            document.getElementById("vide").style.display = data.length === 0 ? "block" : "none";
+            let box = document.getElementById("listeConnexions"); box.innerHTML = "";
+            data.forEach(c => {
+                let badgeType = c.type === "Admin" ? "<span class='badge admin'>ADMIN</span>" : c.type === "Restaurant" ? "<span class='badge restaurant'>RESTAURANT</span>" : "<span class='badge client'>CLIENT</span>";
+                let badgeRes = "";
+                if (c.bloque) badgeRes = "<span class='badge off'>BLOQUEE</span>";
+                else if (!c.connecte) badgeRes = "<span class='badge deco'>DECONNECTE</span>";
+                else if (c.resultat.includes("Reussie")) badgeRes = "<span class='badge on'>CONNECTE</span>";
+                else if (c.resultat.includes("Echouee")) badgeRes = "<span class='badge off'>ECHOUEE — MAUVAIS MOT DE PASSE</span>";
+                else badgeRes = "<span class='badge deco'>" + c.resultat + "</span>";
+                let lettre = (c.nom || "I").charAt(0).toUpperCase();
+                let cls = c.bloque ? "bloque" : (!c.connecte ? "deco" : "ok");
+                // Boutons par personne — jamais BLOQUER + DEBLOQUER en meme temps
+                let btnBloque = c.bloque
+                    ? "<button class='btn-petit btn-debloquer' onclick='debloquer(" + c.id + ")'>DEBLOQUER</button>"
+                    : "<button class='btn-petit btn-bloquer' onclick='bloquer(" + c.id + ")'>BLOQUER</button>";
+                let btnConnexion = "";
+                if (c.type !== "Admin") {
+                    if (c.connecte) btnConnexion = "<button class='btn-petit btn-deconnecter' onclick='deconnecterUn(" + c.id + ")'>DECONNECTER</button>";
+                    else btnConnexion = "<button class='btn-petit btn-connecter' onclick='connecterUn(" + c.id + ")'>CONNECTER</button>";
+                } else {
+                    btnConnexion = "<span class='badge admin' style='text-align:center;padding:10px'>TOI — TU RESTES CONNECTE</span>";
+                }
+                let btnVoir = c.type === "Restaurant" ? "<button class='btn-petit btn-voir' onclick='voirRestos()'>VOIR DANS RESTAURANTS</button>" : c.type === "Client" ? "<button class='btn-petit btn-voir' onclick='voirClients()'>VOIR DANS CLIENTS</button>" : "<button class='btn-petit btn-voir' onclick='voirProfil()'>VOIR MON PROFIL</button>";
+                box.innerHTML += "<div class='conn-card " + cls + "'><div class='conn-top'><div class='avatar'>" + lettre + "</div><div style='flex:1;min-width:0'><h4>" + c.nom + " " + badgeType + " " + badgeRes + "</h4><p>Type : <b>" + c.type + "</b><br>Telephone : <b>" + c.tel + "</b><br>Quand : " + c.quand + "<br>Resultat : " + c.resultat + "</p><small>Surveillance : connexion enregistree</small></div></div><div class='actions'>" + btnBloque + btnConnexion + btnVoir + "<button class='btn-petit btn-supprimer' onclick='supprimer(" + c.id + ")'>SUPPRIMER CETTE LIGNE</button></div></div>";
+            });
+            let bloques = all.filter(c => c.bloque);
+            document.getElementById("nbBloques2").textContent = bloques.length + " compte bloque";
+            let box2 = document.getElementById("listeBloques"); box2.innerHTML = "";
+            bloques.forEach(c => {
+                box2.innerHTML += "<div class='conn-card bloque'><div class='conn-top'><div class='avatar'>" + (c.nom || "I").charAt(0).toUpperCase() + "</div><div style='flex:1;min-width:0'><h4>" + c.nom + " — BLOQUE</h4><p>Type : " + c.type + " — Telephone : " + c.tel + " — Raison : " + c.resultat + "</p></div></div><div class='actions'><button class='btn-petit btn-debloquer' onclick='debloquer(" + c.id + ")'>DEBLOQUER</button></div></div>";
+            });
+            document.getElementById("msgBloques").style.display = bloques.length ? "none" : "block";
+        }
+        // --- UN SEUL UTILISATEUR ---
+        function deconnecterUn(id) {
+            let data = getConnexions(); let it = data.find(x => x.id === id);
+            if (it.type === "Admin") { alert("Tu ne peux pas te deconnecter toi-meme ici. Utilise le menu Deconnecter."); return; }
+            if (!confirm("DECONNECTER " + it.nom + " ?\n\nIl devra se reconnecter. Il n'est pas bloque.")) return;
+            it.connecte = false; it.resultat = "Deconnecte par l'Admin"; saveConnexions(data);
+            localStorage.removeItem("rbm_client"); localStorage.removeItem("rbm_restaurant");
+            pushNotifUsers("Deconnecte : " + it.nom, it.nom + " a ete deconnecte par l'Admin.", it.type);
+            afficher(); alert(it.nom + " DECONNECTE.");
+        }
+        function connecterUn(id) {
+            let data = getConnexions(); let it = data.find(x => x.id === id);
+            if (it.bloque) { alert(it.nom + " est BLOQUE. Debloque-le d'abord."); return; }
+            it.connecte = true; it.resultat = "Reussie"; it.quand = "Aujourd'hui"; saveConnexions(data);
+            pushNotifUsers("Connecte : " + it.nom, it.nom + " a ete reconnecte par l'Admin.", it.type);
+            afficher(); alert(it.nom + " CONNECTE.");
+        }
+        // --- TOUT LE MONDE ---
+        function deconnecterTout() {
+            if (!confirm("DECONNECTER TOUT LE MONDE ?\n\n- Les 8 restaurants seront deconnectes\n- Les 2 clients seront deconnectes\n- TOI l'Admin, tu restes connecte\n\nTu es sur ?")) return;
+            let data = getConnexions();
+            let nb = 0;
+            data.forEach(c => {
+                if (c.type !== "Admin" && c.connecte) { c.connecte = false; c.resultat = "Deconnecte par l'Admin"; nb++; }
+                if (c.type === "Admin") { c.connecte = true; c.resultat = "Reussie"; }
+            });
+            saveConnexions(data);
+            // Vraiment deconnecter : on efface les sessions Client et Restaurant, on garde Admin
+            localStorage.removeItem("rbm_client");
+            localStorage.removeItem("rbm_restaurant");
+            localStorage.removeItem("rbm_client_session");
+            localStorage.removeItem("rbm_restaurant_session");
+            // On NE touche PAS a rbm_admin
+            pushNotifUsers("Tout le monde deconnecte", "L'Admin a deconnecte tout le monde sauf lui-meme. " + nb + " comptes deconnectes.", "Admin");
+            afficher();
+            alert(nb + " comptes deconnectes.\nTOI l'Admin, tu restes connecte.\nLes restaurants et clients devront se reconnecter.");
+        }
+        function connecterTout() {
+            if (!confirm("CONNECTER TOUT LE MONDE ?\n\n- Les 8 restaurants seront reconnectes\n- Les 2 clients seront reconnectes\n- Les comptes BLOQUES restent bloques\n\nTu es sur ?")) return;
+            let data = getConnexions();
+            let nb = 0;
+            data.forEach(c => {
+                if (c.type !== "Admin" && !c.bloque && !c.connecte) { c.connecte = true; c.resultat = "Reussie"; c.quand = "Aujourd'hui"; nb++; }
+            });
+            saveConnexions(data);
+            // On remet aussi les statuts Actif dans Restaurants et Clients pour les non-bloques
+            let restos = getRestos(); restos.forEach(r => { let conn = data.find(c => c.nom === r.nom); if (conn && !conn.bloque) { r.statut = "Actif"; r.acces_compte = "AUTORISE"; } }); localStorage.setItem("rbm_restaurants", JSON.stringify(restos));
+            let clients = getClients(); clients.forEach(cl => { let conn = data.find(c => c.nom === cl.nom); if (conn && !conn.bloque) { cl.statut = "Actif"; } }); localStorage.setItem("rbm_clients", JSON.stringify(clients));
+            pushNotifUsers("Tout le monde connecte", "L'Admin a reconnecte tout le monde. " + nb + " comptes reconnectes. Les bloques restent bloques.", "Admin");
+            afficher();
+            alert(nb + " comptes reconnectes.\nLes comptes BLOQUES restent bloques.");
+        }
+        function bloquer(id) {
+            let data = getConnexions(); let it = data.find(x => x.id === id);
+            let raison = prompt("BLOQUER " + it.nom + " ?\n\nEcris la raison :");
+            if (raison === null) return; if (!raison.trim()) { alert("Tu dois ecrire la raison."); return; }
+            it.bloque = true; it.connecte = false; it.resultat = "Bloquee par l'Admin — " + raison; saveConnexions(data);
+            if (it.type === "Restaurant") { let r = getRestos(); let x = r.find(v => v.nom === it.nom); if (x) { x.statut = "Suspendu"; x.acces_compte = "BLOQUE"; localStorage.setItem("rbm_restaurants", JSON.stringify(r)); } }
+            if (it.type === "Client") { let cl = getClients(); let x = cl.find(v => v.nom === it.nom); if (x) { x.statut = "Suspendu"; localStorage.setItem("rbm_clients", JSON.stringify(cl)); } }
+            pushNotifUsers("Compte bloque : " + it.nom, it.nom + " a ete bloque depuis Securite et Connexion. Raison : " + raison + ".", it.type);
+            afficher(); alert(it.nom + " BLOQUE. Raison : " + raison);
+        }
+        function debloquer(id) {
+            let data = getConnexions(); let it = data.find(x => x.id === id);
+            it.bloque = false; it.connecte = true; it.resultat = "Reussie"; saveConnexions(data);
+            if (it.type === "Restaurant") { let r = getRestos(); let x = r.find(v => v.nom === it.nom); if (x) { x.statut = "Actif"; x.acces_compte = "AUTORISE"; localStorage.setItem("rbm_restaurants", JSON.stringify(r)); } }
+            if (it.type === "Client") { let cl = getClients(); let x = cl.find(v => v.nom === it.nom); if (x) { x.statut = "Actif"; localStorage.setItem("rbm_clients", JSON.stringify(cl)); } }
+            pushNotifUsers("Compte debloque : " + it.nom, it.nom + " a ete debloque depuis Securite et Connexion.", it.type);
+            afficher(); alert(it.nom + " est debloque et reconnecte.");
+        }
+        function supprimer(id) {
+            let data = getConnexions(); let it = data.find(x => x.id === id);
+            if (confirm("Supprimer cette ligne : " + it.nom + " ?")) { saveConnexions(data.filter(x => x.id !== id)); afficher(); }
+        }
+        function voirRestos() { window.location.href = "utilisateurs-restaurants.html"; }
+        function voirClients() { window.location.href = "utilisateurs-clients.html"; }
+        function voirProfil() { window.location.href = "profil-admin.html"; }
+        function effacerHistorique() {
+            if (confirm("Effacer tout l'historique des connexions ?")) {
+                saveConnexions([]); afficher();
+            }
+        }
+        refreshSecu(); afficher();
+    </script>
+</body>
+
+</html>

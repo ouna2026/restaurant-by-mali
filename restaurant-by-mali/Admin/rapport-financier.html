@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport Financier — Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 10
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 21px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #9A938A;
+            font-size: 12px;
+            margin: 8px 0 16px;
+            word-break: break-word
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase;
+            word-break: break-word
+        }
+
+        .sidebar a {
+            color: #D8D2C9;
+            text-decoration: none;
+            padding: 10px 10px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid #2A231E
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 250px;
+            padding: 28px 22px;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: hidden
+        }
+
+        .top h2 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            font-weight: 400;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .top h2 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .top p {
+            color: #7A7268;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 760px;
+            word-break: break-word
+        }
+
+        .top .date {
+            font-size: 12px;
+            color: #9A938A;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px
+        }
+
+        .surveillance {
+            background: #1A1512;
+            color: #fff;
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-left: 6px solid #A83200;
+            width: 100%
+        }
+
+        .surveillance b {
+            color: #C9A227;
+            word-break: break-word
+        }
+
+        .surveillance p {
+            font-size: 13px;
+            color: #D8D2C9;
+            margin-top: 4px;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        .surveillance .pill {
+            background: #A83200;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .6px;
+            white-space: nowrap
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            min-width: 0;
+            word-break: break-word
+        }
+
+        .card b {
+            font-size: 14px
+        }
+
+        .card h3 {
+            font-size: 26px;
+            margin: 8px 0;
+            word-break: break-word
+        }
+
+        .card p {
+            color: #888;
+            font-size: 13px;
+            word-break: break-word
+        }
+
+        .card.noir {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .card.noir p {
+            color: #C9A227
+        }
+
+        .card.vert {
+            border: 2px solid #1B6B2E
+        }
+
+        .card.rouge {
+            border: 2px solid #A83200
+        }
+
+        .card.or {
+            border: 2px solid #C9A227
+        }
+
+        .filtres {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: end;
+            width: 100%
+        }
+
+        .filtres label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 5px
+        }
+
+        .filtres select,
+        .filtres input {
+            padding: 11px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 10px;
+            font-size: 14px;
+            min-width: 170px
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 16px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .btn-gris {
+            background: #eee;
+            color: #1A1512
+        }
+
+        .btn-rouge {
+            background: #A83200;
+            color: #fff
+        }
+
+        .btn-bleu {
+            background: #1A4A8A;
+            color: #fff
+        }
+
+        .box {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            overflow-x: auto
+        }
+
+        .box h3 {
+            margin-bottom: 4px;
+            font-family: Georgia, serif;
+            font-weight: 400;
+            word-break: break-word
+        }
+
+        .box p {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 14px;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px
+        }
+
+        th,
+        td {
+            padding: 11px;
+            text-align: left;
+            border-bottom: 1px solid #F1E3C8;
+            font-size: 14px;
+            word-break: break-word;
+            vertical-align: top
+        }
+
+        th {
+            background: #FFF8EE
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            display: inline-block;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.3
+        }
+
+        .badge.on {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.off {
+            background: #FCE4E4;
+            color: #8A1A1A
+        }
+
+        .badge.att {
+            background: #FFF3CD;
+            color: #7A5A00
+        }
+
+        .badge.autorise {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.bloque {
+            background: #FCE4E4;
+            color: #8A1A1A
+        }
+
+        .btn-petit {
+            padding: 9px 11px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 12px;
+            margin: 4px 4px 0 0;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.3
+        }
+
+        .btn-voir {
+            background: #fff;
+            color: #1A1512;
+            border: 2px solid #1A1512
+        }
+
+        .btn-autoriser {
+            background: #1B6B2E;
+            color: #fff;
+            border: 2px solid #0F3D1A
+        }
+
+        .btn-bloquer {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        .btn-modif {
+            background: #fff;
+            color: #1A1512;
+            border: 2px solid #C9A227
+        }
+
+        .barre-ligne {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0
+        }
+
+        .barre-ligne b {
+            width: 180px;
+            min-width: 140px;
+            font-size: 13px;
+            word-break: break-word
+        }
+
+        .barre-fond {
+            flex: 1;
+            background: #F1E3C8;
+            border-radius: 20px;
+            height: 22px;
+            overflow: hidden
+        }
+
+        .barre-remplie {
+            height: 100%;
+            background: #C9A227;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: #1A1512;
+            font-size: 11px;
+            font-weight: 800
+        }
+
+        .barre-remplie.vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .barre-remplie.rouge {
+            background: #A83200;
+            color: #fff
+        }
+
+        .journal {
+            background: #1A1512;
+            color: #D8D2C9;
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .journal b {
+            color: #C9A227
+        }
+
+        .journal p {
+            font-size: 13px;
+            line-height: 1.7;
+            word-break: break-word;
+            margin-top: 6px
+        }
+
+        .lien-retour {
+            margin-top: 20px;
+            display: inline-block;
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 13px
+        }
+
+        @media(max-width:900px) {
+            .cards {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px
+            }
+        }
+
+        @media(max-width:650px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 16px 12px
+            }
+
+            .cards {
+                grid-template-columns: 1fr
+            }
+
+            .filtres select,
+            .filtres input {
+                min-width: 100%;
+                width: 100%
+            }
+        }
+
+        @media print {
+            .sidebar {
+                display: none
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .btn,
+            .filtres {
+                display: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html">Muna IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html" class="active">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="top">
+            <div>
+                <h2><span>Rapport</span> Financier — Tout l'argent, en clair</h2>
+                <p>Tu vois combien chaque restaurant a payé, combien est en attente, combien est bloqué. Pas de texte
+                    coupé. Tout est synchronisé avec Finance et Paiement.</p>
+                <p id="infoSync" style="color:#C9A227;font-weight:700;font-size:13px;margin-top:8px"></p>
+            </div>
+            <div class="date" id="dateJour"></div>
+        </div>
+        <div class="surveillance">
+            <div><b>ZONE SOUS SURVEILLANCE — ADMIN UNIQUEMENT</b>
+                <p>Regle stricte : Payé = AUTORISÉ. En attente ou Échoué = BLOQUÉ. Aucun restaurant bloqué ne peut se
+                    connecter.</p>
+            </div>
+            <div class="pill">SURVEILLANCE ACTIVE</div>
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-rouge" onclick="reparerRapport()">🔧 REPARER LE RAPPORT — Cliquer 1 fois si les
+                chiffres sont faux</button>
+            <button class="btn btn-gris" onclick="location.reload()">↻ RECHARGER LA PAGE</button>
+        </div>
+
+        <div class="cards">
+            <div class="card vert"><b>Chiffre d'affaires total</b>
+                <h3 id="totalCA">0 FCFA</h3>
+                <p>Tout ce qui a été payé</p>
+            </div>
+            <div class="card or"><b>En attente</b>
+                <h3 id="totalAttente">0 FCFA</h3>
+                <p>Pas encore payé — BLOQUÉ</p>
+            </div>
+            <div class="card rouge"><b>Échoué / Bloqué</b>
+                <h3 id="totalEchoue">0 FCFA</h3>
+                <p>Paiement échoué — BLOQUÉ</p>
+            </div>
+            <div class="card noir"><b>Restaurants payés</b>
+                <h3 id="totalPayes">0 / 8</h3>
+                <p>Sur 8 restaurants</p>
+            </div>
+        </div>
+
+        <div class="filtres">
+            <div><label>Filtrer par statut</label><select id="filtreStatut" onchange="afficher()">
+                    <option value="TOUS">Tous les statuts</option>
+                    <option value="Payé">Payé seulement</option>
+                    <option value="En attente">En attente seulement</option>
+                    <option value="Échoué">Échoué seulement</option>
+                </select></div>
+            <div><label>Rechercher un restaurant</label><input id="recherche" placeholder="Ex : Sandwich+, Le Grill..."
+                    oninput="afficher()"></div>
+            <div><label>Période</label><select id="filtrePeriode" onchange="afficher()">
+                    <option value="TOUT">Toute la période</option>
+                    <option value="CE_MOIS">Ce mois-ci</option>
+                    <option value="CE_JOUR">Aujourd'hui</option>
+                </select></div>
+            <button class="btn btn-noir" onclick="afficher()">FILTRER</button>
+            <button class="btn btn-gris" onclick="resetFiltres()">EFFACER LES FILTRES</button>
+            <button class="btn btn-bleu" onclick="window.print()">🖨 IMPRIMER LE RAPPORT</button>
+        </div>
+
+        <div class="box">
+            <h3>💰 Chiffre d'affaires par restaurant — Qui a payé le plus ?</h3>
+            <p>La barre la plus longue = le restaurant qui a payé le plus. Synchronisé avec Finance et Paiement.</p>
+            <div id="barres"></div>
+        </div>
+
+        <div class="box">
+            <h3>📋 Détail par restaurant — 8 restaurants, pas de texte coupé</h3>
+            <p>Chaque ligne = 1 restaurant. Payé = AUTORISÉ. En attente ou Échoué = BLOQUÉ.</p>
+            <table>
+                <tr>
+                    <th>Restaurant</th>
+                    <th>Quartier</th>
+                    <th>Montant</th>
+                    <th>Statut du paiement</th>
+                    <th>Accès au compte</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                <tbody id="tableBody"></tbody>
+            </table>
+            <p id="totalLignes" style="margin-top:12px;color:#1A1512;font-weight:800"></p>
+        </div>
+
+        <div class="box">
+            <h3>📅 Paiements par mois</h3>
+            <p>Combien par mois. Pour voir si ça monte ou si ça baisse.</p>
+            <table>
+                <tr>
+                    <th>Mois</th>
+                    <th>Nombre de paiements payés</th>
+                    <th>Montant payé</th>
+                    <th>Montant en attente</th>
+                </tr>
+                <tbody id="tableMois"></tbody>
+            </table>
+        </div>
+
+        <div class="journal">
+            <b>📓 JOURNAL DE SURVEILLANCE — Rapport Financier</b>
+            <p id="journalTexte">Chargement du journal...</p>
+            <p style="color:#9A938A;font-size:12px">Seul l'Admin voit ce journal. Tout changement de statut est noté
+                ici.</p>
+        </div>
+
+        <a class="lien-retour" href="dashboard.html">Retour au Tableau de bord</a>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        document.getElementById("dateJour").textContent = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+        function fmt(n) { return Number(n || 0).toLocaleString("fr-FR") + " FCFA"; }
+        function bonsPaiements() {
+            return [
+                { id: 1, restaurant: "Sandwich+", quartier: "Banankabougou", montant: 25000, statut: "Payé", date: "2026-11-10", methode: "Orange Money" },
+                { id: 2, restaurant: "Le Grill - Bamako", quartier: "ACI 2000", montant: 25000, statut: "Payé", date: "2026-11-09", methode: "Orange Money" },
+                { id: 3, restaurant: "Maquis Kati", quartier: "Kati", montant: 25000, statut: "En attente", date: "2026-11-11", methode: "Moov Money" },
+                { id: 4, restaurant: "Le Relax", quartier: "Hippodrome", montant: 25000, statut: "Payé", date: "2026-11-08", methode: "Orange Money" },
+                { id: 5, restaurant: "Chez Fatoumata", quartier: "Magnambougou", montant: 25000, statut: "Payé", date: "2026-11-07", methode: "Orange Money" },
+                { id: 6, restaurant: "Le Faso", quartier: "Hamdalaye", montant: 25000, statut: "Échoué", date: "2026-11-06", methode: "Moov Money" },
+                { id: 7, restaurant: "Douceur Sucrée", quartier: "Badalabougou", montant: 25000, statut: "Payé", date: "2026-11-05", methode: "Orange Money" },
+                { id: 8, restaurant: "Maquis Le Savana", quartier: "Sotuba", montant: 25000, statut: "En attente", date: "2026-11-12", methode: "Orange Money" }
+            ];
+        }
+        function paiementsSontCasses(liste) {
+            if (!Array.isArray(liste)) return true;
+            if (liste.length < 8) return true;
+            if (liste.some(p => !p.restaurant || !p.montant || !p.statut)) return true;
+            if (!liste.some(p => p.restaurant === "Sandwich+")) return true;
+            return false;
+        }
+        function reparerRapport() {
+            if (confirm("Reparer le rapport ? Ca remet les 8 bons paiements : 5 Payés, 2 En attente, 1 Échoué.")) {
+                localStorage.setItem("rbm_paiements", JSON.stringify(bonsPaiements()));
+                localStorage.setItem("rbm_rapport_version", "2");
+                location.reload();
+            }
+        }
+        let anciens = [];
+        try { anciens = JSON.parse(localStorage.getItem("rbm_paiements") || "[]"); } catch (e) { anciens = []; }
+        if (localStorage.getItem("rbm_rapport_version") !== "2" || paiementsSontCasses(anciens)) {
+            localStorage.setItem("rbm_paiements", JSON.stringify(bonsPaiements()));
+            localStorage.setItem("rbm_rapport_version", "2");
+        }
+        function getData() { try { return JSON.parse(localStorage.getItem("rbm_paiements") || "[]"); } catch (e) { return bonsPaiements(); } }
+        function saveData(d) { localStorage.setItem("rbm_paiements", JSON.stringify(d)); }
+        function resetFiltres() { document.getElementById("filtreStatut").value = "TOUS"; document.getElementById("recherche").value = ""; document.getElementById("filtrePeriode").value = "TOUT"; afficher(); }
+        function accesDe(statut) { return statut === "Payé" ? "AUTORISÉ" : "BLOQUÉ"; }
+        function classeAcces(statut) { return statut === "Payé" ? "autorise" : "bloque"; }
+        function classeStatut(statut) { return statut === "Payé" ? "on" : statut === "En attente" ? "att" : "off"; }
+        function afficher() {
+            let data = getData();
+            let filtre = document.getElementById("filtreStatut").value;
+            let rech = (document.getElementById("recherche").value || "").toLowerCase();
+            let periode = document.getElementById("filtrePeriode").value;
+            let auj = new Date().toISOString().slice(0, 10);
+            let moisActuel = auj.slice(0, 7);
+            let filtres = data.filter(p => {
+                if (filtre !== "TOUS" && p.statut !== filtre) return false;
+                if (rech && !(p.restaurant || "").toLowerCase().includes(rech) && !(p.quartier || "").toLowerCase().includes(rech)) return false;
+                if (periode === "CE_JOUR" && p.date !== auj) return false;
+                if (periode === "CE_MOIS" && (p.date || "").slice(0, 7) !== moisActuel) return false;
+                return true;
+            });
+            let ca = 0, att = 0, ech = 0, nbPayes = 0;
+            data.forEach(p => { if (p.statut === "Payé") { ca += Number(p.montant || 0); nbPayes++; } else if (p.statut === "En attente") { att += Number(p.montant || 0); } else if (p.statut === "Échoué") { ech += Number(p.montant || 0); } });
+            document.getElementById("totalCA").textContent = fmt(ca);
+            document.getElementById("totalAttente").textContent = fmt(att);
+            document.getElementById("totalEchoue").textContent = fmt(ech);
+            document.getElementById("totalPayes").textContent = nbPayes + " / 8";
+            let max = Math.max(...data.map(p => Number(p.montant || 0)), 1);
+            let barres = "";
+            [...data].sort((a, b) => Number(b.montant || 0) - Number(a.montant || 0)).forEach(p => {
+                let pct = Math.round(Number(p.montant || 0) / max * 100);
+                let coul = p.statut === "Payé" ? "vert" : p.statut === "En attente" ? "" : "rouge";
+                barres += "<div class='barre-ligne'><b>" + p.restaurant + " — " + p.quartier + "</b><div class='barre-fond'><div class='barre-remplie " + coul + "' style='width:" + pct + "%'>" + fmt(p.montant) + "</div></div><span class='badge " + classeStatut(p.statut) + "'>" + p.statut + "</span></div>";
+            });
+            document.getElementById("barres").innerHTML = barres;
+            let html = "";
+            filtres.forEach(p => {
+                html += "<tr><td><b>" + p.restaurant + "</b><br><span style='color:#888;font-size:12px'>" + (p.methode || "Orange Money") + "</span></td><td>" + p.quartier + "</td><td><b>" + fmt(p.montant) + "</b></td><td><span class='badge " + classeStatut(p.statut) + "'>" + p.statut + "</span></td><td><span class='badge " + classeAcces(p.statut) + "'>" + accesDe(p.statut) + "</span></td><td>" + p.date + "</td><td><button class='btn-petit btn-voir' onclick='voir(" + p.id + ")'>VOIR LE DETAIL</button><button class='btn-petit btn-autoriser' onclick='autoriser(" + p.id + ")'>AUTORISER</button><button class='btn-petit btn-bloquer' onclick='bloquer(" + p.id + ")'>BLOQUER</button></td></tr>";
+            });
+            document.getElementById("tableBody").innerHTML = html || "<tr><td colspan='7'>Aucun paiement avec ces filtres. Clique sur EFFACER LES FILTRES.</td></tr>";
+            document.getElementById("totalLignes").textContent = "Total affiché : " + filtres.length + " restaurant(s) — Chiffre d'affaires total : " + fmt(ca);
+            let parMois = {};
+            data.forEach(p => {
+                let m = (p.date || "2026-11-01").slice(0, 7);
+                if (!parMois[m]) parMois[m] = { nb: 0, paye: 0, att: 0 };
+                if (p.statut === "Payé") { parMois[m].nb++; parMois[m].paye += Number(p.montant || 0); }
+                if (p.statut === "En attente") { parMois[m].att += Number(p.montant || 0); }
+            });
+            let htmlMois = "";
+            Object.keys(parMois).sort().reverse().forEach(m => {
+                let v = parMois[m];
+                htmlMois += "<tr><td><b>" + m + "</b></td><td>" + v.nb + " paiement(s) payé(s)</td><td><b>" + fmt(v.paye) + "</b></td><td>" + fmt(v.att) + "</td></tr>";
+            });
+            document.getElementById("tableMois").innerHTML = htmlMois || "<tr><td colspan='4'>Aucun paiement.</td></tr>";
+            let restos = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]");
+            let clients = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+            document.getElementById("infoSync").textContent = "Synchronisé : " + data.length + " paiements — " + (restos.length || 8) + " restaurants — " + (clients.length || 2) + " clients";
+            document.getElementById("journalTexte").textContent = "Rapport consulté le " + new Date().toLocaleString("fr-FR") + ". Chiffre d'affaires : " + fmt(ca) + ". En attente : " + fmt(att) + ". Échoué : " + fmt(ech) + ". Restaurants AUTORISÉS : " + nbPayes + " sur 8. Restaurants BLOQUÉS : " + (8 - nbPayes) + " sur 8. Regle appliquée : Payé = AUTORISÉ, En attente ou Échoué = BLOQUÉ.";
+        }
+        function voir(id) { let p = getData().find(x => x.id === id); alert("DÉTAIL DU PAIEMENT\n\nRestaurant : " + p.restaurant + "\nQuartier : " + p.quartier + "\nMontant : " + fmt(p.montant) + "\nStatut : " + p.statut + "\nAccès : " + accesDe(p.statut) + "\nDate : " + p.date + "\nMéthode : " + (p.methode || "Orange Money")); }
+        function autoriser(id) { let d = getData(); let p = d.find(x => x.id === id); p.statut = "Payé"; saveData(d); afficher(); alert(p.restaurant + " est maintenant AUTORISÉ."); }
+        function bloquer(id) { let d = getData(); let p = d.find(x => x.id === id); p.statut = "Échoué"; saveData(d); afficher(); alert(p.restaurant + " est maintenant BLOQUÉ."); }
+        afficher();
+    </script>
+</body>
+
+</html>

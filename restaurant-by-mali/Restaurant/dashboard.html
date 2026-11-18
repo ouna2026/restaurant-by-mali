@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Restaurant - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            color: #1A1512
+        }
+
+        .header {
+            background: #1A1512;
+            color: #fff;
+            padding: 24px 20px;
+            text-align: center
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-size: 24px;
+            font-weight: 400
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 4px
+        }
+
+        .badge-autorise {
+            background: #1B6B2E;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-block;
+            margin-top: 10px
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 14px 20px;
+            justify-content: center
+        }
+
+        .nav a {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            padding: 9px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #1A1512;
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .nav a:hover {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px 30px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 14px
+        }
+
+        .card img.couv {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px
+        }
+
+        .photo-rond {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #C9A227
+        }
+
+        .flex {
+            display: flex;
+            gap: 14px;
+            align-items: center
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-blanc {
+            background: #fff;
+            border: 2px solid #F1E3C8
+        }
+
+        .btn-rouge {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        input {
+            width: 100%;
+            border: 1.5px solid #F1E3C8;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            outline: none;
+            margin-top: 8px
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #7A7268;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            display: block;
+            margin-top: 12px
+        }
+
+        .galerie {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .galerie img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 12px
+        }
+
+        .galerie small {
+            display: block;
+            text-align: center;
+            color: #888;
+            font-size: 11px;
+            margin-top: 4px
+        }
+
+        .plat {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border-bottom: 1px solid #F1E3C8;
+            padding: 12px 0
+        }
+
+        .plat img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px
+        }
+
+        .plat b {
+            font-size: 14px
+        }
+
+        .plat small {
+            color: #888;
+            font-size: 12px
+        }
+
+        .msg-ok {
+            font-size: 13px;
+            text-align: center;
+            margin-top: 10px;
+            color: #1B6B2E;
+            font-weight: 700
+        }
+
+        @media(max-width:600px) {
+            .galerie {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 id="titreNom">Mon Restaurant</h1>
+        <p>Bienvenue sur ta page Restaurant</p>
+        <span class="badge-autorise">Compte AUTORISÉ</span>
+    </div>
+    <div class="nav">
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="dashboard.html#menu">Mon Menu</a>
+        <a href="dashboard.html#profil">Profil</a>
+        <a href="dashboard.html#coins">Coins</a>
+        <a href="notification-commande.html">Commandes</a>
+        <a href="notification-paiement.html">Mon Abonnement</a>
+        <a href="paiement.html">Paiements</a>
+        <a href="rapport-mois.html">Rapport du Mois</a>
+        <a href="login.html" onclick="localStorage.removeItem('rbm_resto_connecte')">Se déconnecter</a>
+    </div>
+    <div class="main">
+
+        <div class="card">
+            <img id="photoCouverture" class="couv"
+                src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=400&fit=crop">
+            <div class="flex" style="margin-top:14px">
+                <img id="photoProfil" class="photo-rond"
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=300&fit=crop">
+                <div>
+                    <h3 style="font-family:Georgia,serif;font-weight:400;font-size:20px">Mon Restaurant</h3>
+                    <p id="infoResto" style="font-size:14px;line-height:1.7;color:#555"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 1. MENU : LE RESTAURANT PEUT TOUT CHANGER ===== -->
+        <div class="card" id="menu">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Mon Menu — Je peux changer</h3>
+            <p style="font-size:13px;color:#888;margin-top:6px">Ajoute, modifie, supprime tes plats. Le Client verra ton
+                nouveau menu tout de suite, avec ton nouveau prix et ta nouvelle photo.</p>
+            <div id="listeMenu"></div>
+            <p id="videMenu" style="font-size:13px;color:#888;margin-top:10px;display:none">Tu n'as pas encore de menu
+                perso. Ajoute ton premier plat ci-dessous.</p>
+
+            <div style="border-top:2px dashed #F1E3C8;margin-top:16px;padding-top:14px">
+                <h4 style="font-size:15px">Ajouter / Modifier un plat</h4>
+                <label>Nom du plat *</label>
+                <input type="text" id="platNom" placeholder="Ex : Poulet braisé">
+                <label>Prix en FCFA *</label>
+                <input type="number" id="platPrix" placeholder="Ex : 5000">
+                <label>Photo du plat</label>
+                <input type="file" id="platPhotoInput" accept="image/*" onchange="lirePhotoPlat(this)">
+                <img id="apercuPlat" src=""
+                    style="width:80px;height:80px;object-fit:cover;border-radius:12px;margin-top:8px;display:none">
+                <button class="btn btn-or" onclick="ajouterPlat()">+ AJOUTER CE PLAT À MON MENU</button>
+                <p id="msgMenu" class="msg-ok"></p>
+            </div>
+        </div>
+
+        <!-- ===== 2. PROFIL : PHOTO + NUMÉRO + QUARTIER ===== -->
+        <div class="card" id="profil">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Mon Profil — Changer ma photo, mon numéro</h3>
+            <p style="font-size:13px;color:#888;margin-top:6px">Si tu changes ici, ça change partout : Login, Dashboard,
+                et chez le Client. Tu peux changer autant de fois que tu veux.</p>
+            <div style="text-align:center;margin-top:14px">
+                <img id="photoProfil2" class="photo-rond"
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=300&fit=crop"
+                    style="width:120px;height:120px">
+                <p style="font-size:12px;color:#888;margin-top:6px">Ta photo actuelle</p>
+            </div>
+            <label>1. Choisir une nouvelle photo de profil</label>
+            <input type="file" accept="image/*" onchange="changerPhoto(this)">
+            <button class="btn btn-or" onclick="document.getElementById('inputPhotoCache').click()">📷 CHANGER MA PHOTO
+                DE PROFIL</button>
+            <input type="file" id="inputPhotoCache" accept="image/*" style="display:none" onchange="changerPhoto(this)">
+
+            <label>Mon numéro de téléphone — C'est ce numéro que le Client voit sur ton menu *</label>
+            <input type="text" id="inpTelProfil" placeholder="Ex : +223 70 00 00 00">
+            <label>Mon quartier</label>
+            <input type="text" id="inpQuartier" placeholder="Ex : ACI 2000 - Bamako">
+            <button class="btn btn-noir" onclick="sauvegarderProfil()">SAUVEGARDER MON PROFIL</button>
+            <p id="msgProfil" class="msg-ok"></p>
+        </div>
+
+        <!-- ===== 3. COINS ===== -->
+        <div class="card" id="coins">
+            <h3 style="font-family:Georgia,serif;font-weight:400">Mes coins — Mes 3 photos que le Client voit</h3>
+            <p style="font-size:13px;color:#888;margin-top:6px">Salle, Terrasse, Cuisine. Tu peux les changer aussi.</p>
+            <div class="galerie">
+                <div><img id="coin1"
+                        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop"><small>Salle</small><input
+                        type="file" accept="image/*" onchange="changerCoin(this,0)"></div>
+                <div><img id="coin2"
+                        src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop"><small>Terrasse</small><input
+                        type="file" accept="image/*" onchange="changerCoin(this,1)"></div>
+                <div><img id="coin3"
+                        src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop"><small>Cuisine</small><input
+                        type="file" accept="image/*" onchange="changerCoin(this,2)"></div>
+            </div>
+            <p id="msgCoin" class="msg-ok"></p>
+        </div>
+
+        <button class="btn btn-blanc"
+            onclick="localStorage.removeItem('rbm_resto_connecte');location.href='login.html'">Se déconnecter</button>
+    </div>
+    <script>
+        let nom = localStorage.getItem("rbm_resto_connecte") || "";
+        if (!nom) { location.href = "login.html"; }
+        document.getElementById("titreNom").textContent = nom;
+        let tel = localStorage.getItem("rbm_resto_tel_" + nom) || "+223 70 00 00 00";
+        let quartier = localStorage.getItem("rbm_resto_quartier_" + nom) || "";
+        let photo = localStorage.getItem("rbm_resto_photo_" + nom) || "";
+        try {
+            let dem = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]");
+            let d = dem.find(function (x) { return x.nom === nom; });
+            if (d) { if (!quartier) quartier = d.quartier || ""; tel = d.tel || tel; if (d.photo && !photo) photo = d.photo; }
+        } catch (e) { }
+        try {
+            let pays = JSON.parse(localStorage.getItem("rbm_paiements") || "[]");
+            let p = pays.find(function (x) { return x.nom === nom; });
+            if (p && !quartier) quartier = p.quartier || "";
+        } catch (e) { }
+        if (!quartier) quartier = "Bamako";
+        if (photo) { document.getElementById("photoProfil").src = photo; document.getElementById("photoProfil2").src = photo; document.getElementById("photoCouverture").src = photo; }
+        function refreshInfo() {
+            document.getElementById("infoResto").innerHTML = "Nom : <b>" + nom + "</b><br>Quartier : " + quartier + "<br>Téléphone : " + tel + "<br><small style='color:#888'>C'est ce numéro que le Client voit sur ton menu</small>";
+            document.getElementById("inpQuartier").value = quartier;
+            document.getElementById("inpTelProfil").value = tel;
+        }
+        refreshInfo();
+        try {
+            let coins = JSON.parse(localStorage.getItem("rbm_resto_coins_" + nom) || "[]");
+            if (coins[0]) document.getElementById("coin1").src = coins[0];
+            if (coins[1]) document.getElementById("coin2").src = coins[1];
+            if (coins[2]) document.getElementById("coin3").src = coins[2];
+        } catch (e) { }
+
+        // ===== MENU =====
+        function getMenu() { try { return JSON.parse(localStorage.getItem("rbm_menu_" + nom) || "[]"); } catch (e) { return []; } }
+        function saveMenu(m) { localStorage.setItem("rbm_menu_" + nom, JSON.stringify(m)); }
+        function afficherMenu() {
+            let menu = getMenu();
+            let zone = document.getElementById("listeMenu");
+            document.getElementById("videMenu").style.display = menu.length === 0 ? "block" : "none";
+            zone.innerHTML = menu.map(function (m, i) {
+                return "<div class='plat'><img src='" + (m.img || photo || "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop") + "'><div style='flex:1'><b>" + m.nom + "</b><br><small>" + m.prix + " F — " + nom + " — Tél : " + tel + "</small></div><div style='display:flex;flex-direction:column;gap:6px'><button class='btn btn-or' style='padding:8px 12px;margin:0;font-size:12px' onclick='modifierPlat(" + i + ")'>MODIFIER</button><button class='btn btn-rouge' style='padding:8px 12px;margin:0;font-size:12px' onclick='supprimerPlat(" + i + ")'>SUPPRIMER</button></div></div>";
+            }).join("");
+        }
+        afficherMenu();
+        let photoPlatBase64 = "";
+        function lirePhotoPlat(input) {
+            let f = input.files[0]; if (!f) return;
+            let r = new FileReader();
+            r.onload = function (e) { photoPlatBase64 = e.target.result; let img = document.getElementById("apercuPlat"); img.src = photoPlatBase64; img.style.display = "block"; };
+            r.readAsDataURL(f);
+        }
+        let indexEnCours = -1;
+        function ajouterPlat() {
+            let n = document.getElementById("platNom").value.trim();
+            let p = document.getElementById("platPrix").value.trim();
+            if (!n || !p) { document.getElementById("msgMenu").textContent = "Ecris le nom du plat et son prix."; return; }
+            let menu = getMenu();
+            let plat = { nom: n, prix: parseInt(p), img: photoPlatBase64 || "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop" };
+            if (indexEnCours >= 0) { menu[indexEnCours] = plat; indexEnCours = -1; document.getElementById("msgMenu").textContent = "Plat modifié ! Le Client voit ton nouveau plat."; }
+            else { menu.push(plat); document.getElementById("msgMenu").textContent = "Plat ajouté ! Le Client le voit maintenant."; }
+            saveMenu(menu);
+            afficherMenu();
+            document.getElementById("platNom").value = "";
+            document.getElementById("platPrix").value = "";
+            document.getElementById("platPhotoInput").value = "";
+            document.getElementById("apercuPlat").style.display = "none";
+            photoPlatBase64 = "";
+        }
+        function modifierPlat(i) {
+            let menu = getMenu();
+            let m = menu[i];
+            document.getElementById("platNom").value = m.nom;
+            document.getElementById("platPrix").value = m.prix;
+            photoPlatBase64 = m.img || "";
+            let img = document.getElementById("apercuPlat");
+            if (photoPlatBase64) { img.src = photoPlatBase64; img.style.display = "block"; }
+            indexEnCours = i;
+            document.getElementById("msgMenu").textContent = "Modifie le nom / prix / photo, puis clique AJOUTER pour sauvegarder.";
+            window.scrollTo(0, document.getElementById("menu").offsetTop);
+        }
+        function supprimerPlat(i) {
+            if (!confirm("Supprimer ce plat ? Le Client ne le verra plus.")) return;
+            let menu = getMenu();
+            menu.splice(i, 1);
+            saveMenu(menu);
+            afficherMenu();
+            document.getElementById("msgMenu").textContent = "Plat supprimé !";
+        }
+
+        // ===== PHOTO PROFIL =====
+        function changerPhoto(input) {
+            let f = input.files[0]; if (!f) return;
+            let r = new FileReader();
+            r.onload = function (e) {
+                localStorage.setItem("rbm_resto_photo_" + nom, e.target.result);
+                document.getElementById("photoProfil").src = e.target.result;
+                document.getElementById("photoProfil2").src = e.target.result;
+                document.getElementById("photoCouverture").src = e.target.result;
+                try {
+                    let dem = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]");
+                    dem.forEach(function (d) { if (d.nom === nom) d.photo = e.target.result; });
+                    localStorage.setItem("rbm_demandes_resto", JSON.stringify(dem));
+                } catch (e) { }
+                try {
+                    let restos = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]");
+                    restos.forEach(function (x) { if ((x.nom || x) === nom) x.photo = e.target.result; });
+                    localStorage.setItem("rbm_restaurants", JSON.stringify(restos));
+                } catch (e) { }
+                document.getElementById("msgProfil").textContent = "Photo changée ! Le Client verra ta nouvelle photo.";
+            };
+            r.readAsDataURL(f);
+        }
+
+        // ===== COINS =====
+        function changerCoin(input, index) {
+            let f = input.files[0]; if (!f) return;
+            let r = new FileReader();
+            r.onload = function (e) {
+                let coins = [];
+                try { coins = JSON.parse(localStorage.getItem("rbm_resto_coins_" + nom) || "[]"); } catch (e) { coins = []; }
+                coins[index] = e.target.result;
+                localStorage.setItem("rbm_resto_coins_" + nom, JSON.stringify(coins));
+                document.getElementById("coin" + (index + 1)).src = e.target.result;
+                document.getElementById("msgCoin").textContent = "Photo du coin changée ! Le Client la verra.";
+            };
+            r.readAsDataURL(f);
+        }
+
+        // ===== PROFIL : NUMÉRO + QUARTIER =====
+        function sauvegarderProfil() {
+            let q = document.getElementById("inpQuartier").value.trim();
+            let t = document.getElementById("inpTelProfil").value.trim();
+            if (q) { quartier = q; localStorage.setItem("rbm_resto_quartier_" + nom, q); }
+            if (t) { tel = t; localStorage.setItem("rbm_resto_tel_" + nom, t); }
+            refreshInfo();
+            afficherMenu();
+            document.getElementById("msgProfil").textContent = "Profil sauvegardé ! Ton nouveau numéro s'affiche sur ton menu chez le Client.";
+        }
+    </script>
+</body>
+
+</html>

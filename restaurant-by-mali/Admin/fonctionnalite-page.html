@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Design - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex
+        }
+
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background: #1A1512;
+            color: #fff;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto
+        }
+
+        .sidebar h2 {
+            color: #C9A227;
+            font-size: 18px;
+            margin-bottom: 20px
+        }
+
+        .sidebar a {
+            display: block;
+            color: #D8CFC0;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 4px
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512;
+            font-weight: 800
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 24px;
+            flex: 1;
+            max-width: 1200px;
+            width: 100%
+        }
+
+        .main h1 {
+            font-size: 22px;
+            margin-bottom: 6px
+        }
+
+        .main .sous {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 16px;
+            line-height: 1.5
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px
+        }
+
+        .tab {
+            border: 2px solid #F1E3C8;
+            background: #fff;
+            border-radius: 20px;
+            padding: 11px 16px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            color: #1A1512
+        }
+
+        .tab.active {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .tab.active span {
+            color: #C9A227
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            align-items: start
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 14px
+        }
+
+        .card h3 {
+            font-size: 15px;
+            margin-bottom: 12px
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 800;
+            color: #555;
+            display: block;
+            margin: 12px 0 6px;
+            text-transform: uppercase
+        }
+
+        input[type=text],
+        select {
+            width: 100%;
+            border: 2px solid #F1E3C8;
+            border-radius: 10px;
+            padding: 11px;
+            font-size: 14px;
+            outline: none
+        }
+
+        input[type=text]:focus,
+        select:focus {
+            border-color: #C9A227
+        }
+
+        input[type=color] {
+            width: 100%;
+            height: 44px;
+            border: 2px solid #F1E3C8;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 2px
+        }
+
+        input[type=range] {
+            width: 100%
+        }
+
+        .couleurs {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px
+        }
+
+        .couleur {
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent
+        }
+
+        .couleur.sel {
+            border-color: #1A1512;
+            transform: scale(1.1)
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 10px
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-rouge {
+            background: #C0392B;
+            color: #fff
+        }
+
+        .btn-blanc {
+            background: #fff;
+            border: 2px solid #F1E3C8
+        }
+
+        .apercu {
+            position: sticky;
+            top: 20px;
+            background: #fff;
+            border: 2px solid #1A1512;
+            border-radius: 18px;
+            overflow: hidden
+        }
+
+        .apercu-top {
+            padding: 22px 18px 24px;
+            text-align: center;
+            color: #fff;
+            transition: .3s
+        }
+
+        .apercu-top h2 {
+            font-size: 20px;
+            line-height: 1.3
+        }
+
+        .apercu-top p {
+            font-size: 12px;
+            opacity: .85;
+            margin-top: 6px
+        }
+
+        .apercu-body {
+            padding: 14px;
+            min-height: 360px
+        }
+
+        .apercu-search {
+            background: #fff;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #888;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+            margin-bottom: 12px
+        }
+
+        .apercu-cats {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px
+        }
+
+        .apercu-cat {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid #F1E3C8
+        }
+
+        .apercu-cat img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .apercu-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .apercu-card {
+            border-radius: 14px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #eee
+        }
+
+        .apercu-card .img {
+            height: 90px;
+            overflow: hidden
+        }
+
+        .apercu-card .img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block
+        }
+
+        .apercu-card .txt {
+            padding: 10px
+        }
+
+        .apercu-card b {
+            font-size: 13px
+        }
+
+        .apercu-card small {
+            font-size: 11px;
+            color: #888
+        }
+
+        .apercu-btn {
+            width: 100%;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 800;
+            margin-top: 8px;
+            cursor: pointer
+        }
+
+        .apercu-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            margin-top: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #888
+        }
+
+        .mini {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fff
+        }
+
+        .mini b {
+            font-size: 13px
+        }
+
+        .mini small {
+            font-size: 11px;
+            color: #888
+        }
+
+        .mini-photo {
+            width: 100%;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 8px
+        }
+
+        .bulle {
+            background: #F1E3C8;
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 13px;
+            margin-bottom: 8px;
+            line-height: 1.4
+        }
+
+        .bulle-blanche {
+            background: #fff;
+            border: 1px solid #eee
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 8px
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                display: none
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .grid2 {
+                grid-template-columns: 1fr
+            }
+
+            .apercu {
+                position: static
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Restaurant By Mali<br><small style="color:#D8CFC0;font-size:11px">Admin</small></h2>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Profil Admin</a>
+        <a href="securite-connexion.html">Sécurité / Connexion</a>
+        <a href="utilisateurs-restaurants.html">Restaurants</a>
+        <a href="utilisateurs-clients.html">Clients</a>
+        <a href="finance-paiement.html">Finance / Paiement</a>
+        <a href="fonctionnalite-site.html">Fonctionnalité Site</a>
+        <a href="fonctionnalite-ia.html">Fonctionnalité IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalité Jeux</a>
+        <a href="fonctionnalite-page.html" class="active">Studio Design Page</a>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <a href="rapport-clients-restaurants.html">Rapport Clients / Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <a href="deconnecter.html">Déconnecter</a>
+        <a href="login.html">Se déconnecter (Admin)</a>
+    </div>
+
+    <div class="main">
+        <h1>Studio Design — Modifie le design depuis l'Admin</h1>
+        <p class="sous">Choisis la page → change les couleurs, le titre, les boutons → vois l'aperçu qui <b>change
+                vraiment</b> pour chaque page → clique sur <b>APPLIQUER</b>.</p>
+
+        <div class="tabs" id="tabsPages">
+            <button class="tab active" data-page="accueil" onclick="choisirPage('accueil')"><span>Accueil
+                    Client</span></button>
+            <button class="tab" data-page="profil" onclick="choisirPage('profil')"><span>Profil Client</span></button>
+            <button class="tab" data-page="jeux" onclick="choisirPage('jeux')"><span>Jeux</span></button>
+            <button class="tab" data-page="ia" onclick="choisirPage('ia')"><span>IA Muna</span></button>
+            <button class="tab" data-page="commandes" onclick="choisirPage('commandes')"><span>Commandes</span></button>
+            <button class="tab" data-page="restaurant" onclick="choisirPage('restaurant')"><span>Page
+                    Restaurant</span></button>
+            <button class="tab" data-page="admin" onclick="choisirPage('admin')"><span>Ma Page Admin</span></button>
+        </div>
+
+        <div class="grid2">
+            <div>
+                <div class="card">
+                    <h3>1. Textes de la page <span id="nomPageOutil">— Accueil Client</span></h3>
+                    <label>Titre principal</label>
+                    <input type="text" id="inpTitre" placeholder="Ex : Bienvenue sur la meilleure app">
+                    <label>Sous-titre / Bonjour</label>
+                    <input type="text" id="inpSousTitre"
+                        placeholder="Ex : Bonjour ! Tu as faim ? Choisis ton restaurant.">
+                    <label>Texte du bouton principal</label>
+                    <input type="text" id="inpBouton" placeholder="Ex : Commander">
+                    <label>Texte en bas de page (Footer)</label>
+                    <input type="text" id="inpFooter" placeholder="Ex : Restaurant By Mali - Tout le Mali">
+                </div>
+                <div class="card">
+                    <h3>2. Couleurs — 32 couleurs + ta propre couleur</h3>
+                    <label>Couleur du haut (Header)</label>
+                    <div class="couleurs" id="palHeader"></div>
+                    <label style="margin-top:10px">Ou choisis ta propre couleur :</label>
+                    <input type="color" id="inpHeaderColor" value="#1A1512"
+                        oninput="changerCouleur('header', this.value)">
+                    <label>Couleur des boutons</label>
+                    <div class="couleurs" id="palBouton"></div>
+                    <label style="margin-top:10px">Ou choisis ta propre couleur :</label>
+                    <input type="color" id="inpBoutonColor" value="#C9A227"
+                        oninput="changerCouleur('bouton', this.value)">
+                    <label>Couleur du fond de la page</label>
+                    <div class="couleurs" id="palFond"></div>
+                    <label style="margin-top:10px">Ou choisis ta propre couleur :</label>
+                    <input type="color" id="inpFondColor" value="#FFF8EE" oninput="changerCouleur('fond', this.value)">
+                    <label>Couleur du texte des titres</label>
+                    <input type="color" id="inpTexteColor" value="#1A1512"
+                        oninput="changerCouleur('texte', this.value)">
+                </div>
+                <div class="card">
+                    <h3>3. Style</h3>
+                    <label>Police</label>
+                    <select id="inpPolice" onchange="appliquerStyle()">
+                        <option value="Arial,sans-serif">Arial (Simple)</option>
+                        <option value="Georgia,serif">Georgia (Élégant)</option>
+                        <option value="'Trebuchet MS',sans-serif">Trebuchet (Moderne)</option>
+                        <option value="Verdana,sans-serif">Verdana (Lisible)</option>
+                    </select>
+                    <label>Arrondi des cartes : <span id="valArrondi">18</span>px</label>
+                    <input type="range" id="inpArrondi" min="0" max="30" value="18"
+                        oninput="document.getElementById('valArrondi').textContent=this.value; appliquerStyle()">
+                    <label>Taille du titre : <span id="valTaille">22</span>px</label>
+                    <input type="range" id="inpTaille" min="16" max="32" value="22"
+                        oninput="document.getElementById('valTaille').textContent=this.value; appliquerStyle()">
+                </div>
+                <div class="card">
+                    <h3>4. Pour quel restaurant ? (Optionnel)</h3>
+                    <label>Appliquer à :</label>
+                    <select id="inpCible">
+                        <option value="tous">Tous les restaurants + Tous les clients</option>
+                        <option value="Le Grill - Bamako">Seulement : Le Grill - Bamako</option>
+                        <option value="Sandwich+">Seulement : Sandwich+</option>
+                        <option value="Le Relax">Seulement : Le Relax</option>
+                        <option value="Maquis Le Savana">Seulement : Maquis Le Savana</option>
+                        <option value="Chez Fatoumata">Seulement : Chez Fatoumata</option>
+                        <option value="Le Faso">Seulement : Le Faso</option>
+                        <option value="Maquis Kati">Seulement : Maquis Kati</option>
+                        <option value="Douceur Sucrée">Seulement : Douceur Sucrée</option>
+                    </select>
+                </div>
+                <button class="btn btn-or" onclick="appliquerDesign()">APPLIQUER CE DESIGN</button>
+                <button class="btn btn-noir" onclick="appliquerAToutesPages()">APPLIQUER À TOUTES LES PAGES</button>
+                <button class="btn btn-blanc" onclick="reinitialiserDesign()">REMETTRE LE DESIGN PAR DÉFAUT (Noir +
+                    Or)</button>
+                <button class="btn btn-rouge" onclick="effacerTousDesigns()">EFFACER TOUS MES DESIGNS</button>
+                <p id="msgOk" style="font-size:13px;color:#1A7A2E;font-weight:800;text-align:center;display:none">Design
+                    appliqué !</p>
+            </div>
+
+            <div>
+                <div class="apercu" id="apercuBox">
+                    <div class="apercu-top" id="apercuHeader">
+                        <h2 id="apercuTitre">Bienvenue sur la meilleure app<br>Restaurant By Mali</h2>
+                        <p id="apercuSousTitre">Bonjour ! Tu as faim ? Choisis ton restaurant.</p>
+                    </div>
+                    <div class="apercu-body" id="apercuBody"></div>
+                    <div style="padding:0 14px 14px">
+                        <div class="apercu-nav">
+                            <span>Accueil</span><span>Profil</span><span>IA</span><span>Jeux</span><span>Commandes</span>
+                        </div>
+                        <p id="apercuFooter" style="text-align:center;color:#999;font-size:11px;margin-top:10px">
+                            Restaurant By Mali - Bamako, Segou, Kayes, Kati - Tout le Mali</p>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:14px">
+                    <h3>Comment ça marche ?</h3>
+                    <p style="font-size:13px;line-height:1.7;color:#555">
+                        1. Tu choisis la page en haut<br>
+                        2. Tu changes les textes et les couleurs<br>
+                        3. L'aperçu à droite <b>change vraiment</b> pour cette page<br>
+                        4. Tu cliques sur <b>APPLIQUER</b><br>
+                        5. Le Client voit le nouveau design après <b>Ctrl + F5</b><br><br>
+                        Tout est enregistré dans <b>rbm_design</b>.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Designs enregistrés</h3>
+                    <div id="listeDesigns" style="font-size:13px;line-height:1.7"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let COULEURS_32 = ["#1A1512", "#C9A227", "#FFF8EE", "#FFFFFF", "#000000", "#E74C3C", "#C0392B", "#1A7A2E", "#27AE60", "#2980B9", "#1A3A8A", "#6A1B9A", "#E91E63", "#FF9800", "#FFEB3B", "#00BCD4", "#009688", "#795548", "#607D8B", "#FF5722", "#9C27B0", "#3F51B5", "#8BC34A", "#FFC107", "#FF4081", "#00E5FF", "#7A4A00", "#B7791F", "#F1E3C8", "#D8CFC0", "#888888", "#F5EBD6"];
+        let pageActuelle = "accueil";
+        let NOMS_PAGES = { accueil: "Accueil Client", profil: "Profil Client", jeux: "Jeux", ia: "IA Muna", commandes: "Commandes", restaurant: "Page Restaurant", admin: "Ma Page Admin" };
+        function getDesigns() { try { return JSON.parse(localStorage.getItem("rbm_design") || "{}"); } catch (e) { return {}; } }
+        function setDesigns(d) { localStorage.setItem("rbm_design", JSON.stringify(d)); }
+        function designParDefaut(page) {
+            return {
+                titre: page === "accueil" ? "Bienvenue sur la meilleure app" : page === "profil" ? "Mon Profil" : page === "jeux" ? "Jeux Restaurant By Mali" : page === "ia" ? "Bonjour, je suis Muna" : page === "commandes" ? "Mes Commandes" : page === "restaurant" ? "Mon Restaurant" : "Tableau de bord Admin",
+                sousTitre: page === "ia" ? "Dis-moi ton quartier, je te propose le restaurant le plus proche." : page === "jeux" ? "Joue, gagne des points, pas d'argent." : page === "profil" ? "Tes points, tes commandes, tes infos." : page === "commandes" ? "Suis tes commandes en direct." : "Bonjour ! Tu as faim ? Choisis ton restaurant.", bouton: page === "ia" ? "Envoyer" : page === "jeux" ? "Jouer" : page === "profil" ? "Modifier" : "Commander", footer: "Restaurant By Mali - Bamako, Segou, Kayes, Kati - Tout le Mali",
+                header: "#1A1512", boutonColor: "#C9A227", fond: "#FFF8EE", texte: "#1A1512", police: "Arial,sans-serif", arrondi: 18, taille: 22, cible: "tous"
+            };
+        }
+        function creerPalette(id, type) {
+            let zone = document.getElementById(id); zone.innerHTML = "";
+            COULEURS_32.forEach(c => {
+                let d = document.createElement("div"); d.className = "couleur"; d.style.background = c; d.title = c;
+                d.onclick = function () { changerCouleur(type, c); }; d.dataset.couleur = c; zone.appendChild(d);
+            });
+        }
+        creerPalette("palHeader", "header"); creerPalette("palBouton", "bouton"); creerPalette("palFond", "fond");
+        function changerCouleur(type, couleur) {
+            if (type === "header") document.getElementById("inpHeaderColor").value = couleur;
+            if (type === "bouton") document.getElementById("inpBoutonColor").value = couleur;
+            if (type === "fond") document.getElementById("inpFondColor").value = couleur;
+            if (type === "texte") document.getElementById("inpTexteColor").value = couleur;
+            appliquerStyle();
+            let palId = type === "header" ? "palHeader" : type === "bouton" ? "palBouton" : type === "fond" ? "palFond" : null;
+            if (palId) { document.querySelectorAll("#" + palId + " .couleur").forEach(el => { el.classList.toggle("sel", el.dataset.couleur.toLowerCase() === couleur.toLowerCase()); }); }
+        }
+
+        // === APERÇU QUI CHANGE VRAIMENT PAR PAGE — VRAIES PHOTOS ===
+        function apercuHTML(page, btnTxt) {
+            if (page === "profil") {
+                return '<div style="text-align:center"><img class="avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop"><b style="font-size:16px">Awa Diallo</b><br><small style="color:#888">ACI 2000 — Bamako • +223 70 11 22 33</small><br><span style="display:inline-block;background:#C9A227;padding:6px 14px;border-radius:20px;font-weight:800;font-size:13px;margin-top:8px">120 points</span></div>'
+                    + '<div class="mini" style="margin-top:12px"><b>Mes commandes</b><br><small>2 commandes • Dernière : Le Grill - Bamako</small></div>'
+                    + '<div class="mini"><b>Mon quartier</b><br><small>ACI 2000</small></div>'
+                    + '<button class="apercu-btn" id="apercuBtn1">' + btnTxt + '</button>';
+            }
+            if (page === "jeux") {
+                return '<div class="apercu-cards">'
+                    + '<div class="apercu-card"><div class="img"><img src="https://images.unsplash.com/photo-1614294148960-9aa740632a87?w=600&h=400&fit=crop"></div><div class="txt"><b>Snake</b><br><small>Mange et grandis</small><button class="apercu-btn" id="apercuBtn1">' + btnTxt + '</button></div></div>'
+                    + '<div class="apercu-card"><div class="img"><img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&h=400&fit=crop"></div><div class="txt"><b>Quiz du Mali</b><br><small>Teste tes connaissances</small><button class="apercu-btn" id="apercuBtn2">' + btnTxt + '</button></div></div></div>'
+                    + '<div class="mini" style="margin-top:10px"><b>Classement</b><br><small>1. Awa Diallo — 120 pts • 2. Moussa Traoré — 45 pts</small></div>';
+            }
+            if (page === "ia") {
+                return '<div style="text-align:center"><img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop"><b>Muna — Ton assistante</b></div>'
+                    + '<div class="bulle">Bonjour ! Tu es dans quel quartier ? Je te propose le restaurant le plus proche.</div>'
+                    + '<div class="bulle bulle-blanche" style="text-align:right">Je suis à ACI 2000, je veux du poulet.</div>'
+                    + '<div class="bulle">Le Grill - Bamako est le plus proche pour toi. Poulet braisé, riz. Tu veux commander ?</div>'
+                    + '<div class="apercu-search" style="margin:0">Écris ton message... <span style="float:right;font-weight:800;color:#1A1512">' + btnTxt + '</span></div>';
+            }
+            if (page === "commandes") {
+                return '<div class="mini"><b>Commande #1 — Le Grill - Bamako</b><br><small>Poulet braisé x1 • 5 000 F • En préparation</small><br><button class="apercu-btn" id="apercuBtn1">' + btnTxt + '</button></div>'
+                    + '<div class="mini"><b>Commande #2 — Sandwich+</b><br><small>Tacos x1 • 3 500 F • Livrée</small></div>';
+            }
+            if (page === "restaurant") {
+                return '<div class="mini"><img class="mini-photo" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=400&fit=crop"><b>Le Grill - Bamako</b><br><small>Statut : AUTORISÉ • Aujourd\'hui : 12 commandes</small></div>'
+                    + '<div class="mini"><b>Menu du jour</b><br><small>Poulet braisé — 5 000 F • Riz — 1 500 F</small><br><button class="apercu-btn" id="apercuBtn1">' + btnTxt + '</button></div>';
+            }
+            if (page === "admin") {
+                return '<div class="mini"><b>8 Restaurants</b><br><small>6 payés • 2 en attente</small></div>'
+                    + '<div class="mini"><b>2 Clients</b><br><small>Awa Diallo • Moussa Traoré</small></div>'
+                    + '<div class="mini"><b>Finance du jour</b><br><small>45 000 F reçus</small><br><button class="apercu-btn" id="apercuBtn1">' + btnTxt + '</button></div>';
+            }
+            return '<div class="apercu-search">Rechercher un restaurant, un plat...</div>'
+                + '<div class="apercu-cats"><div class="apercu-cat"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=200&h=200&fit=crop"></div><div class="apercu-cat"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=200&h=200&fit=crop"></div><div class="apercu-cat"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&h=200&fit=crop"></div><div class="apercu-cat"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=200&fit=crop"></div></div>'
+                + '<div class="apercu-cards">'
+                + '<div class="apercu-card"><div class="img"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=400&fit=crop"></div><div class="txt"><b>Le Grill - Bamako</b><br><small>Poulet braisé, Riz</small><button class="apercu-btn" id="apercuBtn1">' + btnTxt + '</button></div></div>'
+                + '<div class="apercu-card"><div class="img"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&h=400&fit=crop"></div><div class="txt"><b>Sandwich+</b><br><small>Tacos, Burger</small><button class="apercu-btn" id="apercuBtn2">' + btnTxt + '</button></div></div></div>';
+        }
+
+        function choisirPage(page) {
+            pageActuelle = page;
+            document.querySelectorAll("#tabsPages .tab").forEach(t => t.classList.toggle("active", t.dataset.page === page));
+            document.getElementById("nomPageOutil").textContent = "— " + NOMS_PAGES[page];
+            let designs = getDesigns();
+            let d = designs[page] || designParDefaut(page);
+            document.getElementById("inpTitre").value = d.titre;
+            document.getElementById("inpSousTitre").value = d.sousTitre;
+            document.getElementById("inpBouton").value = d.bouton;
+            document.getElementById("inpFooter").value = d.footer;
+            document.getElementById("inpHeaderColor").value = d.header;
+            document.getElementById("inpBoutonColor").value = d.boutonColor;
+            document.getElementById("inpFondColor").value = d.fond;
+            document.getElementById("inpTexteColor").value = d.texte;
+            document.getElementById("inpPolice").value = d.police;
+            document.getElementById("inpArrondi").value = d.arrondi;
+            document.getElementById("valArrondi").textContent = d.arrondi;
+            document.getElementById("inpTaille").value = d.taille;
+            document.getElementById("valTaille").textContent = d.taille;
+            document.getElementById("inpCible").value = d.cible || "tous";
+            appliquerStyle();
+            afficherListeDesigns();
+        }
+        function appliquerStyle() {
+            let header = document.getElementById("inpHeaderColor").value;
+            let bouton = document.getElementById("inpBoutonColor").value;
+            let fond = document.getElementById("inpFondColor").value;
+            let police = document.getElementById("inpPolice").value;
+            let arrondi = document.getElementById("inpArrondi").value;
+            let taille = document.getElementById("inpTaille").value;
+            let titre = document.getElementById("inpTitre").value || "Bienvenue";
+            let sous = document.getElementById("inpSousTitre").value || "";
+            let btnTxt = document.getElementById("inpBouton").value || "Commander";
+            let footer = document.getElementById("inpFooter").value || "";
+            let ap = document.getElementById("apercuBox");
+            ap.style.fontFamily = police;
+            document.getElementById("apercuHeader").style.background = header;
+            document.getElementById("apercuTitre").textContent = titre + " — Restaurant By Mali";
+            document.getElementById("apercuTitre").style.color = "#fff";
+            document.getElementById("apercuTitre").style.fontSize = taille + "px";
+            document.getElementById("apercuSousTitre").textContent = sous;
+            document.getElementById("apercuBody").style.background = fond;
+            document.getElementById("apercuBody").innerHTML = apercuHTML(pageActuelle, btnTxt);
+            document.querySelectorAll(".apercu-btn").forEach(b => { b.style.background = bouton; b.style.color = "#1A1512"; b.style.borderRadius = Math.max(6, arrondi - 8) + "px"; });
+            document.getElementById("apercuFooter").textContent = footer;
+            document.querySelectorAll(".apercu-card").forEach(c => c.style.borderRadius = arrondi + "px");
+            document.querySelectorAll(".mini").forEach(c => c.style.borderRadius = arrondi + "px");
+        }
+        function lireFormulaire() {
+            return { titre: document.getElementById("inpTitre").value || "Bienvenue", sousTitre: document.getElementById("inpSousTitre").value || "", bouton: document.getElementById("inpBouton").value || "Commander", footer: document.getElementById("inpFooter").value || "", header: document.getElementById("inpHeaderColor").value, boutonColor: document.getElementById("inpBoutonColor").value, fond: document.getElementById("inpFondColor").value, texte: document.getElementById("inpTexteColor").value, police: document.getElementById("inpPolice").value, arrondi: parseInt(document.getElementById("inpArrondi").value), taille: parseInt(document.getElementById("inpTaille").value), cible: document.getElementById("inpCible").value };
+        }
+        function appliquerDesign() {
+            let designs = getDesigns(); designs[pageActuelle] = lireFormulaire(); designs[pageActuelle].modifieLe = new Date().toLocaleString("fr-FR"); setDesigns(designs);
+            let msg = document.getElementById("msgOk"); msg.style.display = "block"; msg.textContent = "Design appliqué pour : " + NOMS_PAGES[pageActuelle] + " ! Va sur la page Client et fais Ctrl + F5.";
+            afficherListeDesigns(); setTimeout(() => { msg.style.display = "none"; }, 4000);
+        }
+        function appliquerAToutesPages() {
+            if (!confirm("Appliquer ce design à TOUTES les pages ?")) return;
+            let d = lireFormulaire(); let designs = getDesigns();
+            ["accueil", "profil", "jeux", "ia", "commandes", "restaurant"].forEach(p => { designs[p] = { ...d, titre: designs[p]?.titre || d.titre, modifieLe: new Date().toLocaleString("fr-FR") }; });
+            setDesigns(designs); alert("Design appliqué à toutes les pages !"); afficherListeDesigns();
+        }
+        function reinitialiserDesign() {
+            if (!confirm("Remettre le design par défaut Noir + Or pour : " + NOMS_PAGES[pageActuelle] + " ?")) return;
+            let designs = getDesigns(); delete designs[pageActuelle]; setDesigns(designs); choisirPage(pageActuelle); alert("Design par défaut remis");
+        }
+        function effacerTousDesigns() {
+            if (!confirm("Effacer TOUS tes designs ?")) return;
+            localStorage.removeItem("rbm_design"); choisirPage(pageActuelle); alert("Tous les designs effacés.");
+        }
+        function afficherListeDesigns() {
+            let designs = getDesigns(); let zone = document.getElementById("listeDesigns"); let cles = Object.keys(designs);
+            if (cles.length === 0) { zone.innerHTML = "<span style='color:#888'>Aucun design personnalisé. Tout est en Noir + Or par défaut.</span>"; return; }
+            zone.innerHTML = cles.map(k => "• <b>" + (NOMS_PAGES[k] || k) + "</b> — Header : " + designs[k].header + " • Bouton : " + designs[k].boutonColor + "<br>").join("");
+        }
+        ["inpTitre", "inpSousTitre", "inpBouton", "inpFooter"].forEach(id => { document.getElementById(id).addEventListener("input", appliquerStyle); });
+        ["inpHeaderColor", "inpBoutonColor", "inpFondColor", "inpTexteColor"].forEach(id => { document.getElementById(id).addEventListener("input", appliquerStyle); });
+        choisirPage("accueil");
+    </script>
+</body>
+
+</html>

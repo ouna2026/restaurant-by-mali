@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh
+        }
+
+        .sidebar {
+            width: 270px;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 22px;
+            line-height: 1.2
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #888;
+            font-size: 12px;
+            margin-top: 6px;
+            margin-bottom: 18px
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase
+        }
+
+        .sidebar a {
+            color: #ddd;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13.5px
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 270px;
+            padding: 32px 36px
+        }
+
+        .bienvenue {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 20px;
+            padding: 28px
+        }
+
+        .bienvenue h2 {
+            font-family: Georgia, serif;
+            font-size: 30px
+        }
+
+        .bienvenue h2 span {
+            color: #C9A227
+        }
+
+        .bienvenue p {
+            color: #777;
+            margin-top: 8px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 24px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 22px
+        }
+
+        .card b {
+            font-size: 32px;
+            color: #1A1512
+        }
+
+        .card p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 4px
+        }
+
+        .card.or {
+            border-top: 5px solid #C9A227;
+            background: #1A1512
+        }
+
+        .card.or b {
+            color: #C9A227
+        }
+
+        .card.or p {
+            color: #ccc
+        }
+
+        .bloc {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 24px;
+            margin-top: 24px
+        }
+
+        .bloc h3 {
+            font-family: Georgia, serif;
+            font-size: 19px;
+            margin-bottom: 6px
+        }
+
+        .bloc p {
+            color: #888;
+            font-size: 14px
+        }
+
+        @media(max-width:850px) {
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:600px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+
+        <div class="titre">Principal</div>
+        <a href="dashboard.html" class="active">📊 Tableau de bord</a>
+        <a href="profil-admin.html">👤 Mon Profil</a>
+        <a href="securite-connexion.html">🔒 Sécurité & Connexion</a>
+
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">🍽️ Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">👥 Utilisateurs Clients</a>
+
+        <div class="titre">Finance</div>
+        <a href="finance-paiement.html">💰 Finance & Paiement</a>
+
+        <div class="titre">Fonctionnalités du site</div>
+        <a href="fonctionnalite-site.html">⚙️ Fonctionnalité Site</a>
+        <a href="fonctionnalite-ia.html">🤖 Fonctionnalité IA</a>
+        <a href="fonctionnalite-jeux.html">🎮 Fonctionnalité Jeux</a>
+        <a href="fonctionnalite-page.html">📄 Fonctionnalité Page</a>
+
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">🔔 Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">🔔 Notifications Utilisateurs</a>
+
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">📄 Rapport Clients & Restaurants</a>
+        <a href="rapport-financier.html">📄 Rapport Financier</a>
+
+        <div class="bas">
+            <a href="deconnecter.html">🚪 Déconnecter</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="bienvenue">
+            <h2>Bienvenue, <span id="nomAdmin">Admin</span> 👋</h2>
+            <p>Numéro connecté : <b id="telAdmin"></b> • Voici ton tableau de bord.</p>
+        </div>
+
+        <div class="grid">
+            <div class="card"><b>0</b>
+                <p>Clients</p>
+            </div>
+            <div class="card"><b>0</b>
+                <p>Restaurants</p>
+            </div>
+            <div class="card"><b>0</b>
+                <p>Commandes</p>
+            </div>
+            <div class="card"><b>0 FCFA</b>
+                <p>Paiements reçus</p>
+            </div>
+            <div class="card or"><b>0 FCFA</b>
+                <p>💰 Chiffre d'affaires total</p>
+            </div>
+            <div class="card"><b>0</b>
+                <p>En attente de validation</p>
+            </div>
+        </div>
+
+        <div class="bloc">
+            <h3>Toutes tes pages sont dans le menu à gauche</h3>
+            <p>16 pages Admin : Tableau de bord, Profil, Sécurité, Restaurants, Clients, Finance, 4 Fonctionnalités, 2
+                Notifications, 2 Rapports, Déconnecter. Clique sur une page à gauche pour l'ouvrir.</p>
+        </div>
+    </div>
+
+
+    <script>
+        let admin = localStorage.getItem("rbm_admin");
+        if (!admin) {window.location.href = "login.html";}
+        else {
+            let a = JSON.parse(admin);
+            document.getElementById("nomAdmin").textContent = a.prenom || a.nom || "Admin";
+            document.getElementById("telAdmin").textContent = a.telephone || "";
+        }
+        let restos = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]");
+        let clients = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+        let paiements = JSON.parse(localStorage.getItem("rbm_paiements") || "[]");
+        let cards = document.querySelectorAll(".grid .card b");
+        if (cards[0]) cards[0].textContent = clients.length;
+        if (cards[1]) cards[1].textContent = restos.length;
+        if (cards[2]) cards[2].textContent = paiements.length;
+        if (cards[3]) cards[3].textContent = paiements.filter(p => p.statut === "Payé").reduce((s, p) => s + p.montant, 0).toLocaleString("fr-FR") + " FCFA";
+        let ca = paiements.filter(p => p.statut === "Payé").reduce((s, p) => s + p.montant, 0);
+        let caEl = document.querySelector(".card.or b");
+        if (caEl) caEl.textContent = ca.toLocaleString("fr-FR") + " FCFA";
+    </script>
+</body>
+
+</html>

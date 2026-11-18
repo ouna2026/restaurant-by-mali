@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .header {
+            background: #1A1512;
+            color: #fff;
+            padding: 22px 20px;
+            text-align: center
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: 400
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 4px
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 14px 20px;
+            justify-content: center
+        }
+
+        .nav a {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            padding: 9px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #1A1512;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px 30px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 14px;
+            overflow: hidden
+        }
+
+        .ligne {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start
+        }
+
+        .ligne img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0
+        }
+
+        .ligne .texte {
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
+            font-size: 13px;
+            line-height: 1.8
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .btn-rouge {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        .badge-valide {
+            background: #1B6B2E;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            text-align: center
+        }
+
+        .badge-attente {
+            background: #C9A227;
+            color: #1A1512;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            text-align: center
+        }
+
+        .badge-annule {
+            background: #A83200;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            text-align: center
+        }
+
+        /* ===== MODIFIER JUSTE EN BAS DU BADGE ===== */
+        .statut-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            flex-shrink: 0
+        }
+
+        .btn-modif-petit {
+            background: #fff;
+            border: 2px dashed #C9A227;
+            color: #1A1512;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 12px;
+            white-space: nowrap
+        }
+
+        .vide {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            padding: 20px
+        }
+
+        @media print {
+
+            .nav,
+            .btn,
+            .btn-modif-petit {
+                display: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 id="titreNom">Historique</h1>
+        <p>MODIFIER est juste en bas de chaque statut.</p>
+    </div>
+    <div class="nav"><a href="dashboard.html">Tableau de bord</a><a href="notification-commande.html">Commandes</a><a
+            href="paiement.html">Mes Paiements</a><a href="historique.html">Historique</a><a
+            href="rapport-mois.html">Rapport du Mois</a></div>
+    <div class="main">
+        <div class="card" style="display:flex;gap:12px;text-align:center">
+            <div style="flex:1"><b id="nbValide">0</b><br><small>Validées</small></div>
+            <div style="flex:1"><b id="totalValide">0 F</b><br><small>Total validé</small></div>
+            <div style="flex:1"><b id="nbAnnule">0</b><br><small>Échouées</small></div>
+        </div>
+        <div id="liste"></div>
+        <button class="btn btn-noir" onclick="window.print()">🖨 IMPRIMER MON HISTORIQUE</button>
+    </div>
+    <script>
+        let nom = localStorage.getItem("rbm_resto_connecte") || "";
+        if (!nom) location.href = "login.html";
+        document.getElementById("titreNom").textContent = "Historique — " + nom;
+        function propre(v) {
+            if (!v) return "—";
+            v = String(v).trim();
+            if (v.charAt(0) === "{") {
+                try { let o = JSON.parse(v); if (o.nom) return o.nom; } catch (e) { }
+                let m = v.match(/"nom"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "—";
+            }
+            return v;
+        }
+        function propreTel(v) {
+            if (!v) return "—";
+            v = String(v).trim();
+            if (v.charAt(0) === "{") {
+                try { let o = JSON.parse(v); if (o.telephone) return o.telephone; if (o.tel) return o.tel; } catch (e) { }
+                let m = v.match(/"telephone"\s*:\s*"([^"]+)"/) || v.match(/"tel"\s*:\s*"([^"]+)"/); if (m) return m[1];
+                return "—";
+            }
+            return v;
+        }
+        function photoPlat(c, nomPlat) {
+            if (c.img && c.img.length > 10) return c.img;
+            if (c.photo && c.photo.length > 10) return c.photo;
+            try {
+                let menu = JSON.parse(localStorage.getItem("rbm_menu_" + nom) || "[]");
+                let t = menu.find(function (m) { return m.nom === nomPlat; });
+                if (t && t.img && t.img.length > 10) return t.img;
+            } catch (e) { }
+            let photoResto = localStorage.getItem("rbm_resto_photo_" + nom);
+            if (photoResto && photoResto.length > 10) return photoResto;
+            return "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop";
+        }
+        function getCommandes() { try { return JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); } catch (e) { return []; } }
+        let commandes = getCommandes().filter(function (c) { return (c.restaurant || c.resto) === nom; });
+        commandes.sort(function (a, b) { return new Date(b.date || 0) - new Date(a.date || 0); });
+        let validees = commandes.filter(function (c) { return c.statut === "Validée" || c.statut === "Livrée"; });
+        let annulees = commandes.filter(function (c) { return c.statut === "Annulée" || c.paiement === "Échoué"; });
+        let total = validees.reduce(function (s, c) { return s + (parseInt(c.total || c.prix || 0) || 0); }, 0);
+        document.getElementById("nbValide").textContent = validees.length;
+        document.getElementById("totalValide").textContent = total.toLocaleString("fr-FR") + " F";
+        document.getElementById("nbAnnule").textContent = annulees.length;
+        let zone = document.getElementById("liste");
+        if (commandes.length === 0) {
+            zone.innerHTML = "<div class='card vide'>Aucun historique pour le moment.</div>";
+        } else {
+            zone.innerHTML = commandes.map(function (c) {
+                let toutes = getCommandes();
+                let idx = toutes.indexOf(c);
+                if (idx === -1) { idx = toutes.findIndex(function (x) { return (x.restaurant || x.resto) === nom && String(x.client) === String(c.client) && String(x.date) === String(c.date); }); }
+                let nomClient = propre(c.client);
+                let nomPlat = propre(c.plat || c.commande);
+                let img = photoPlat(c, nomPlat);
+                let statut = c.statut || "En attente";
+                let badge = statut === "Validée" || statut === "Livrée" ? "badge-valide" : (statut === "Annulée" || c.paiement === "Échoué" ? "badge-annule" : "badge-attente");
+                let texteBadge = statut === "Validée" ? "VALIDÉE" : (statut === "Livrée" ? "LIVRÉE" : (statut === "Annulée" ? "ÉCHOUÉ" : "EN ATTENTE"));
+                // ===== MODIFIER JUSTE EN BAS DU BADGE =====
+                let blocStatut = "";
+                if (statut === "Validée" || statut === "Livrée") {
+                    blocStatut = "<div class='statut-col'><span class='" + badge + "'>" + texteBadge + "</span><button class='btn-modif-petit' onclick='echouerPaiement(" + idx + ", true)'>✏️ Modifier</button></div>";
+                } else if (statut === "Annulée" || c.paiement === "Échoué") {
+                    blocStatut = "<div class='statut-col'><span class='" + badge + "'>" + texteBadge + "</span><button class='btn-modif-petit' onclick='validerPaiement(" + idx + ", true)'>✏️ Modifier</button></div>";
+                } else {
+                    blocStatut = "<div class='statut-col'><span class='" + badge + "'>" + texteBadge + "</span></div>";
+                }
+                let boutonsBas = "";
+                if (statut === "En attente") {
+                    boutonsBas = "<button class='btn btn-vert' onclick='validerPaiement(" + idx + ", false)'>✅ J'AI REÇU L'ARGENT — VALIDER</button><button class='btn btn-rouge' onclick='echouerPaiement(" + idx + ", false)'>❌ ARGENT NON REÇU — PAIEMENT ÉCHOUÉ</button>";
+                }
+                if (c.modifiee) boutonsBas += "<p style='font-size:12px;color:#888;margin-top:6px'>Modifié le : " + c.dateModification + " — " + (c.raisonModification || "") + "</p>";
+                return "<div class='card'><div class='ligne'><img src='" + img + "' onerror=\"this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop'\"><div class='texte'><b>" + nomClient + " — " + nomPlat + " x " + (c.quantite || c.qty || 1) + "</b><br>Montant : <b>" + (c.total || c.prix || "—") + " F</b> — Paiement : " + (c.paiement || "—") + "<br>Tél : " + propreTel(c.telephone || c.tel) + " — Quartier : " + (c.quartier || "—") + "<br>Date commande : " + (c.date || "—") + (c.dateValidation ? "<br>Date validation : " + c.dateValidation : "") + "</div>" + blocStatut + "</div>" + boutonsBas + "</div>";
+            }).join("");
+        }
+        function validerPaiement(idx, estCorrection) {
+            if (!confirm(estCorrection ? "L'argent est bien arrivé en retard à cause de la connexion ? On passe de ÉCHOUÉ → VALIDÉ." : "Tu confirmes que tu as bien reçu l'argent ?")) return;
+            let toutes = getCommandes();
+            let c = toutes[idx];
+            if (!c) return alert("Commande introuvable.");
+            c.statut = "Validée"; c.paiement = "Payé"; c.dateValidation = new Date().toLocaleString("fr-FR");
+            if (estCorrection) { c.modifiee = true; c.dateModification = new Date().toLocaleString("fr-FR"); c.raisonModification = "Correction : argent arrivé en retard (connexion)"; }
+            localStorage.setItem("rbm_commandes", JSON.stringify(toutes));
+            let msgs = [];
+            try { msgs = JSON.parse(localStorage.getItem("rbm_messages") || "[]"); } catch (e) { msgs = []; }
+            msgs.push({ pour: c.client, pourNom: propre(c.client), de: nom, restaurant: nom, type: estCorrection ? "Correction — Paiement reçu" : "Paiement reçu — Commande validée", texte: estCorrection ? "Correction : l'argent est finalement arrivé en retard. Ta commande " + propre(c.plat || c.commande) + " — " + (c.total || c.prix) + " F est maintenant VALIDÉE chez " + nom + "." : "Paiement reçu : " + propre(c.plat || c.commande) + " — " + (c.total || c.prix) + " F. Validée chez " + nom + ".", plat: propre(c.plat || c.commande), img: photoPlat(c, propre(c.plat || c.commande)), total: c.total || c.prix, date: new Date().toLocaleString("fr-FR"), lu: false });
+            localStorage.setItem("rbm_messages", JSON.stringify(msgs));
+            alert("Corrigé ! Message de correction envoyé au client.");
+            location.reload();
+        }
+        function echouerPaiement(idx, estCorrection) {
+            if (!confirm(estCorrection ? "Tu confirmes que tu n'as finalement PAS reçu l'argent ? On passe de VALIDÉ → ÉCHOUÉ." : "Tu confirmes que tu n'as PAS reçu l'argent ?")) return;
+            let toutes = getCommandes();
+            let c = toutes[idx];
+            if (!c) return alert("Commande introuvable.");
+            c.statut = "Annulée"; c.paiement = "Échoué";
+            if (estCorrection) { c.modifiee = true; c.dateModification = new Date().toLocaleString("fr-FR"); c.raisonModification = "Correction : argent finalement non reçu"; }
+            localStorage.setItem("rbm_commandes", JSON.stringify(toutes));
+            let msgs = [];
+            try { msgs = JSON.parse(localStorage.getItem("rbm_messages") || "[]"); } catch (e) { msgs = []; }
+            msgs.push({ pour: c.client, pourNom: propre(c.client), de: nom, restaurant: nom, type: estCorrection ? "Correction — Paiement échoué" : "Paiement échoué", texte: estCorrection ? "Correction : après vérification, nous n'avons finalement PAS reçu l'argent pour " + propre(c.plat || c.commande) + " — " + (c.total || c.prix) + " F chez " + nom + ". Ta commande passe en ÉCHOUÉ." : "Paiement échoué : " + propre(c.plat || c.commande) + " — " + (c.total || c.prix) + " F. Non reçu chez " + nom + ".", plat: propre(c.plat || c.commande), img: photoPlat(c, propre(c.plat || c.commande)), total: c.total || c.prix, date: new Date().toLocaleString("fr-FR"), lu: false });
+            localStorage.setItem("rbm_messages", JSON.stringify(msgs));
+            alert("Corrigé ! Message de correction envoyé au client.");
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>

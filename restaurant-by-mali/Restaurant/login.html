@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Restaurant - Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 16px;
+            color: #1A1512
+        }
+
+        .box {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 430px;
+            overflow: hidden
+        }
+
+        .top {
+            background: #1A1512;
+            color: #fff;
+            padding: 24px 20px;
+            text-align: center
+        }
+
+        .top h1 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: 400
+        }
+
+        .top h1 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .top p {
+            font-size: 13px;
+            opacity: .85;
+            margin-top: 6px;
+            line-height: 1.5
+        }
+
+        .top img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+            margin-bottom: 12px
+        }
+
+        .body {
+            padding: 20px
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #7A7268;
+            display: block;
+            margin: 14px 0 6px;
+            text-transform: uppercase;
+            letter-spacing: .6px
+        }
+
+        input {
+            width: 100%;
+            border: 1.5px solid #F1E3C8;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            outline: none;
+            background: #fff
+        }
+
+        input:focus {
+            border-color: #C9A227
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 16px
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-blanc {
+            background: #fff;
+            border: 2px solid #F1E3C8;
+            margin-top: 10px
+        }
+
+        .msg {
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+            padding: 10px;
+            border-radius: 10px
+        }
+
+        .msg-rouge {
+            background: #FCE4E4;
+            color: #8A1A1A;
+            display: block
+        }
+
+        .msg-vert {
+            background: #D8F3DC;
+            color: #1B6B2E;
+            display: block
+        }
+
+        .info {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.6;
+            text-align: center;
+            margin-top: 14px
+        }
+
+        .info b {
+            color: #1A1512
+        }
+
+        .exemple {
+            font-size: 11px;
+            color: #888;
+            margin-top: 4px
+        }
+
+        .choix {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px
+        }
+
+        .choix button {
+            border: 2px solid #F1E3C8;
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px 6px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 13px
+        }
+
+        .choix button.sel {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .choix button.sel span {
+            color: #C9A227
+        }
+
+        .choix span {
+            display: block;
+            color: #C9A227;
+            font-size: 12px;
+            margin-top: 4px
+        }
+
+        .pay {
+            border: 1.5px solid #F1E3C8;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            cursor: pointer
+        }
+
+        .pay.sel {
+            border-color: #1A1512;
+            background: #FFF8EE
+        }
+
+        .pay b {
+            font-size: 14px
+        }
+
+        .pay small {
+            font-size: 12px;
+            color: #555
+        }
+
+        .separateur {
+            border-top: 2px dashed #F1E3C8;
+            margin: 20px 0;
+            padding-top: 16px
+        }
+
+        .photo-box {
+            text-align: center
+        }
+
+        .photo-rond {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #C9A227;
+            background: #FFF8EE;
+            display: block;
+            margin: 0 auto 8px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="top">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=400&fit=crop"
+                onerror="this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=400&fit=crop'">
+            <h1>Connexion <span>Restaurant</span></h1>
+            <p>Ecris le nom de ton entreprise pour te connecter</p>
+        </div>
+        <div class="body">
+            <div id="partieLogin">
+                <div class="photo-box">
+                    <img id="photoLogin" class="photo-rond"
+                        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=300&fit=crop"
+                        alt="Photo restaurant">
+                    <small style="color:#888">Photo de ton restaurant</small>
+                </div>
+                <label>Nom de ton entreprise *</label>
+                <input type="text" id="inpNom" placeholder="Ex : LAIT KOUNDAR" oninput="voirPhotoLogin()">
+                <p class="exemple">Ecris exactement le nom que l'Admin a enregistre.</p>
+                <label>Telephone du restaurant *</label>
+                <input type="text" id="inpTel" placeholder="Ex : +223 70 00 00 00">
+                <label>Mot de passe *</label>
+                <input type="password" id="inpMdp" placeholder="Ton mot de passe">
+                <button class="btn btn-or" onclick="seConnecter()">SE CONNECTER</button>
+                <button class="btn btn-blanc" onclick="afficherInscription()">Je n'ai pas de compte — S'inscrire
+                    ici</button>
+                <p class="msg" id="msg"></p>
+            </div>
+            <div id="partieInscription" style="display:none">
+                <div class="separateur"></div>
+                <h3 style="font-family:Georgia,serif;font-size:18px;text-align:center;font-weight:400">Creer un compte
+                    <span style="color:#C9A227;font-style:italic">Restaurant</span></h3>
+                <p style="font-size:12px;color:#888;text-align:center;line-height:1.5;margin-top:6px">Remplis ici, mets
+                    ta photo, paie sur Wave ou Sama, l'Admin accepte, 4 secondes apres tu peux te connecter.</p>
+                <div class="photo-box">
+                    <img id="apercuPhoto" class="photo-rond"
+                        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=300&fit=crop">
+                    <label style="text-align:center">Photo de profil du restaurant *</label>
+                    <input type="file" id="insPhoto" accept="image/*" onchange="lirePhoto(this)">
+                    <small style="color:#888">Choisis la photo de ton restaurant / ton logo</small>
+                </div>
+                <label>Nom de ton entreprise *</label>
+                <input type="text" id="insNom" placeholder="Ex : LAIT KOUNDAR">
+                <label>Telephone *</label>
+                <input type="text" id="insTel" placeholder="Ex : +223 70 00 00 00">
+                <label>Quartier / Ville *</label>
+                <input type="text" id="insQuartier" placeholder="Ex : ACI 2000 - Bamako">
+                <label>Mot de passe *</label>
+                <input type="password" id="insMdp" placeholder="Choisis un mot de passe">
+                <label>Choisis ton abonnement *</label>
+                <div class="choix">
+                    <button type="button" id="btnMensuel" onclick="choisirAbo('Mensuel',15000)">Mensuel<span>15 000
+                            F</span></button>
+                    <button type="button" id="btnTrimestriel"
+                        onclick="choisirAbo('Trimestriel',40000)">Trimestriel<span>40 000 F</span></button>
+                    <button type="button" id="btnAnnuel" onclick="choisirAbo('Annuel',150000)">Annuel<span>150 000
+                            F</span></button>
+                </div>
+                <label>Tu paies avec quoi ? *</label>
+                <div class="pay" id="payWave" onclick="choisirPay('Wave')"><b>Wave</b><br><small>Envoie a :
+                        <b>+22364716909</b></small></div>
+                <div class="pay" id="paySama" onclick="choisirPay('Sama')"><b>Sama Money</b><br><small>Envoie a :
+                        <b>+22399335928</b></small></div>
+                <label>Numero qui a envoye l'argent *</label>
+                <input type="text" id="insPayeur" placeholder="Ex : +223 70 00 00 00">
+                <button class="btn btn-or" onclick="creerCompte()">J'AI PAYE — ENVOYER MA DEMANDE</button>
+                <button class="btn btn-blanc" onclick="afficherLogin()">J'ai deja un compte — Se connecter</button>
+                <p class="msg" id="msgIns"></p>
+            </div>
+            <p class="info"><b>Regle :</b> Pas paye = pas d'acces.<br>Si ton compte est <b>BLOQUE</b>, contacte l'Admin
+                :<br><b>+22364716909</b><br><br>Restaurant By Mali - Bamako, Segou, Kayes, Kati - Tout le Mali</p>
+        </div>
+    </div>
+    <script>
+        let RESTAURANTS_AUTORISES = ["Le Grill - Bamako", "Sandwich+", "Le Relax", "Maquis Le Savana", "Chez Fatoumata", "Le Faso", "Maquis Kati", "Douceur Sucrée"];
+        let deja = localStorage.getItem("rbm_resto_connecte");
+        if (deja) {
+            let st = localStorage.getItem("rbm_resto_statut_" + deja) || "AUTORISE";
+            if (st === "AUTORISE") { location.href = "dashboard.html"; }
+        }
+        function afficherInscription() { document.getElementById("partieInscription").style.display = "block"; document.getElementById("partieLogin").style.display = "none"; window.scrollTo(0, 0); }
+        function afficherLogin() { document.getElementById("partieInscription").style.display = "none"; document.getElementById("partieLogin").style.display = "block"; window.scrollTo(0, 0); }
+        function afficherMsg(texte, ok) { let m = document.getElementById("msg"); m.textContent = texte; m.className = "msg " + (ok ? "msg-vert" : "msg-rouge"); m.style.display = "block"; }
+        function normaliser(nom) { return nom.trim().toLowerCase().replace(/\s+/g, " "); }
+        // PHOTO : quand tu tapes le nom, on montre sa photo si elle existe deja
+        function voirPhotoLogin() {
+            let nom = document.getElementById("inpNom").value.trim();
+            let photo = localStorage.getItem("rbm_resto_photo_" + nom);
+            if (photo) document.getElementById("photoLogin").src = photo;
+        }
+        let photoBase64 = "";
+        function lirePhoto(input) {
+            let f = input.files[0]; if (!f) return;
+            let r = new FileReader();
+            r.onload = function (e) { photoBase64 = e.target.result; document.getElementById("apercuPhoto").src = photoBase64; };
+            r.readAsDataURL(f);
+        }
+        function seConnecter() {
+            let nomEcrit = document.getElementById("inpNom").value.trim();
+            let tel = document.getElementById("inpTel").value.trim();
+            let mdp = document.getElementById("inpMdp").value.trim();
+            if (!nomEcrit || !tel || !mdp) { afficherMsg("Ecris le nom de ton entreprise, ton telephone et ton mot de passe.", false); return; }
+            let nomTrouve = null;
+            RESTAURANTS_AUTORISES.forEach(r => { if (normaliser(r) === normaliser(nomEcrit)) nomTrouve = r; });
+            if (!nomTrouve && localStorage.getItem("rbm_resto_statut_" + nomEcrit)) { nomTrouve = nomEcrit; }
+            if (!nomTrouve) { try { let dem = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]"); dem.forEach(function (d) { if (d.nom && normaliser(d.nom) === normaliser(nomEcrit)) nomTrouve = d.nom; }); } catch (e) { } }
+            if (!nomTrouve) { try { let pays = JSON.parse(localStorage.getItem("rbm_paiements") || "[]"); pays.forEach(function (p) { if (p.nom && normaliser(p.nom) === normaliser(nomEcrit)) nomTrouve = p.nom; }); } catch (e) { } }
+            if (!nomTrouve) { afficherMsg("Entreprise non trouvee : \"" + nomEcrit + "\". Verifie l'orthographe ou contacte l'Admin : +22364716909", false); return; }
+            let statut = localStorage.getItem("rbm_resto_statut_" + nomTrouve);
+            try {
+                let pays = JSON.parse(localStorage.getItem("rbm_paiements") || "[]");
+                let derniers = pays.filter(function (p) { return p.nom && normaliser(p.nom) === normaliser(nomTrouve); });
+                if (derniers.length > 0) {
+                    let dernier = derniers[derniers.length - 1];
+                    if (dernier.statut === "Payé" || dernier.statut === "PAYE") { statut = "AUTORISE"; localStorage.setItem("rbm_resto_statut_" + nomTrouve, "AUTORISE"); }
+                    if (dernier.statut === "En attente" || dernier.statut === "Échoué" || dernier.statut === "Echoue") { statut = "BLOQUE"; localStorage.setItem("rbm_resto_statut_" + nomTrouve, "BLOQUE"); }
+                }
+            } catch (e) { }
+            if (!statut) statut = "AUTORISE";
+            if (statut !== "AUTORISE") { afficherMsg("Compte BLOQUE pour " + nomTrouve + ". Paiement en attente. Contacte l'Admin : +22364716909", false); return; }
+            localStorage.setItem("rbm_resto_connecte", nomTrouve);
+            localStorage.setItem("rbm_resto_tel_" + nomTrouve, tel);
+            afficherMsg("Connexion reussie. Bienvenue " + nomTrouve + " !", true);
+            setTimeout(() => { location.href = "dashboard.html"; }, 800);
+        }
+        let aboChoisi = ""; let montantChoisi = 0; let payChoisi = "";
+        function choisirAbo(abo, montant) { aboChoisi = abo; montantChoisi = montant; document.getElementById("btnMensuel").classList.toggle("sel", abo === "Mensuel"); document.getElementById("btnTrimestriel").classList.toggle("sel", abo === "Trimestriel"); document.getElementById("btnAnnuel").classList.toggle("sel", abo === "Annuel"); }
+        function choisirPay(p) { payChoisi = p; document.getElementById("payWave").classList.toggle("sel", p === "Wave"); document.getElementById("paySama").classList.toggle("sel", p === "Sama"); }
+        function creerCompte() {
+            let nom = document.getElementById("insNom").value.trim();
+            let tel = document.getElementById("insTel").value.trim();
+            let quartier = document.getElementById("insQuartier").value.trim();
+            let mdp = document.getElementById("insMdp").value.trim();
+            let payeur = document.getElementById("insPayeur").value.trim();
+            let m = document.getElementById("msgIns");
+            if (!nom || !tel || !quartier || !mdp || !aboChoisi || !payChoisi || !payeur) { m.textContent = "Remplis tout : nom, telephone, quartier, mot de passe, abonnement, Wave/Sama, numero qui a paye."; m.className = "msg msg-rouge"; m.style.display = "block"; return; }
+            if (photoBase64) localStorage.setItem("rbm_resto_photo_" + nom, photoBase64);
+            let demandes = [];
+            try { demandes = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]"); } catch (e) { demandes = []; }
+            demandes.push({ nom: nom, tel: tel, quartier: quartier, mdp: mdp, abo: aboChoisi, montant: montantChoisi, payPar: payChoisi, payeur: payeur, date: new Date().toLocaleString("fr-FR"), statut: "EN ATTENTE", photo: photoBase64 });
+            localStorage.setItem("rbm_demandes_resto", JSON.stringify(demandes));
+            let notifsAdmin = [];
+            try { notifsAdmin = JSON.parse(localStorage.getItem("rbm_notif_paiements") || "[]"); } catch (e) { notifsAdmin = []; }
+            notifsAdmin.unshift({ id: Date.now(), titre: "Nouvelle inscription : " + nom, texte: nom + " — " + montantChoisi.toLocaleString("fr-FR") + " FCFA — " + aboChoisi + " — Via " + payChoisi + " — Numero qui a paye : " + payeur + " — Quartier : " + quartier + " — Tel : " + tel + " — Statut : EN ATTENTE — Acces : BLOQUE.", type: "En attente", date: new Date().toLocaleString("fr-FR"), lu: false, couleur: "#C9A227" });
+            localStorage.setItem("rbm_notif_paiements", JSON.stringify(notifsAdmin));
+            let paiements = [];
+            try { paiements = JSON.parse(localStorage.getItem("rbm_paiements") || "[]"); } catch (e) { paiements = []; }
+            paiements.unshift({ id: Date.now(), nom: nom, montant: montantChoisi, methode: payChoisi, motif: "Nouvelle inscription - " + aboChoisi, statut: "En attente", couleur: "#C9A227", tel: tel, quartier: quartier });
+            localStorage.setItem("rbm_paiements", JSON.stringify(paiements));
+            let restos = [];
+            try { restos = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]"); } catch (e) { restos = []; }
+            if (!restos.some(function (r) { return (r.nom || r) === nom; })) { restos.push({ nom: nom, tel: tel, quartier: quartier, statut: "BLOQUE", photo: photoBase64 }); localStorage.setItem("rbm_restaurants", JSON.stringify(restos)); }
+            localStorage.setItem("rbm_resto_statut_" + nom, "BLOQUE");
+            localStorage.setItem("rbm_resto_abo_" + nom, aboChoisi + " - " + montantChoisi + " F - " + payChoisi);
+            m.textContent = "Demande envoyee ! L'Admin voit maintenant ta demande dans Notifications Paiements.";
+            m.className = "msg msg-vert"; m.style.display = "block";
+            setTimeout(() => { afficherLogin(); }, 2500);
+        }
+    </script>
+</body>
+
+</html>

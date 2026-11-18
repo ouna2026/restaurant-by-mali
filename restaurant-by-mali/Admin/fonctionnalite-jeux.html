@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fonctionnalite Jeux — Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 10
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 21px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #9A938A;
+            font-size: 12px;
+            margin: 8px 0 16px;
+            word-break: break-word
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase;
+            word-break: break-word
+        }
+
+        .sidebar a {
+            color: #D8D2C9;
+            text-decoration: none;
+            padding: 10px 10px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid #2A231E
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 250px;
+            padding: 28px 22px;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: hidden
+        }
+
+        .top h2 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            font-weight: 400;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .top h2 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .top p {
+            color: #7A7268;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 720px;
+            word-break: break-word
+        }
+
+        .top .date {
+            font-size: 12px;
+            color: #9A938A;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px
+        }
+
+        .surveillance {
+            background: #1A1512;
+            color: #fff;
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-left: 6px solid #A83200;
+            width: 100%
+        }
+
+        .surveillance b {
+            color: #C9A227;
+            word-break: break-word
+        }
+
+        .surveillance p {
+            font-size: 13px;
+            color: #D8D2C9;
+            margin-top: 4px;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        .surveillance .pill {
+            background: #A83200;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .6px;
+            white-space: nowrap
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            min-width: 0;
+            word-break: break-word
+        }
+
+        .card b {
+            font-size: 14px
+        }
+
+        .card h3 {
+            font-size: 26px;
+            margin: 8px 0
+        }
+
+        .card p {
+            color: #888;
+            font-size: 13px;
+            word-break: break-word
+        }
+
+        .card.noir {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .card.noir p {
+            color: #C9A227
+        }
+
+        .config {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            width: 100%
+        }
+
+        .config b {
+            font-size: 16px;
+            word-break: break-word
+        }
+
+        .config p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 4px;
+            word-break: break-word
+        }
+
+        .switch {
+            position: relative;
+            width: 58px;
+            height: 30px;
+            background: #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            flex-shrink: 0
+        }
+
+        .switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%
+        }
+
+        .switch.on {
+            background: #1A1512
+        }
+
+        .switch.on::after {
+            left: 31px;
+            background: #C9A227
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: normal;
+            word-break: break-word;
+            display: inline-block;
+            line-height: 1.3
+        }
+
+        .badge.on {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.off {
+            background: #FCE4E4;
+            color: #8A1A1A
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 16px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .btn-gris {
+            background: #eee;
+            color: #1A1512
+        }
+
+        .btn-rouge {
+            background: #A83200;
+            color: #fff
+        }
+
+        .form-box {
+            display: none;
+            background: #fff;
+            border: 2px solid #C9A227;
+            border-radius: 18px;
+            padding: 22px;
+            margin-top: 18px;
+            width: 100%
+        }
+
+        .form-box h3 {
+            margin-bottom: 12px;
+            font-family: Georgia, serif;
+            font-weight: 400
+        }
+
+        .form-box label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 12px 0 5px;
+            text-transform: uppercase
+        }
+
+        .form-box input,
+        .form-box select {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px
+        }
+
+        .liste {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            width: 100%
+        }
+
+        .jeu {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            min-width: 0;
+            overflow: hidden
+        }
+
+        .jeu h3 {
+            font-size: 18px;
+            word-break: break-word;
+            line-height: 1.4
+        }
+
+        .jeu p {
+            color: #666;
+            font-size: 13px;
+            margin: 8px 0;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        .jeu .emoji-jeu {
+            font-size: 48px;
+            line-height: 1;
+            margin-bottom: 8px
+        }
+
+        .jeu .bande {
+            margin: -18px -18px 14px -18px;
+            padding: 12px 18px;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase
+        }
+
+        .jeu-snake {
+            border: 2px solid #1B6B2E
+        }
+
+        .jeu-snake .bande {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .jeu-ballon {
+            border: 2px solid #E53935
+        }
+
+        .jeu-ballon .bande {
+            background: #E53935;
+            color: #fff
+        }
+
+        .jeu-quiz {
+            border: 2px solid #C9A227
+        }
+
+        .jeu-quiz .bande {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .jeu-devinette {
+            border: 2px solid #7B1FA2
+        }
+
+        .jeu-devinette .bande {
+            background: #7B1FA2;
+            color: #fff
+        }
+
+        .jeu-poursuite {
+            border: 2px solid #E67E00
+        }
+
+        .jeu-poursuite .bande {
+            background: #E67E00;
+            color: #fff
+        }
+
+        .jeu-autre {
+            border: 2px solid #1A1512
+        }
+
+        .jeu-autre .bande {
+            background: #1A1512;
+            color: #C9A227
+        }
+
+        .btn-petit {
+            padding: 10px 12px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 12px;
+            margin: 8px 4px 0 0;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.3
+        }
+
+        .btn-jouer-snake {
+            background: #1B6B2E;
+            color: #fff;
+            border: 2px solid #0F3D1A
+        }
+
+        .btn-jouer-ballon {
+            background: #E53935;
+            color: #fff;
+            border: 2px solid #7A0F0F
+        }
+
+        .btn-jouer-quiz {
+            background: #C9A227;
+            color: #1A1512;
+            border: 2px solid #1A1512
+        }
+
+        .btn-jouer-devinette {
+            background: #7B1FA2;
+            color: #fff;
+            border: 2px solid #3D0A4A
+        }
+
+        .btn-jouer-poursuite {
+            background: #E67E00;
+            color: #fff;
+            border: 2px solid #7A3A00
+        }
+
+        .btn-jouer-autre {
+            background: #1A1512;
+            color: #fff;
+            border: 2px solid #1A1512
+        }
+
+        .btn-modif {
+            background: #fff;
+            color: #1A1512;
+            border: 2px solid #C9A227
+        }
+
+        .btn-statut {
+            background: #eee;
+            color: #1A1512;
+            border: 2px solid #1A1512
+        }
+
+        .btn-suppr {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        .zone-jeu {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+            width: 100%
+        }
+
+        .zone-jeu h3 {
+            margin-bottom: 8px;
+            font-family: Georgia, serif;
+            font-weight: 400;
+            word-break: break-word
+        }
+
+        .zone-jeu p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        canvas {
+            background: #1A1512;
+            border-radius: 12px;
+            display: block;
+            margin: 14px auto;
+            max-width: 100%;
+            touch-action: none
+        }
+
+        .ballon-zone {
+            width: 100%;
+            max-width: 360px;
+            height: 360px;
+            background: #1A1512;
+            border-radius: 12px;
+            margin: 14px auto;
+            position: relative;
+            overflow: hidden;
+            display: none
+        }
+
+        .ballon {
+            position: absolute;
+            width: 48px;
+            height: 58px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #fff;
+            font-weight: 800;
+            border: 2px solid #fff
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px
+        }
+
+        .controls button {
+            background: #1A1512;
+            color: #fff;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer
+        }
+
+        .controls button.gold {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .manette {
+            display: grid;
+            grid-template-columns: 60px 60px 60px;
+            grid-template-rows: 60px 60px 60px;
+            gap: 6px;
+            justify-content: center;
+            margin: 14px auto 6px;
+            touch-action: none
+        }
+
+        .manette button {
+            border: none;
+            border-radius: 14px;
+            font-size: 24px;
+            font-weight: 800;
+            cursor: pointer;
+            background: #1A1512;
+            color: #fff;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+        .manette button:active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .manette .centre {
+            background: #C9A227;
+            color: #1A1512;
+            font-size: 28px
+        }
+
+        .points-config {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .points-config h3 {
+            margin-bottom: 12px;
+            font-family: Georgia, serif;
+            font-weight: 400
+        }
+
+        .points-config label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase
+        }
+
+        .points-config input {
+            padding: 10px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 10px;
+            width: 120px;
+            margin: 6px 8px 6px 0
+        }
+
+        .points-config .ligne-pts {
+            border-left: 5px solid #ccc;
+            padding-left: 12px;
+            margin-bottom: 14px
+        }
+
+        .points-config .ligne-pts.snake {
+            border-color: #1B6B2E
+        }
+
+        .points-config .ligne-pts.ballon {
+            border-color: #E53935
+        }
+
+        .points-config .ligne-pts.quiz {
+            border-color: #C9A227
+        }
+
+        .points-config .ligne-pts.devinette {
+            border-color: #7B1FA2
+        }
+
+        .points-config .ligne-pts.poursuite {
+            border-color: #E67E00
+        }
+
+        .classement {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .classement h3 {
+            margin-bottom: 12px;
+            font-family: Georgia, serif;
+            font-weight: 400
+        }
+
+        .classement table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .classement th,
+        .classement td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #F1E3C8;
+            font-size: 14px;
+            word-break: break-word
+        }
+
+        .classement tr:first-child td {
+            font-weight: 800;
+            color: #C9A227
+        }
+
+        .quiz-q {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1A1512;
+            margin: 14px 0;
+            line-height: 1.5;
+            word-break: break-word
+        }
+
+        .quiz-opt {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: #FFF8EE;
+            border: 2px solid #E8DCC2;
+            border-radius: 12px;
+            padding: 13px;
+            margin: 8px 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            word-break: break-word
+        }
+
+        .quiz-opt:hover {
+            border-color: #C9A227;
+            background: #fff
+        }
+
+        .quiz-opt.bonne {
+            background: #D8F3DC;
+            border-color: #1B6B2E
+        }
+
+        .quiz-opt.mauvaise {
+            background: #FCE4E4;
+            border-color: #A83200
+        }
+
+        .devine-emoji {
+            font-size: 64px;
+            text-align: center;
+            margin: 14px 0
+        }
+
+        .devine-indice {
+            background: #FFF8EE;
+            border: 1.5px solid #F1E3C8;
+            border-radius: 12px;
+            padding: 14px;
+            margin: 10px 0;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        .devine-input {
+            width: 100%;
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 10px;
+            font-size: 15px
+        }
+
+        .lien-retour {
+            margin-top: 20px;
+            display: inline-block;
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 13px
+        }
+
+        @media(max-width:900px) {
+            .cards {
+                grid-template-columns: 1fr
+            }
+
+            .liste {
+                grid-template-columns: 1fr
+            }
+
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px
+            }
+        }
+
+        @media(max-width:650px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 16px 12px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html">Muna IA</a>
+        <a href="fonctionnalite-jeux.html" class="active">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="top">
+            <div>
+                <h2><span>Jeux</span> — Pour attendre en s'amusant</h2>
+                <p>Le client joue en attendant sa commande, il gagne des points, il se detend. Pas d'argent ici, juste
+                    pour le fun. Chaque jeu a sa couleur, on ne les confond plus.</p>
+                <p id="infoSync" style="color:#C9A227;font-weight:700;font-size:13px;margin-top:8px"></p>
+            </div>
+            <div class="date" id="dateJour"></div>
+        </div>
+        <div class="surveillance">
+            <div><b>ZONE SOUS SURVEILLANCE — ADMIN UNIQUEMENT</b>
+                <p>Tes 5 jeux : Snake vert, Pop Ballon rouge, Quiz du Mali or, Devinette violet, Poursuite orange +
+                    Classement noir. Pas d'argent, juste des points.</p>
+            </div>
+            <div class="pill">SURVEILLANCE ACTIVE</div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-rouge" onclick="reparerJeux()">🔧 REPARER LES JEUX — Cliquer 1 fois si les jeux sont
+                pareils</button>
+            <button class="btn btn-gris" onclick="location.reload()">↻ RECHARGER LA PAGE</button>
+        </div>
+        <div class="cards">
+            <div class="card"><b>Jeux actifs</b>
+                <h3 id="nbActifs">0</h3>
+                <p>Sur l'application</p>
+            </div>
+            <div class="card"><b>Points donnes aujourd'hui</b>
+                <h3 id="pointsJour">0</h3>
+                <p>Par les jeux, juste pour le fun</p>
+            </div>
+            <div class="card noir"><b>Regle des points</b>
+                <h3>Joue pour le fun</h3>
+                <p>Plus tu joues, plus tu montes dans le classement</p>
+            </div>
+        </div>
+        <div class="config">
+            <div><b>Jeux</b> <span class="badge on" id="badgeJeux">Actives</span>
+                <p>Si tu eteins, les clients ne voient plus les jeux.</p>
+            </div>
+            <div class="switch on" id="switchJeux" onclick="toggleJeux()"></div>
+        </div>
+        <div class="points-config">
+            <h3>Combien de points par jeu ? — Chaque jeu a sa couleur</h3>
+            <div class="ligne-pts snake"><label>🐍 Snake — Points par nourriture mangee</label><br><input type="number"
+                    id="ptsSnake" value="10"> <span>points</span></div>
+            <div class="ligne-pts ballon"><label>🎈 Pop Ballon — Points par ballon eclate</label><br><input
+                    type="number" id="ptsBallon" value="5"> <span>points</span></div>
+            <div class="ligne-pts quiz"><label>🇲🇱 Quiz du Mali — Points par bonne reponse</label><br><input
+                    type="number" id="ptsQuiz" value="10"> <span>points</span></div>
+            <div class="ligne-pts devinette"><label>❓ Devinette — Points par devinette trouvee</label><br><input
+                    type="number" id="ptsDevinette" value="20"> <span>points</span></div>
+            <div class="ligne-pts poursuite"><label>🏃 Poursuite — Points par seconde survecue</label><br><input
+                    type="number" id="ptsPoursuite" value="5"> <span>points</span></div>
+            <button class="btn btn-or" onclick="sauverPoints()">ENREGISTRER LES POINTS</button>
+            <button class="btn btn-gris" onclick="resetPoints()">REMETTRE LES POINTS A 0</button>
+            <span id="msgPoints" style="color:#1B6B2E;font-weight:700;margin-left:10px"></span>
+        </div>
+        <button class="btn btn-noir" onclick="ouvrirForm()" style="margin-top:18px">+ AJOUTER UN JEU</button>
+        <div class="form-box" id="formBox">
+            <h3 id="formTitre">Ajouter un jeu</h3>
+            <input type="hidden" id="editId">
+            <label>Nom du jeu</label><input id="f_nom" placeholder="Ex : Devinette, Quiz du Mali...">
+            <label>Description</label><input id="f_desc" placeholder="Ex : Devine la reponse...">
+            <label>Type de jeu — Choisis, ce n'est pas Snake par defaut</label>
+            <select id="f_type">
+                <option value="">-- Choisir le type de jeu --</option>
+                <option value="snake">🐍 Snake — Vert</option>
+                <option value="ballon">🎈 Pop Ballon — Rouge</option>
+                <option value="quiz">🇲🇱 Quiz du Mali — Or</option>
+                <option value="devinette">❓ Devinette — Violet</option>
+                <option value="poursuite">🏃 Poursuite — Orange</option>
+                <option value="autre">⭐ Autre — Noir</option>
+            </select>
+            <label>Points gagnes</label><input id="f_pts" placeholder="Ex : 10" type="number">
+            <label>Statut</label><select id="f_statut">
+                <option value="Actif">Actif</option>
+                <option value="Inactif">Inactif</option>
+            </select>
+            <button class="btn btn-or" onclick="enregistrer()">ENREGISTRER</button>
+            <button class="btn btn-gris" onclick="fermerForm()">ANNULER</button>
+        </div>
+        <div class="liste" id="liste"></div>
+        <div class="zone-jeu" id="zoneJeu">
+            <h3 id="titreJeu">Jouer</h3>
+            <p id="descJeu"></p>
+            <p><b>Score : <span id="score">0</span></b> | <b>Points gagnes : <span id="pointsGagnes">0</span></b> |
+                <b><span id="tempsJeu">1 / 10</span></b> | <b id="etatSnake">En attente</b></p>
+            <canvas id="canvasJeu" width="360" height="360"></canvas>
+            <div class="ballon-zone" id="ballonZone"></div>
+            <div id="zoneQuiz" style="display:none"></div>
+            <div id="zoneDevinette" style="display:none"></div>
+            <div class="manette" id="manetteJeu">
+                <div></div>
+                <button type="button" onpointerdown="changerDir('haut');return false;"
+                    onclick="changerDir('haut')">↑</button>
+                <div></div>
+                <button type="button" onpointerdown="changerDir('gauche');return false;"
+                    onclick="changerDir('gauche')">←</button>
+                <button type="button" class="centre" onpointerdown="demarrerJeu();return false;"
+                    onclick="demarrerJeu()">▶</button>
+                <button type="button" onpointerdown="changerDir('droite');return false;"
+                    onclick="changerDir('droite')">→</button>
+                <div></div>
+                <button type="button" onpointerdown="changerDir('bas');return false;"
+                    onclick="changerDir('bas')">↓</button>
+                <div></div>
+            </div>
+            <p style="text-align:center" id="aideManette">Touche ▶ au centre pour demarrer le Snake, puis touche les
+                fleches ↑ ↓ ← → pour diriger le serpent.</p>
+            <div class="controls" id="controlsJeu">
+                <button onclick="demarrerJeu()">RECOMMENCER</button>
+                <button class="gold" onclick="fermerJeu()">FERMER LE JEU</button>
+            </div>
+            <p style="text-align:center;margin-top:8px" id="aideJeu">Sur ordinateur, tu peux aussi utiliser les fleches
+                du clavier. Pour Pop Ballon, clique sur les ballons.</p>
+        </div>
+        <div class="classement">
+            <h3>🏆 Classement — Les meilleurs joueurs</h3>
+            <p style="color:#888;font-size:13px;margin-bottom:12px">Juste pour le fun, pour distraire. Pas d'argent.</p>
+            <table>
+                <tr>
+                    <th>Place</th>
+                    <th>Joueur</th>
+                    <th>Jeu prefere</th>
+                    <th>Points</th>
+                </tr>
+                <tbody id="classementBody"></tbody>
+            </table>
+            <br><label>Ton pseudo pour le classement</label><br>
+            <input id="pseudoJoueur" placeholder="Ex : Awa, Moussa..."
+                style="padding:10px;border:1.5px solid #E8DCC2;border-radius:10px;margin-top:6px;width:220px">
+            <button class="btn btn-or" onclick="ajouterClassement()">AJOUTER MON SCORE AU CLASSEMENT</button>
+            <button class="btn btn-gris" onclick="resetClassement()">EFFACER LE CLASSEMENT</button>
+        </div>
+        <a class="lien-retour" href="dashboard.html">Retour au Tableau de bord</a>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        document.getElementById("dateJour").textContent = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+        function getFonctions() { return JSON.parse(localStorage.getItem("rbm_fonctions") || "[]"); }
+        function refreshJeux() {
+            let f = getFonctions().find(x => x.id === "jeux");
+            let on = f ? f.on : true;
+            document.getElementById("switchJeux").className = "switch " + (on ? "on" : "");
+            let b = document.getElementById("badgeJeux");
+            b.textContent = on ? "Actives" : "Eteints";
+            b.className = "badge " + (on ? "on" : "off");
+        }
+        function toggleJeux() {
+            let data = getFonctions(); let f = data.find(x => x.id === "jeux");
+            if (f) { f.on = !f.on; localStorage.setItem("rbm_fonctions", JSON.stringify(data)); }
+            refreshJeux();
+        }
+        function getCfg() { return JSON.parse(localStorage.getItem("rbm_points_jeux") || '{"snake":10,"ballon":5,"quiz":10,"devinette":20,"poursuite":5}'); }
+        function sauverPoints() {
+            localStorage.setItem("rbm_points_jeux", JSON.stringify({ snake: parseInt(document.getElementById("ptsSnake").value) || 10, ballon: parseInt(document.getElementById("ptsBallon").value) || 5, quiz: parseInt(document.getElementById("ptsQuiz").value) || 10, devinette: parseInt(document.getElementById("ptsDevinette").value) || 20, poursuite: parseInt(document.getElementById("ptsPoursuite").value) || 5 }));
+            document.getElementById("msgPoints").textContent = "Enregistre !";
+            setTimeout(() => { document.getElementById("msgPoints").textContent = ""; }, 2000);
+        }
+        function resetPoints() {
+            if (confirm("Remettre les points donnes a 0 ?")) { localStorage.setItem("rbm_points_jour", "0"); document.getElementById("pointsJour").textContent = "0"; }
+        }
+        function resetClassement() {
+            if (confirm("Effacer tout le classement ?")) { localStorage.setItem("rbm_classement", JSON.stringify([])); afficherClassement(); }
+        }
+        function bonsJeux() {
+            return [
+                { id: 1, nom: "Snake", desc: "Mange, grandis, ne te mords pas la queue. Le serpent vert mange le carre or.", pts: 10, statut: "Actif", type: "snake", emoji: "🐍", couleur: "SERPENT VERT" },
+                { id: 2, nom: "Pop Ballon", desc: "Eclate un maximum de ballons en 30 secondes. Juste pour te distraire.", pts: 5, statut: "Actif", type: "ballon", emoji: "🎈", couleur: "BALLONS ROUGES" },
+                { id: 3, nom: "Quiz du Mali", desc: "10 questions sur le Mali, les restaurants et les plats. Teste ta culture !", pts: 10, statut: "Actif", type: "quiz", emoji: "🇲🇱", couleur: "DRAPEAU MALI — OR" },
+                { id: 4, nom: "Devinette", desc: "Devine la reponse avec les indices. Tu connais le Mali ?", pts: 20, statut: "Actif", type: "devinette", emoji: "❓", couleur: "MYSTERE VIOLET" },
+                { id: 5, nom: "Poursuite", desc: "Tu es le rond vert. Evite le rond rouge qui te poursuit.", pts: 5, statut: "Actif", type: "poursuite", emoji: "🏃", couleur: "COURSE ORANGE" },
+                { id: 6, nom: "Classement", desc: "Vois qui a le plus de points. Monte dans le classement.", pts: 0, statut: "Actif", type: "autre", emoji: "🏆", couleur: "TROPHEE NOIR" }
+            ];
+        }
+        function jeuxSontCasses(liste) {
+            if (!Array.isArray(liste)) return true;
+            if (liste.length < 5) return true;
+            let types = liste.map(j => j.type);
+            if (types.includes("memoire") || types.includes("devine") || types.includes(undefined) || types.includes("")) return true;
+            let uniques = [...new Set(types)];
+            if (uniques.length < 5) return true;
+            if (!types.includes("snake") || !types.includes("ballon") || !types.includes("quiz") || !types.includes("devinette") || !types.includes("poursuite")) return true;
+            return false;
+        }
+        function reparerJeux() {
+            if (confirm("Reparer les jeux ? Ca remet les 6 bons jeux : Snake, Pop Ballon, Quiz, Devinette, Poursuite, Classement.")) {
+                localStorage.setItem("rbm_jeux", JSON.stringify(bonsJeux()));
+                localStorage.setItem("rbm_jeux_version", "2");
+                localStorage.setItem("rbm_points_jeux", JSON.stringify({ snake: 10, ballon: 5, quiz: 10, devinette: 20, poursuite: 5 }));
+                location.reload();
+            }
+        }
+        let anciens = [];
+        try { anciens = JSON.parse(localStorage.getItem("rbm_jeux") || "[]"); } catch (e) { anciens = []; }
+        if (localStorage.getItem("rbm_jeux_version") !== "2" || jeuxSontCasses(anciens)) {
+            localStorage.setItem("rbm_jeux", JSON.stringify(bonsJeux()));
+            localStorage.setItem("rbm_jeux_version", "2");
+        }
+        if (!localStorage.getItem("rbm_points_jeux")) { localStorage.setItem("rbm_points_jeux", JSON.stringify({ snake: 10, ballon: 5, quiz: 10, devinette: 20, poursuite: 5 })); }
+        if (!localStorage.getItem("rbm_classement")) {
+            localStorage.setItem("rbm_classement", JSON.stringify([{ pseudo: "Awa", jeu: "Pop Ballon", pts: 120 }, { pseudo: "Moussa", jeu: "Snake", pts: 90 }, { pseudo: "Fatoumata", jeu: "Quiz du Mali", pts: 80 }]));
+        }
+        let cfg = getCfg();
+        document.getElementById("ptsSnake").value = cfg.snake;
+        document.getElementById("ptsBallon").value = cfg.ballon;
+        document.getElementById("ptsQuiz").value = cfg.quiz;
+        document.getElementById("ptsDevinette").value = cfg.devinette || 20;
+        document.getElementById("ptsPoursuite").value = cfg.poursuite;
+        function getData() { return JSON.parse(localStorage.getItem("rbm_jeux") || "[]"); }
+        function saveData(d) { localStorage.setItem("rbm_jeux", JSON.stringify(d)); }
+        function labelType(t) { return t === "snake" ? "Snake" : t === "ballon" ? "Pop Ballon" : t === "quiz" ? "Quiz du Mali" : t === "devinette" ? "Devinette" : t === "poursuite" ? "Poursuite" : "Autre"; }
+        function infoJeu(j) {
+            if (j.type === "snake") return { emoji: "🐍", couleur: "SERPENT VERT", classe: "jeu-snake", btn: "btn-jouer-snake", txt: "🐍 JOUER AU SNAKE" };
+            if (j.type === "ballon") return { emoji: "🎈", couleur: "BALLONS ROUGES", classe: "jeu-ballon", btn: "btn-jouer-ballon", txt: "🎈 JOUER A POP BALLON" };
+            if (j.type === "quiz") return { emoji: "🇲🇱", couleur: "DRAPEAU MALI — OR", classe: "jeu-quiz", btn: "btn-jouer-quiz", txt: "🇲🇱 JOUER AU QUIZ DU MALI" };
+            if (j.type === "devinette") return { emoji: "❓", couleur: "MYSTERE VIOLET", classe: "jeu-devinette", btn: "btn-jouer-devinette", txt: "❓ JOUER A LA DEVINETTE" };
+            if (j.type === "poursuite") return { emoji: "🏃", couleur: "COURSE ORANGE", classe: "jeu-poursuite", btn: "btn-jouer-poursuite", txt: "🏃 JOUER A LA POURSUITE" };
+            return { emoji: "🏆", couleur: "TROPHEE NOIR", classe: "jeu-autre", btn: "btn-jouer-autre", txt: "🏆 VOIR LE CLASSEMENT" };
+        }
+        function afficher() {
+            let liste = document.getElementById("liste"); liste.innerHTML = "";
+            let actifs = 0;
+            getData().forEach(j => {
+                if (j.statut === "Actif") actifs++;
+                let info = infoJeu(j);
+                let emoji = j.emoji || info.emoji;
+                let couleur = j.couleur || info.couleur;
+                liste.innerHTML += "<div class='jeu " + info.classe + "'><div class='bande'>" + couleur + "</div><div class='emoji-jeu'>" + emoji + "</div><h3>" + j.nom + " <span class='badge " + (j.statut === "Actif" ? "on" : "off") + "'>" + j.statut + "</span></h3><p>" + j.desc + "</p><p><b>Type : " + labelType(j.type) + " | " + j.pts + " points</b></p><button class='btn-petit " + info.btn + "' onclick='jouer(" + j.id + ")'>" + info.txt + "</button><button class='btn-petit btn-modif' onclick='modifier(" + j.id + ")'>MODIFIER</button><button class='btn-petit btn-statut' onclick='changerStatut(" + j.id + ")'>ACTIF / INACTIF</button><button class='btn-petit btn-suppr' onclick='supprimer(" + j.id + ")'>SUPPRIMER</button></div>";
+            });
+            document.getElementById("nbActifs").textContent = actifs;
+            let restos = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]");
+            let clients = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+            document.getElementById("infoSync").textContent = "Synchronise : " + getData().length + " jeux — " + restos.length + " restaurants — " + clients.length + " clients";
+        }
+        function afficherClassement() {
+            let data = JSON.parse(localStorage.getItem("rbm_classement") || "[]");
+            data.sort((a, b) => b.pts - a.pts);
+            let html = "";
+            data.slice(0, 5).forEach((c, i) => {
+                let medaille = i === 0 ? "1ere - " : i === 1 ? "2eme - " : i === 2 ? "3eme - " : (i + 1) + "eme - ";
+                html += "<tr><td>" + medaille + "</td><td>" + c.pseudo + "</td><td>" + c.jeu + "</td><td><b>" + c.pts + " pts</b></td></tr>";
+            });
+            document.getElementById("classementBody").innerHTML = html || "<tr><td colspan='4'>Pas encore de joueur. Sois le premier !</td></tr>";
+        }
+        function ajouterClassement() {
+            let pseudo = document.getElementById("pseudoJoueur").value.trim();
+            if (!pseudo) { alert("Ecris ton pseudo"); return; }
+            let pts = parseInt(document.getElementById("pointsGagnes").textContent) || 0;
+            if (pts === 0) pts = parseInt(document.getElementById("pointsJour").textContent) || 0;
+            let data = JSON.parse(localStorage.getItem("rbm_classement") || "[]");
+            let nomJeu = jeuActuel ? labelType(jeuActuel) : "Snake";
+            data.push({ pseudo: pseudo, jeu: nomJeu, pts: pts });
+            localStorage.setItem("rbm_classement", JSON.stringify(data));
+            document.getElementById("pseudoJoueur").value = "";
+            afficherClassement();
+            alert("Bravo " + pseudo + " ! Tu es dans le classement avec " + pts + " points.");
+        }
+        function ouvrirForm() {
+            document.getElementById("formTitre").textContent = "Ajouter un jeu";
+            document.getElementById("editId").value = "";
+            document.getElementById("f_nom").value = ""; document.getElementById("f_desc").value = ""; document.getElementById("f_pts").value = "10"; document.getElementById("f_statut").value = "Actif";
+            document.getElementById("f_type").value = "";
+            let box = document.getElementById("formBox"); box.style.display = "block";
+            setTimeout(() => { box.scrollIntoView({ behavior: "smooth", block: "center" }); }, 100);
+        }
+        function fermerForm() { document.getElementById("formBox").style.display = "none"; }
+        function enregistrer() {
+            let id = document.getElementById("editId").value;
+            let nom = document.getElementById("f_nom").value.trim();
+            let desc = document.getElementById("f_desc").value.trim();
+            let pts = document.getElementById("f_pts").value.trim();
+            let statut = document.getElementById("f_statut").value;
+            let type = document.getElementById("f_type").value;
+            if (!nom || !desc) { alert("Remplis le nom et la description"); return; }
+            if (!type) { alert("Choisis le type de jeu : Snake, Quiz du Mali, Devinette... Ce n'est pas Snake par defaut."); return; }
+            let data = getData();
+            if (id) { let it = data.find(x => x.id == id); it.nom = nom; it.desc = desc; it.pts = pts || 10; it.statut = statut; it.type = type; it.emoji = infoJeu({ type: type }).emoji; it.couleur = infoJeu({ type: type }).couleur; }
+            else { data.push({ id: Date.now(), nom: nom, desc: desc, pts: pts || 10, statut: statut, type: type, emoji: infoJeu({ type: type }).emoji, couleur: infoJeu({ type: type }).couleur }); }
+            saveData(data); fermerForm(); afficher();
+        }
+        function modifier(id) {
+            let it = getData().find(x => x.id === id);
+            document.getElementById("formTitre").textContent = "Modifier : " + it.nom;
+            document.getElementById("editId").value = it.id;
+            document.getElementById("f_nom").value = it.nom; document.getElementById("f_desc").value = it.desc; document.getElementById("f_pts").value = it.pts; document.getElementById("f_statut").value = it.statut; document.getElementById("f_type").value = it.type || "";
+            let box = document.getElementById("formBox"); box.style.display = "block";
+            setTimeout(() => { box.scrollIntoView({ behavior: "smooth", block: "center" }); }, 100);
+        }
+        function changerStatut(id) { let data = getData(); let it = data.find(x => x.id === id); it.statut = it.statut === "Actif" ? "Inactif" : "Actif"; saveData(data); afficher(); }
+        function supprimer(id) { let it = getData().find(x => x.id === id); if (confirm("Supprimer : " + it.nom + " ?")) { saveData(getData().filter(x => x.id !== id)); afficher(); } }
+        const QUIZ = [
+            { q: "Quelle est la devise du Mali ?", opts: ["Un Peuple, Un But, Une Foi", "Assimi Goïta", "AES"], bonne: 0 },
+            { q: "Quelle est la capitale du Mali ?", opts: ["Bamako", "Kati", "Sikasso", "Kayes"], bonne: 0 },
+            { q: "Quel est le plat national du Mali ?", opts: ["Tiepoudienne", "Pizza", "Sushi", "Burger"], bonne: 0 },
+            { q: "Ou se trouve le restaurant Sandwich+ ?", opts: ["Banankabougou", "Kati", "Hippodrome", "Hamdalaye"], bonne: 0 },
+            { q: "Quel restaurant est a l'ACI 2000 ?", opts: ["Le Grill - Bamako", "Maquis Kati", "Le Relax", "Le Faso"], bonne: 0 },
+            { q: "Quel plat est a base de riz rouge ?", opts: ["Tiepoudienne", "Mafé", "Yassa", "Tô"], bonne: 0 },
+            { q: "Quel restaurant est a Magnambougou ?", opts: ["Chez Fatoumata", "Le Faso", "Sandwich+", "Douceur Sucrée"], bonne: 0 },
+            { q: "Quel est l'ingredient principal du Mafé ?", opts: ["Arachide", "Tomate", "Poisson", "Fromage"], bonne: 0 },
+            { q: "Quel restaurant est a Kati ?", opts: ["Maquis Kati", "Le Relax", "Le Grill - Bamako", "Chez Fatoumata"], bonne: 0 },
+            { q: "Quel restaurant est a Hippodrome ?", opts: ["Le Relax", "Sandwich+", "Le Faso", "Maquis Le Savana"], bonne: 0 }
+        ];
+        const DEVINETTES = [
+            { emoji: "🇲🇱", question: "Je suis la devise du Mali. Je commence par Un Peuple... C'est quoi ?", indices: "Un Peuple, Un But, Une ...", reponse: "UNE FOI" },
+            { emoji: "🍚🥩🥕", question: "Je suis le plat national du Mali. Riz rouge, poisson, legumes. C'est quoi ?", indices: "Riz rouge, poisson...", reponse: "TIEPOUDIENNE" },
+            { emoji: "🥜🍗🍚", question: "Je suis une sauce arachide avec poulet et riz. Tres populaire au Mali. C'est quoi ?", indices: "Sauce arachide...", reponse: "MAFE" },
+            { emoji: "🌽🥣", question: "Je suis une pate de mil ou de mais, avec sauce. On mange avec les doigts. C'est quoi ?", indices: "Pate de mil...", reponse: "TO" },
+            { emoji: "🐟🍋🧅", question: "Je suis du poisson marine au citron et oignon. C'est quoi ?", indices: "Poisson, citron...", reponse: "YASSA" },
+            { emoji: "🍞🥩🧀", question: "Je suis du pain, viande, fromage. On me trouve a Sandwich+. C'est quoi ?", indices: "Pain, viande...", reponse: "SANDWICH" }
+        ];
+        let jeuActuel = null;
+        let score = 0, pointsGagnes = 0;
+        let intervalJeu = null, intervalBallon = null;
+        let tempsRestant = 30;
+        let snake = [], dir = "droite", nextDir = "droite", nourriture = { x: 5, y: 5 };
+        let joueur = { x: 180, y: 180 }, ennemi = { x: 50, y: 50 }, tempsSurvie = 0;
+        let quizIndex = 0, quizBonnes = 0;
+        let devinetteIndex = 0;
+        let snakeEnCours = false;
+        function jouer(id) {
+            let j = getData().find(x => x.id === id);
+            if (!j) return;
+            jeuActuel = j.type || "";
+            if (jeuActuel === "autre") {
+                document.getElementById("zoneJeu").style.display = "none";
+                document.querySelector(".classement").scrollIntoView({ behavior: "smooth" });
+                alert("Jeu : " + j.nom + "\n\n" + j.desc);
+                return;
+            }
+            document.getElementById("zoneJeu").style.display = "block";
+            document.getElementById("titreJeu").textContent = "Tu joues a : " + j.nom;
+            document.getElementById("descJeu").textContent = j.desc;
+            document.getElementById("zoneJeu").scrollIntoView({ behavior: "smooth", block: "center" });
+            demarrerJeu();
+        }
+        function fermerJeu() {
+            document.getElementById("zoneJeu").style.display = "none";
+            clearInterval(intervalJeu); clearInterval(intervalBallon);
+            snakeEnCours = false;
+            document.getElementById("etatSnake").textContent = "Ferme";
+        }
+        function changerDir(d) {
+            if (jeuActuel === "snake") {
+                if (d === "haut" && dir !== "bas") nextDir = "haut";
+                if (d === "bas" && dir !== "haut") nextDir = "bas";
+                if (d === "gauche" && dir !== "droite") nextDir = "gauche";
+                if (d === "droite" && dir !== "gauche") nextDir = "droite";
+                if (!snakeEnCours) { document.getElementById("etatSnake").textContent = "Direction : " + d + " — Touche ▶ pour demarrer"; }
+                else { document.getElementById("etatSnake").textContent = "Direction : " + d; }
+            } else if (jeuActuel === "poursuite") {
+                if (d === "haut") joueur.y = Math.max(12, joueur.y - 25);
+                if (d === "bas") joueur.y = Math.min(348, joueur.y + 25);
+                if (d === "gauche") joueur.x = Math.max(12, joueur.x - 25);
+                if (d === "droite") joueur.x = Math.min(348, joueur.x + 25);
+                dessinerPoursuite();
+            }
+        }
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowUp") { e.preventDefault(); changerDir("haut"); }
+            if (e.key === "ArrowDown") { e.preventDefault(); changerDir("bas"); }
+            if (e.key === "ArrowLeft") { e.preventDefault(); changerDir("gauche"); }
+            if (e.key === "ArrowRight") { e.preventDefault(); changerDir("droite"); }
+        });
+        let touchX = 0, touchY = 0;
+        let canvasEl = document.getElementById("canvasJeu");
+        canvasEl.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; }, { passive: true });
+        canvasEl.addEventListener("touchmove", function (e) {
+            if (jeuActuel !== "snake" && jeuActuel !== "poursuite") return;
+            e.preventDefault();
+            let dx = e.touches[0].clientX - touchX;
+            let dy = e.touches[0].clientY - touchY;
+            if (Math.abs(dx) > 20 || Math.abs(dy) > 20) {
+                if (Math.abs(dx) > Math.abs(dy)) { changerDir(dx > 0 ? "droite" : "gauche"); }
+                else { changerDir(dy > 0 ? "bas" : "haut"); }
+                touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+            }
+        }, { passive: false });
+        function finirPartie(message) {
+            clearInterval(intervalJeu); clearInterval(intervalBallon);
+            snakeEnCours = false;
+            document.getElementById("etatSnake").textContent = "Partie finie";
+            alert(message);
+            let total = parseInt(localStorage.getItem("rbm_points_jour") || "0") + pointsGagnes;
+            localStorage.setItem("rbm_points_jour", total);
+            document.getElementById("pointsJour").textContent = total;
+        }
+        function cacherZones() {
+            document.getElementById("canvasJeu").style.display = "none";
+            document.getElementById("ballonZone").style.display = "none";
+            document.getElementById("zoneQuiz").style.display = "none";
+            document.getElementById("zoneDevinette").style.display = "none";
+        }
+        function demarrerJeu() {
+            clearInterval(intervalJeu); clearInterval(intervalBallon);
+            snakeEnCours = false;
+            score = 0; pointsGagnes = 0; tempsSurvie = 0; tempsRestant = 30;
+            document.getElementById("score").textContent = "0";
+            document.getElementById("pointsGagnes").textContent = "0";
+            document.getElementById("tempsJeu").textContent = "1 / 10";
+            document.getElementById("etatSnake").textContent = "En cours";
+            let config = getCfg();
+            let canvas = document.getElementById("canvasJeu");
+            let zone = document.getElementById("ballonZone");
+            cacherZones();
+            if (jeuActuel === "snake" || jeuActuel === "poursuite") {
+                document.getElementById("manetteJeu").style.display = "grid";
+                document.getElementById("aideManette").style.display = "block";
+                document.getElementById("aideManette").textContent = jeuActuel === "snake" ? "Touche ▶ au centre pour demarrer le Snake, puis touche les fleches ↑ ↓ ← → pour diriger le serpent vert." : "Touche les fleches ↑ ↓ ← → pour fuir le rond rouge.";
+            } else {
+                document.getElementById("manetteJeu").style.display = "none";
+                document.getElementById("aideManette").style.display = "none";
+            }
+            document.getElementById("controlsJeu").style.display = "flex";
+            document.getElementById("aideJeu").textContent = "Sur ordinateur, tu peux aussi utiliser les fleches du clavier. Pour Pop Ballon, clique sur les ballons.";
+            if (jeuActuel === "quiz") {
+                document.getElementById("controlsJeu").style.display = "flex";
+                document.getElementById("aideJeu").textContent = "Choisis la bonne reponse. 10 points par bonne reponse.";
+                quizIndex = 0; quizBonnes = 0;
+                afficherQuiz();
+                return;
+            }
+            if (jeuActuel === "devinette") {
+                document.getElementById("controlsJeu").style.display = "flex";
+                document.getElementById("aideJeu").textContent = "Ecris la reponse. 20 points par devinette trouvee.";
+                devinetteIndex = 0;
+                afficherDevinette();
+                return;
+            }
+            if (jeuActuel === "ballon") {
+                canvas.style.display = "none"; zone.style.display = "block"; zone.innerHTML = "";
+                document.getElementById("tempsJeu").textContent = "30s";
+                document.getElementById("etatSnake").textContent = "Eclate les ballons !";
+                intervalBallon = setInterval(() => {
+                    tempsRestant--;
+                    document.getElementById("tempsJeu").textContent = tempsRestant + "s";
+                    if (tempsRestant <= 0) { finirPartie("Temps fini ! Ballons eclates : " + score + " - Points : " + pointsGagnes); zone.innerHTML = ""; return; }
+                    creerBallon(config.ballon);
+                }, 1000);
+                creerBallon(config.ballon);
+                return;
+            }
+            canvas.style.display = "block";
+            if (jeuActuel === "snake") {
+                snake = [{ x: 8, y: 8 }, { x: 7, y: 8 }, { x: 6, y: 8 }];
+                dir = "droite"; nextDir = "droite";
+                nourriture = { x: Math.floor(Math.random() * 17) + 1, y: Math.floor(Math.random() * 17) + 1 };
+                dessinerSnake();
+                document.getElementById("etatSnake").textContent = "Serpent pret — Touche ▶ ou une fleche pour demarrer";
+                snakeEnCours = true;
+                intervalJeu = setInterval(() => {
+                    dir = nextDir;
+                    let tete = { x: snake[0].x, y: snake[0].y };
+                    if (dir === "droite") tete.x++;
+                    if (dir === "gauche") tete.x--;
+                    if (dir === "haut") tete.y--;
+                    if (dir === "bas") tete.y++;
+                    if (tete.x < 0 || tete.x > 19 || tete.y < 0 || tete.y > 19 || snake.some(s => s.x === tete.x && s.y === tete.y)) {
+                        finirPartie("Partie finie ! Le serpent s'est mordu ou a tape le mur. Score : " + score + " - Points gagnes : " + pointsGagnes);
+                        return;
+                    }
+                    snake.unshift(tete);
+                    if (tete.x === nourriture.x && tete.y === nourriture.y) {
+                        score += 1; pointsGagnes += config.snake;
+                        nourriture = { x: Math.floor(Math.random() * 17) + 1, y: Math.floor(Math.random() * 17) + 1 };
+                    } else { snake.pop(); }
+                    document.getElementById("score").textContent = score;
+                    document.getElementById("pointsGagnes").textContent = pointsGagnes;
+                    document.getElementById("etatSnake").textContent = "Serpent en marche — Direction : " + dir;
+                    dessinerSnake();
+                }, 180);
+                dessinerSnake();
+            } else {
+                joueur = { x: 180, y: 180 }; ennemi = { x: 50, y: 50 };
+                document.getElementById("etatSnake").textContent = "Fuis le rond rouge !";
+                intervalJeu = setInterval(() => {
+                    tempsSurvie++;
+                    if (ennemi.x < joueur.x) ennemi.x += 3;
+                    if (ennemi.x > joueur.x) ennemi.x -= 3;
+                    if (ennemi.y < joueur.y) ennemi.y += 3;
+                    if (ennemi.y > joueur.y) ennemi.y -= 3;
+                    let dist = Math.sqrt(Math.pow(joueur.x - ennemi.x, 2) + Math.pow(joueur.y - ennemi.y, 2));
+                    score = Math.floor(tempsSurvie / 10);
+                    pointsGagnes = Math.floor(score * config.poursuite / 2);
+                    document.getElementById("score").textContent = score;
+                    document.getElementById("pointsGagnes").textContent = pointsGagnes;
+                    dessinerPoursuite();
+                    if (dist < 18) { finirPartie("Attrape ! Tu as survecu " + score + " secondes. Points gagnes : " + pointsGagnes); }
+                }, 100);
+                dessinerPoursuite();
+            }
+        }
+        function afficherQuiz() {
+            let box = document.getElementById("zoneQuiz"); box.style.display = "block";
+            document.getElementById("tempsJeu").textContent = (quizIndex + 1) + " / " + QUIZ.length;
+            if (quizIndex >= QUIZ.length) {
+                box.innerHTML = "<div class='quiz-q'>Termine ! Tu as " + quizBonnes + " bonnes reponses sur " + QUIZ.length + ". Points : " + pointsGagnes + "</div><button class='btn btn-or' onclick='demarrerJeu()'>REJOUER</button>";
+                let total = parseInt(localStorage.getItem("rbm_points_jour") || "0") + pointsGagnes;
+                localStorage.setItem("rbm_points_jour", total);
+                document.getElementById("pointsJour").textContent = total;
+                return;
+            }
+            let q = QUIZ[quizIndex];
+            let html = "<div class='quiz-q'>Question " + (quizIndex + 1) + " / " + QUIZ.length + " : " + q.q + "</div>";
+            let lettres = ["a", "b", "c", "d"];
+            q.opts.forEach((opt, i) => {
+                html += "<button class='quiz-opt' onclick='repondreQuiz(" + i + ", this)'>" + lettres[i] + " : " + opt + "</button>";
+            });
+            box.innerHTML = html;
+        }
+        function repondreQuiz(i, btn) {
+            let q = QUIZ[quizIndex];
+            let config = getCfg();
+            let btns = document.querySelectorAll(".quiz-opt");
+            btns.forEach((b, idx) => {
+                b.disabled = true;
+                if (idx === q.bonne) b.classList.add("bonne");
+                else if (idx === i) b.classList.add("mauvaise");
+            });
+            if (i === q.bonne) { quizBonnes++; pointsGagnes += config.quiz; score = quizBonnes; document.getElementById("score").textContent = score; document.getElementById("pointsGagnes").textContent = pointsGagnes; }
+            setTimeout(() => { quizIndex++; afficherQuiz(); }, 800);
+        }
+        function afficherDevinette() {
+            let box = document.getElementById("zoneDevinette"); box.style.display = "block";
+            document.getElementById("tempsJeu").textContent = (devinetteIndex + 1) + " / " + DEVINETTES.length;
+            if (devinetteIndex >= DEVINETTES.length) {
+                box.innerHTML = "<div class='quiz-q'>Termine ! Tu as devine " + score + " devinettes sur " + DEVINETTES.length + ". Points : " + pointsGagnes + "</div><button class='btn btn-or' onclick='demarrerJeu()'>REJOUER</button>";
+                let total = parseInt(localStorage.getItem("rbm_points_jour") || "0") + pointsGagnes;
+                localStorage.setItem("rbm_points_jour", total);
+                document.getElementById("pointsJour").textContent = total;
+                return;
+            }
+            let d = DEVINETTES[devinetteIndex];
+            box.innerHTML = "<div class='devine-emoji'>" + d.emoji + "</div><div class='quiz-q'>" + d.question + "</div><div class='devine-indice'><b>Indice :</b> " + d.indices + "</div><input class='devine-input' id='reponseDevinette' placeholder='Ecris ta reponse...'><br><br><button class='btn btn-or' onclick='validerDevinette()'>VALIDER MA REPONSE</button> <button class='btn btn-gris' onclick='passerDevinette()'>PASSER</button><p id='msgDevinette' style='margin-top:10px;font-weight:700'></p>";
+        }
+        function validerDevinette() {
+            let rep = (document.getElementById("reponseDevinette").value || "").trim().toUpperCase();
+            let d = DEVINETTES[devinetteIndex];
+            let config = getCfg();
+            let msg = document.getElementById("msgDevinette");
+            if (!rep) { msg.textContent = "Ecris une reponse d'abord."; msg.style.color = "#A83200"; return; }
+            if (rep === d.reponse || d.reponse.includes(rep) || rep.includes(d.reponse)) {
+                score++; pointsGagnes += config.devinette;
+                document.getElementById("score").textContent = score;
+                document.getElementById("pointsGagnes").textContent = pointsGagnes;
+                msg.textContent = "Bravo ! C'etait bien " + d.reponse + ". + " + config.devinette + " points.";
+                msg.style.color = "#1B6B2E";
+                setTimeout(() => { devinetteIndex++; afficherDevinette(); }, 1000);
+            } else {
+                msg.textContent = "Pas encore. Essaie encore, ou clique sur PASSER.";
+                msg.style.color = "#A83200";
+            }
+        }
+        function passerDevinette() { devinetteIndex++; afficherDevinette(); }
+        function creerBallon(ptsParBallon) {
+            let zone = document.getElementById("ballonZone");
+            if (!zone) return;
+            let b = document.createElement("div");
+            b.className = "ballon";
+            let couleurs = ["#E53935", "#FF9800", "#4CAF50", "#2196F3", "#9C27B0", "#C9A227"];
+            b.style.background = couleurs[Math.floor(Math.random() * couleurs.length)];
+            b.style.left = Math.floor(Math.random() * 300) + "px";
+            b.style.top = Math.floor(Math.random() * 290) + "px";
+            b.textContent = "O";
+            b.onclick = function () {
+                score++; pointsGagnes += ptsParBallon;
+                document.getElementById("score").textContent = score;
+                document.getElementById("pointsGagnes").textContent = pointsGagnes;
+                b.remove();
+            };
+            zone.appendChild(b);
+            setTimeout(() => { if (b.parentNode) b.remove(); }, 2500);
+        }
+        function dessinerSnake() {
+            let c = document.getElementById("canvasJeu"); let ctx = c.getContext("2d");
+            ctx.clearRect(0, 0, 360, 360); ctx.fillStyle = "#1A1512"; ctx.fillRect(0, 0, 360, 360);
+            ctx.fillStyle = "#C9A227"; ctx.fillRect(nourriture.x * 18, nourriture.y * 18, 16, 16);
+            snake.forEach((s, idx) => {
+                ctx.fillStyle = idx === 0 ? "#1B6B2E" : "#4CAF50";
+                ctx.fillRect(s.x * 18, s.y * 18, 16, 16);
+                ctx.fillStyle = "#fff";
+                if (idx === 0) { ctx.fillRect(s.x * 18 + 3, s.y * 18 + 3, 3, 3); ctx.fillRect(s.x * 18 + 10, s.y * 18 + 3, 3, 3); }
+            });
+        }
+        function dessinerPoursuite() {
+            let c = document.getElementById("canvasJeu"); let ctx = c.getContext("2d");
+            ctx.clearRect(0, 0, 360, 360); ctx.fillStyle = "#1A1512"; ctx.fillRect(0, 0, 360, 360);
+            ctx.fillStyle = "#4CAF50"; ctx.beginPath(); ctx.arc(joueur.x, joueur.y, 12, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#E53935"; ctx.beginPath(); ctx.arc(ennemi.x, ennemi.y, 12, 0, Math.PI * 2); ctx.fill();
+        }
+        document.getElementById("pointsJour").textContent = localStorage.getItem("rbm_points_jour") || "0";
+        refreshJeux(); afficher(); afficherClassement();
+    </script>
+</body>
+
+</html>

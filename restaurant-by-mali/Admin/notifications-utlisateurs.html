@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications Utilisateurs — Restaurant By Mali</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh;
+            color: #1A1512;
+            overflow-x: hidden
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 10
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 21px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #9A938A;
+            font-size: 12px;
+            margin: 8px 0 16px;
+            word-break: break-word
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin: 16px 0 8px;
+            text-transform: uppercase;
+            word-break: break-word
+        }
+
+        .sidebar a {
+            color: #D8D2C9;
+            text-decoration: none;
+            padding: 10px 10px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid #2A231E
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 250px;
+            padding: 28px 22px;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: hidden
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .top h2 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            font-weight: 400;
+            word-break: break-word;
+            line-height: 1.2
+        }
+
+        .top h2 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .top p {
+            color: #7A7268;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 720px;
+            word-break: break-word
+        }
+
+        .top .date {
+            font-size: 12px;
+            color: #9A938A;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: normal
+        }
+
+        .surveillance {
+            background: #1A1512;
+            color: #fff;
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-left: 6px solid #A83200;
+            width: 100%
+        }
+
+        .surveillance b {
+            color: #C9A227;
+            word-break: break-word
+        }
+
+        .surveillance p {
+            font-size: 13px;
+            color: #D8D2C9;
+            margin-top: 4px;
+            line-height: 1.6;
+            word-break: break-word
+        }
+
+        .surveillance .pill {
+            background: #A83200;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .6px;
+            white-space: nowrap
+        }
+
+        .kpi {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .kpi-card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            min-width: 0;
+            word-break: break-word
+        }
+
+        .kpi-card small {
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9A938A;
+            font-weight: 700
+        }
+
+        .kpi-card h3 {
+            font-family: Georgia, serif;
+            font-size: 26px;
+            margin: 10px 0 4px;
+            font-weight: 400
+        }
+
+        .kpi-card p {
+            color: #7A7268;
+            font-size: 13px;
+            word-break: break-word
+        }
+
+        .kpi-card.noir {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .kpi-card.noir small {
+            color: #C9A227
+        }
+
+        .kpi-card.noir p {
+            color: #C9A227
+        }
+
+        .barre {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .barre input {
+            flex: 1;
+            min-width: 180px;
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px
+        }
+
+        .barre select {
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px;
+            max-width: 100%
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 16px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .btn-vert {
+            background: #1B6B2E;
+            color: #fff
+        }
+
+        .section {
+            margin-top: 28px;
+            width: 100%
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #F1E3C8;
+            padding-bottom: 12px
+        }
+
+        .section-head h3 {
+            font-family: Georgia, serif;
+            font-size: 21px;
+            font-weight: 400;
+            word-break: break-word;
+            line-height: 1.3
+        }
+
+        .section-head p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 4px;
+            word-break: break-word
+        }
+
+        .liste {
+            margin-top: 14px;
+            display: grid;
+            gap: 12px;
+            width: 100%
+        }
+
+        .notif-card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            min-width: 0
+        }
+
+        .notif-card.non-lu {
+            border-left: 6px solid #C9A227;
+            background: #FFFEF8
+        }
+
+        .notif-card.lu {
+            opacity: .75
+        }
+
+        .notif-top {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            width: 100%;
+            min-width: 0
+        }
+
+        .notif-card h4 {
+            font-size: 15px;
+            line-height: 1.5;
+            word-break: break-word;
+            white-space: normal;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center
+        }
+
+        .notif-card p {
+            color: #666;
+            font-size: 13.5px;
+            margin-top: 6px;
+            line-height: 1.6;
+            word-break: break-word;
+            white-space: normal
+        }
+
+        .notif-card small {
+            font-size: 12px;
+            color: #9A938A;
+            word-break: break-word
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: normal;
+            word-break: break-word;
+            display: inline-block;
+            line-height: 1.3
+        }
+
+        .badge.restaurant {
+            background: #FFF3CD;
+            color: #7A5A00
+        }
+
+        .badge.client {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.debloque {
+            background: #D8F3DC;
+            color: #1B6B2E;
+            border: 1.5px solid #1B6B2E
+        }
+
+        .badge.bloque {
+            background: #FCE4E4;
+            color: #8A1A1A;
+            border: 1.5px solid #A83200
+        }
+
+        .badge.nouveau {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .badge.actif {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.suspendu {
+            background: #FCE4E4;
+            color: #8A1A1A
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            flex-wrap: wrap;
+            width: 100%
+        }
+
+        .btn-petit {
+            padding: 10px 12px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 12px;
+            flex: 1;
+            min-width: 140px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.3
+        }
+
+        .btn-lu {
+            background: #1B6B2E;
+            color: #fff;
+            border: 2px solid #0F3D1A
+        }
+
+        .btn-non-lu {
+            background: #1A1512;
+            color: #fff;
+            border: 2px solid #C9A227
+        }
+
+        .btn-voir {
+            background: #C9A227;
+            color: #1A1512;
+            border: 2px solid #1A1512
+        }
+
+        .btn-debloquer {
+            background: #1B6B2E;
+            color: #fff;
+            border: 2px solid #0F3D1A
+        }
+
+        .btn-bloquer {
+            background: #A83200;
+            color: #fff;
+            border: 2px solid #5A0F0F
+        }
+
+        .btn-supprimer {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 50%;
+            background: #1A1512;
+            color: #C9A227;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            flex-shrink: 0
+        }
+
+        .lien-retour {
+            margin-top: 20px;
+            display: inline-block;
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 13px
+        }
+
+        @media(max-width:1100px) {
+            .kpi {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media(max-width:850px) {
+            .sidebar {
+                width: 210px
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 20px 14px
+            }
+        }
+
+        @media(max-width:650px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 16px 12px
+            }
+
+            .kpi {
+                grid-template-columns: 1fr
+            }
+
+            .btn-petit {
+                min-width: 100%;
+                flex: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">Utilisateurs Clients</a>
+        <div class="titre">Finance</div><a href="finance-paiement.html">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html">Muna IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html" class="active">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="top">
+            <div>
+                <h2>Notifications <span>— Utilisateurs</span></h2>
+                <p>Toutes les alertes sur les gens : les 8 restaurants + les 2 clients. Nouveau compte, compte debloque,
+                    compte bloque.</p>
+                <p id="infoSync" style="color:#C9A227;font-weight:700;font-size:13px;margin-top:8px"></p>
+            </div>
+            <div class="date" id="dateJour"></div>
+        </div>
+        <div class="surveillance">
+            <div><b>ZONE SOUS SURVEILLANCE — ADMIN UNIQUEMENT</b>
+                <p>Chaque utilisateur qui entre, qui est bloque ou debloque est enregistre ici.</p>
+            </div>
+            <div class="pill">SURVEILLANCE ACTIVE</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-card noir"><small>Total notifications</small>
+                <h3 id="nbTotal">0</h3>
+                <p>Toutes les alertes utilisateurs</p>
+            </div>
+            <div class="kpi-card"><small>Non lues</small>
+                <h3 id="nbNonLu">0</h3>
+                <p>A traiter en priorite</p>
+            </div>
+            <div class="kpi-card"><small>Restaurants</small>
+                <h3 id="nbResto">0</h3>
+                <p>Les 8 restaurants</p>
+            </div>
+            <div class="kpi-card"><small>Clients</small>
+                <h3 id="nbClient">0</h3>
+                <p>Tes 2 clients</p>
+            </div>
+        </div>
+        <div class="barre">
+            <input id="search" placeholder="Rechercher : nom restaurant, nom client, action..." oninput="afficher()">
+            <select id="filtreType" onchange="afficher()">
+                <option value="">Tous — Restaurants + Clients</option>
+                <option value="Restaurant">Restaurants seulement</option>
+                <option value="Client">Clients seulement</option>
+                <option value="DEBLOQUER">Debloques</option>
+                <option value="BLOQUER">Bloques</option>
+            </select>
+            <select id="filtreLu" onchange="afficher()">
+                <option value="">Toutes</option>
+                <option value="non-lu">Non lues seulement</option>
+                <option value="lu">Lues seulement</option>
+            </select>
+            <button class="btn btn-or" onclick="afficher()">Rechercher</button>
+            <button class="btn btn-noir" onclick="toutMarquerLu()">Tout marquer comme lu</button>
+        </div>
+        <div class="barre" style="margin-top:10px">
+            <button class="btn btn-vert" onclick="reparer()">REPARER — Afficher les 8 restaurants + 2 clients</button>
+            <button class="btn btn-noir" onclick="toutEffacer()">Tout effacer puis reparer</button>
+        </div>
+        <div class="section">
+            <div class="section-head">
+                <div>
+                    <h3>Alertes utilisateurs — 8 restaurants + 2 clients</h3>
+                    <p id="nbLignes">0 notification affichee</p>
+                </div><span style="font-size:12px;color:#9A938A;font-weight:700">SYNCHRONISE : RESTAURANTS + CLIENTS +
+                    FINANCE + FONCTIONNALITE PAGE</span>
+            </div>
+            <div class="liste" id="listeNotifs"></div>
+            <p id="vide"
+                style="display:none;color:#888;margin-top:12px;text-align:center;padding:30px;background:#fff;border-radius:16px">
+                Aucune notification. Clique sur REPARER en haut.</p>
+        </div>
+        <a class="lien-retour" href="dashboard.html">Retour au Tableau de bord</a>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        document.getElementById("dateJour").textContent = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+        function getNotifs() { return JSON.parse(localStorage.getItem("rbm_notif_users") || "[]"); }
+        function saveNotifs(d) { localStorage.setItem("rbm_notif_users", JSON.stringify(d)); }
+        function getRestos() {
+            let r = JSON.parse(localStorage.getItem("rbm_restaurants") || "[]");
+            // Si la liste restaurants est vide ou incomplete, on met les 8 vrais restaurants
+            if (r.length < 8) {
+                r = [
+                    { id: 1, nom: "Le Grill - Bamako", quartier: "ACI 2000, Bamako", code: "+223 70 00 00 01", statut: "Actif", statut_page: "active", acces_compte: "AUTORISE" },
+                    { id: 2, nom: "Sandwich+", quartier: "Banankabougou, Bamako", code: "+223 70 00 00 02", statut: "Actif", statut_page: "active", acces_compte: "AUTORISE" },
+                    { id: 3, nom: "Le Relax", quartier: "Hippodrome, Bamako", code: "+223 70 00 00 03", statut: "Actif", statut_page: "active", acces_compte: "AUTORISE" },
+                    { id: 4, nom: "Maquis Le Savana", quartier: "Badalabougou, Bamako", code: "+223 70 00 00 04", statut: "Actif", statut_page: "active", acces_compte: "AUTORISE" },
+                    { id: 5, nom: "Chez Fatoumata", quartier: "Magnambougou, Bamako", code: "+223 70 00 00 05", statut: "Actif", statut_page: "active", acces_compte: "AUTORISE" },
+                    { id: 6, nom: "Le Faso", quartier: "Hamdalaye, Bamako", code: "+223 70 00 00 06", statut: "Actif", statut_page: "active", acces_compte: "AUTORISE" },
+                    { id: 7, nom: "Maquis Kati", quartier: "Kati", code: "+223 70 00 00 07", statut: "Actif", statut_page: "active", acces_compte: "AUTORISE" },
+                    { id: 8, nom: "Douceur Sucrée", quartier: "ACI 2000, Bamako", code: "+223 70 00 00 08", statut: "Actif", statut_page: "active", acces_compte: "AUTORISE" }
+                ];
+                localStorage.setItem("rbm_restaurants", JSON.stringify(r));
+            }
+            return r;
+        }
+        function getClients() {
+            let c = JSON.parse(localStorage.getItem("rbm_clients") || "[]");
+            // Si clients vide, on met tes 2 clients
+            if (c.length === 0) {
+                c = [
+                    { id: 1, nom: "Awa Diallo", tel: "+223 70 11 22 33", adresse: "ACI 2000, Bamako", points: 120, statut: "Actif" },
+                    { id: 2, nom: "Moussa Traoré", tel: "+223 65 44 33 22", adresse: "Hippodrome, Bamako", points: 45, statut: "Actif" }
+                ];
+                localStorage.setItem("rbm_clients", JSON.stringify(c));
+            }
+            return c;
+        }
+        function getPaiements() { return JSON.parse(localStorage.getItem("rbm_paiements") || "[]"); }
+        // REPARATION AUTOMATIQUE : on complete les manquants, on n'efface pas l'ancien
+        function reparerAuto() {
+            let restos = getRestos();
+            let clients = getClients();
+            let notifs = getNotifs();
+            let texteExistant = notifs.map(n => (n.titre + " " + n.texte).toLowerCase()).join(" || ");
+            let ajoute = 0;
+            restos.forEach((r) => {
+                if (!texteExistant.includes(r.nom.toLowerCase())) {
+                    let acces = r.acces_compte || (r.statut === "Actif" ? "AUTORISE" : "BLOQUE");
+                    notifs.push({ id: 1000 + r.id, titre: (acces === "AUTORISE" ? "Compte debloque : " : "Compte bloque : ") + r.nom, texte: r.nom + " — " + (r.quartier || "") + " — " + (r.code || "") + " — Statut : " + r.statut + " — Acces compte : " + acces + " — Pas paye = Pas d'acces.", type: "Restaurant", date: "A l'instant", lu: false });
+                    ajoute++;
+                }
+            });
+            clients.forEach((c) => {
+                if (!texteExistant.includes((c.nom || "").toLowerCase())) {
+                    notifs.push({ id: 2000 + c.id, titre: "Client : " + c.nom, texte: "Client inscrit : " + c.nom + " — " + (c.telephone || c.tel || "") + " — " + (c.adresse || c.quartier || "") + " — Statut : " + (c.statut || "Actif"), type: "Client", date: "A l'instant", lu: false });
+                    ajoute++;
+                }
+            });
+            if (ajoute > 0) saveNotifs(notifs);
+            return ajoute;
+        }
+        function reparer() {
+            let n = reparerAuto();
+            afficher();
+            alert("Repare ! " + n + " notification(s) ajoutee(s).\nTu dois maintenant voir 8 restaurants + 2 clients.");
+        }
+        function toutEffacer() {
+            if (!confirm("Effacer toutes les anciennes notifications et recreer les 8 restaurants + 2 clients ?")) return;
+            localStorage.setItem("rbm_notif_users", JSON.stringify([]));
+            reparerAuto();
+            afficher();
+            alert("Efface et recree ! Tu dois voir 8 restaurants + 2 clients.");
+        }
+        reparerAuto();
+        function afficher() {
+            let v = document.getElementById("search").value.toLowerCase();
+            let ft = document.getElementById("filtreType").value;
+            let fl = document.getElementById("filtreLu").value;
+            let all = getNotifs();
+            let data = all.filter(n => {
+                let txt = (n.titre + " " + n.texte + " " + (n.type || "")).toLowerCase();
+                let okV = !v || txt.includes(v);
+                let okT = true;
+                if (ft === "Restaurant") okT = (n.type || "").toLowerCase().includes("restaurant");
+                if (ft === "Client") okT = (n.type || "").toLowerCase().includes("client");
+                if (ft === "DEBLOQUER") okT = txt.includes("debloque") || txt.includes("autorise");
+                if (ft === "BLOQUER") okT = txt.includes("bloque") && !txt.includes("debloque");
+                let okL = !fl || (fl === "non-lu" && !n.lu) || (fl === "lu" && n.lu);
+                return okV && okT && okL;
+            });
+            document.getElementById("nbTotal").textContent = all.length;
+            document.getElementById("nbNonLu").textContent = all.filter(n => !n.lu).length;
+            document.getElementById("nbResto").textContent = all.filter(n => (n.type || "").toLowerCase().includes("restaurant")).length;
+            document.getElementById("nbClient").textContent = all.filter(n => (n.type || "").toLowerCase().includes("client")).length;
+            document.getElementById("nbLignes").textContent = data.length + " notification affichee";
+            document.getElementById("infoSync").textContent = "Synchronise : " + getRestos().length + " restaurants — " + getClients().length + " clients — " + all.length + " notifications";
+            document.getElementById("vide").style.display = data.length === 0 ? "block" : "none";
+            let box = document.getElementById("listeNotifs"); box.innerHTML = "";
+            data.forEach(n => {
+                let txt = (n.titre + " " + n.texte).toLowerCase();
+                let isResto = (n.type || "").toLowerCase().includes("restaurant");
+                let badgeType = isResto ? "<span class='badge restaurant'>RESTAURANT</span>" : "<span class='badge client'>CLIENT</span>";
+                let badgeEtat = "";
+                if (txt.includes("debloque") || txt.includes("autorise")) badgeEtat = "<span class='badge debloque'>DEBLOQUE — AUTORISE</span>";
+                else if (txt.includes("bloque")) badgeEtat = "<span class='badge bloque'>BLOQUE</span>";
+                else if (txt.includes("actif")) badgeEtat = "<span class='badge actif'>ACTIF</span>";
+                else if (txt.includes("suspendu")) badgeEtat = "<span class='badge suspendu'>SUSPENDU</span>";
+                else badgeEtat = "<span class='badge nouveau'>NOUVEAU</span>";
+                let lettre = (n.titre || "N").replace("Compte debloque : ", "").replace("Compte bloque : ", "").replace("Client : ", "").replace("Nouveau client : ", "").replace("Statut change : ", "").charAt(0).toUpperCase();
+                let btnLu = n.lu
+                    ? "<button class='btn-petit btn-non-lu' onclick='marquerNonLu(" + n.id + ")'>REMETTRE EN NON LU</button>"
+                    : "<button class='btn-petit btn-lu' onclick='marquerLu(" + n.id + ")'>MARQUER COMME LU</button>";
+                let btnAction = "";
+                if (isResto) {
+                    let nomResto = (n.titre || "").replace("Compte debloque : ", "").replace("Compte bloque : ", "").replace("Page activee : ", "").replace("Page fermee : ", "").replace("Statut change : ", "").trim();
+                    let r = getRestos().find(x => x.nom === nomResto);
+                    let acces = r ? (r.acces_compte || (r.statut === "Actif" ? "AUTORISE" : "BLOQUE")) : "BLOQUE";
+                    if (acces === "BLOQUE") btnAction = "<button class='btn-petit btn-debloquer' onclick='debloquerResto(\"" + nomResto.replace(/"/g, "") + "\")'>DEBLOQUER CE RESTAURANT</button>";
+                    else btnAction = "<button class='btn-petit btn-bloquer' onclick='bloquerResto(\"" + nomResto.replace(/"/g, "") + "\")'>BLOQUER CE RESTAURANT</button>";
+                    btnAction += "<button class='btn-petit btn-voir' onclick='voirRestos()'>VOIR DANS RESTAURANTS</button>";
+                } else {
+                    let nomClient = (n.titre || "").replace("Client : ", "").replace("Compte debloque : ", "").replace("Compte bloque : ", "").replace("Nouveau client : ", "").replace("Client modifie : ", "").replace("Client supprime : ", "").replace("Statut change : ", "").trim();
+                    let c = getClients().find(x => x.nom === nomClient);
+                    let statut = c ? c.statut : "Actif";
+                    if (statut === "Actif") btnAction = "<button class='btn-petit btn-bloquer' onclick='bloquerClient(\"" + nomClient.replace(/"/g, "") + "\")'>BLOQUER CE CLIENT</button>";
+                    else btnAction = "<button class='btn-petit btn-debloquer' onclick='debloquerClient(\"" + nomClient.replace(/"/g, "") + "\")'>DEBLOQUER CE CLIENT</button>";
+                    btnAction += "<button class='btn-petit btn-voir' onclick='voirClients()'>VOIR DANS CLIENTS</button>";
+                }
+                box.innerHTML += "<div class='notif-card " + (n.lu ? "lu" : "non-lu") + "'><div class='notif-top'><div class='avatar'>" + lettre + "</div><div style='flex:1;min-width:0'><h4>" + n.titre + " " + badgeType + " " + badgeEtat + " " + (!n.lu ? "<span class='badge nouveau'>NON LU</span>" : "") + "</h4><p>" + n.texte + "</p><small>" + (n.date || "A l'instant") + " — Surveillance : action enregistree</small></div></div><div class='actions'>" + btnLu + btnAction + "<button class='btn-petit btn-supprimer' onclick='supprimer(" + n.id + ")'>SUPPRIMER</button></div></div>";
+            });
+        }
+        function marquerLu(id) { let d = getNotifs(); let n = d.find(x => x.id === id); if (n) n.lu = true; saveNotifs(d); afficher(); }
+        function marquerNonLu(id) { let d = getNotifs(); let n = d.find(x => x.id === id); if (n) n.lu = false; saveNotifs(d); afficher(); }
+        function toutMarquerLu() { if (!confirm("Marquer toutes les notifications comme lues ?")) return; let d = getNotifs(); d.forEach(n => n.lu = true); saveNotifs(d); afficher(); }
+        function voirRestos() { window.location.href = "utilisateurs-restaurants.html"; }
+        function voirClients() { window.location.href = "utilisateurs-clients.html"; }
+        function debloquerResto(nom) {
+            if (!confirm("DEBLOQUER " + nom + " ?")) return;
+            let restos = getRestos(); let r = restos.find(x => x.nom === nom); if (!r) return;
+            r.statut = "Actif"; r.statut_page = "active"; r.acces_compte = "AUTORISE"; localStorage.setItem("rbm_restaurants", JSON.stringify(restos));
+            let paiements = getPaiements(); let p = [...paiements].reverse().find(x => x.nom === nom); if (p) { p.statut = "Payé"; localStorage.setItem("rbm_paiements", JSON.stringify(paiements)); }
+            let notifs = getNotifs(); notifs.unshift({ id: Date.now(), titre: "Compte debloque : " + nom, texte: nom + " a ete debloque par l'Admin. Acces AUTORISE.", type: "Restaurant", date: "A l'instant", lu: false }); saveNotifs(notifs);
+            afficher(); alert(nom + " DEBLOQUE.");
+        }
+        function bloquerResto(nom) {
+            let raison = prompt("BLOQUER " + nom + " ?\n\nEcris la raison (ex : Pas paye) :");
+            if (raison === null) return; if (!raison.trim()) { alert("Tu dois ecrire la raison."); return; }
+            let restos = getRestos(); let r = restos.find(x => x.nom === nom); if (!r) return;
+            r.statut = "Suspendu"; r.statut_page = "inactive"; r.acces_compte = "BLOQUE"; localStorage.setItem("rbm_restaurants", JSON.stringify(restos));
+            let paiements = getPaiements(); let p = [...paiements].reverse().find(x => x.nom === nom); if (p) { p.statut = "Échoué"; localStorage.setItem("rbm_paiements", JSON.stringify(paiements)); }
+            let notifs = getNotifs(); notifs.unshift({ id: Date.now(), titre: "Compte bloque : " + nom, texte: nom + " a ete bloque par l'Admin. Raison : " + raison + ". Acces BLOQUE.", type: "Restaurant", date: "A l'instant", lu: false }); saveNotifs(notifs);
+            afficher(); alert(nom + " BLOQUE. Raison : " + raison);
+        }
+        function bloquerClient(nom) {
+            let raison = prompt("BLOQUER " + nom + " ?\n\nEcris la raison :");
+            if (raison === null) return; if (!raison.trim()) { alert("Tu dois ecrire la raison."); return; }
+            let clients = getClients(); let c = clients.find(x => x.nom === nom); if (!c) return;
+            c.statut = "Suspendu"; localStorage.setItem("rbm_clients", JSON.stringify(clients));
+            let notifs = getNotifs(); notifs.unshift({ id: Date.now(), titre: "Compte bloque : " + nom, texte: "Le client " + nom + " a ete bloque par l'Admin. Raison : " + raison + ". Acces BLOQUE.", type: "Client", date: "A l'instant", lu: false }); saveNotifs(notifs);
+            afficher(); alert(nom + " BLOQUE.");
+        }
+        function debloquerClient(nom) {
+            if (!confirm("DEBLOQUER " + nom + " ?")) return;
+            let clients = getClients(); let c = clients.find(x => x.nom === nom); if (!c) return;
+            c.statut = "Actif"; localStorage.setItem("rbm_clients", JSON.stringify(clients));
+            let notifs = getNotifs(); notifs.unshift({ id: Date.now(), titre: "Compte debloque : " + nom, texte: "Le client " + nom + " a ete debloque par l'Admin. Acces AUTORISE.", type: "Client", date: "A l'instant", lu: false }); saveNotifs(notifs);
+            afficher(); alert(nom + " DEBLOQUE.");
+        }
+        function supprimer(id) {
+            let d = getNotifs(); let n = d.find(x => x.id === id);
+            if (confirm("Supprimer cette notification : " + n.titre + " ?")) { saveNotifs(d.filter(x => x.id !== id)); afficher(); }
+        }
+        afficher();
+    </script>
+</body>
+
+</html>

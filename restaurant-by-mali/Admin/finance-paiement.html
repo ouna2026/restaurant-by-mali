@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance et Paiement — Restaurant By Mali — Sous Surveillance</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif
+        }
+
+        body {
+            background: #FFF8EE;
+            display: flex;
+            min-height: 100vh;
+            color: #1A1512
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #1A1512;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto
+        }
+
+        .sidebar h1 {
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 23px
+        }
+
+        .sidebar h1 span {
+            color: #C9A227
+        }
+
+        .sidebar p {
+            color: #9A938A;
+            font-size: 12px;
+            margin: 8px 0 20px
+        }
+
+        .titre {
+            color: #C9A227;
+            font-size: 11px;
+            letter-spacing: 1.2px;
+            font-weight: 800;
+            margin: 18px 0 8px;
+            text-transform: uppercase
+        }
+
+        .sidebar a {
+            color: #D8D2C9;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13.5px
+        }
+
+        .sidebar a:hover {
+            background: #2A231E;
+            color: #fff
+        }
+
+        .sidebar a.active {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .bas {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px solid #2A231E
+        }
+
+        .bas a {
+            background: #C9A227;
+            color: #1A1512;
+            text-align: center;
+            font-weight: 800
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 36px 40px;
+            max-width: 1200px
+        }
+
+        .top h2 {
+            font-family: Georgia, serif;
+            font-size: 32px;
+            font-weight: 400
+        }
+
+        .top h2 span {
+            color: #C9A227;
+            font-style: italic
+        }
+
+        .top p {
+            color: #7A7268;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6
+        }
+
+        .surveillance {
+            background: #1A1512;
+            color: #fff;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-top: 22px;
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-left: 6px solid #A83200
+        }
+
+        .surveillance b {
+            color: #C9A227
+        }
+
+        .surveillance p {
+            font-size: 13px;
+            color: #D8D2C9;
+            margin-top: 4px;
+            line-height: 1.6
+        }
+
+        .surveillance .pill {
+            background: #A83200;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .6px;
+            white-space: nowrap
+        }
+
+        .kpi {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 22px
+        }
+
+        .kpi-card {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            padding: 20px
+        }
+
+        .kpi-card small {
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9A938A;
+            font-weight: 700
+        }
+
+        .kpi-card h3 {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            margin: 10px 0 4px;
+            font-weight: 400
+        }
+
+        .kpi-card p {
+            color: #7A7268;
+            font-size: 13px
+        }
+
+        .kpi-card.noir {
+            background: #1A1512;
+            color: #fff;
+            border-color: #1A1512
+        }
+
+        .kpi-card.noir small {
+            color: #C9A227
+        }
+
+        .kpi-card.noir p {
+            color: #C9A227
+        }
+
+        .barre {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 22px
+        }
+
+        .barre input {
+            flex: 1;
+            min-width: 220px;
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px
+        }
+
+        .barre select {
+            padding: 13px;
+            border: 1.5px solid #E8DCC2;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            font-size: 14px
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 18px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13px
+        }
+
+        .btn-noir {
+            background: #1A1512;
+            color: #fff
+        }
+
+        .btn-or {
+            background: #C9A227;
+            color: #1A1512
+        }
+
+        .table-wrap {
+            background: #fff;
+            border: 1px solid #F1E3C8;
+            border-radius: 16px;
+            margin-top: 22px;
+            overflow-x: auto
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px
+        }
+
+        th {
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9A938A;
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid #F1E3C8
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #F1E3C8;
+            font-size: 14px;
+            vertical-align: middle
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .badge.paye {
+            background: #D8F3DC;
+            color: #1B6B2E
+        }
+
+        .badge.attente {
+            background: #FFF3CD;
+            color: #7A5A00
+        }
+
+        .badge.echoue {
+            background: #FCE4E4;
+            color: #8A1A1A
+        }
+
+        .badge.autorise {
+            background: #D8F3DC;
+            color: #1B6B2E;
+            border: 1.5px solid #1B6B2E
+        }
+
+        .badge.bloque {
+            background: #FCE4E4;
+            color: #8A1A1A;
+            border: 1.5px solid #A83200
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 160px
+        }
+
+        .btn-petit {
+            padding: 9px 11px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 12px;
+            width: 100%;
+            text-align: center
+        }
+
+        .btn-modif {
+            background: #C9A227;
+            color: #1A1512;
+            border: 2px solid #1A1512
+        }
+
+        .btn-debloque {
+            background: #1B6B2E;
+            color: #fff;
+            border: 2px solid #0F3D1A
+        }
+
+        .btn-bloque {
+            background: #A83200;
+            color: #fff;
+            border: 2px solid #6B1A00
+        }
+
+        .btn-statut {
+            background: #1A1512;
+            color: #fff;
+            border: 2px solid #C9A227
+        }
+
+        .btn-suppr {
+            background: #fff;
+            color: #A83200;
+            border: 2px solid #A83200
+        }
+
+        .lien-retour {
+            margin-top: 20px;
+            display: inline-block;
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 13px
+        }
+
+        @media(max-width:900px) {
+            .kpi {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .sidebar {
+                width: 220px
+            }
+
+            .main {
+                margin-left: 220px;
+                padding: 24px
+            }
+        }
+
+        @media(max-width:600px) {
+            body {
+                flex-direction: column
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px
+            }
+
+            .kpi {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>Restaurant <span>By Mali</span></h1>
+        <p>Espace Administrateur</p>
+        <div class="titre">Principal</div>
+        <a href="dashboard.html">Tableau de bord</a>
+        <a href="profil-admin.html">Mon Profil</a>
+        <a href="securite-connexion.html">Securite et Connexion</a>
+        <div class="titre">Utilisateurs</div>
+        <a href="utilisateurs-restaurants.html">Utilisateurs Restaurants</a>
+        <a href="utilisateurs-clients.html">Utilisateurs Clients</a>
+        <div class="titre">Finance</div>
+        <a href="finance-paiement.html" class="active">Finance et Paiement</a>
+        <div class="titre">Fonctionnalites</div>
+        <a href="fonctionnalite-site.html">Fonctionnalite Site</a>
+        <a href="fonctionnalite-ia.html">Muna IA</a>
+        <a href="fonctionnalite-jeux.html">Fonctionnalite Jeux</a>
+        <a href="fonctionnalite-page.html">Fonctionnalite Page</a>
+        <div class="titre">Notifications</div>
+        <a href="notifications-paiements.html">Notifications Paiements</a>
+        <a href="notifications-utlisateurs.html">Notifications Utilisateurs</a>
+        <div class="titre">Rapports</div>
+        <a href="rapport-clients-restaurants.html">Rapport Clients et Restaurants</a>
+        <a href="rapport-financier.html">Rapport Financier</a>
+        <div class="bas"><a href="deconnecter.html">Deconnecter</a></div>
+    </div>
+    <div class="main">
+        <div class="top">
+            <h2>Finance <span>— Paiement</span></h2>
+            <p>Regle : <b>Pas paye = pas d'acces.</b> Paye = AUTORISE, En attente / Echoue = BLOQUE.<br>Quand tu
+                acceptes ici, le restaurant peut se connecter 4 secondes apres.</p>
+            <p style="color:#C9A227;font-weight:700;font-size:13px;margin-top:8px" id="infoSync"></p>
+        </div>
+        <div class="surveillance">
+            <div><b>ZONE SOUS SURVEILLANCE — ADMIN UNIQUEMENT</b>
+                <p>Chaque action est enregistree dans le Journal de Surveillance.</p>
+            </div>
+            <div class="pill">SURVEILLANCE ACTIVE</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-card noir"><small>Total paiements</small>
+                <h3 id="nbTotal">0</h3>
+                <p>Toutes les lignes</p>
+            </div>
+            <div class="kpi-card"><small>Payes</small>
+                <h3 id="nbPaye">0</h3>
+                <p>Comptes AUTORISES</p>
+            </div>
+            <div class="kpi-card"><small>En attente</small>
+                <h3 id="nbAttente">0</h3>
+                <p>Comptes BLOQUES</p>
+            </div>
+            <div class="kpi-card"><small>Total recu</small>
+                <h3 id="totalRecu">0 F</h3>
+                <p>Seulement les Payes</p>
+            </div>
+        </div>
+        <div class="barre">
+            <input id="search" placeholder="Rechercher : nom, methode, motif..." oninput="afficher()">
+            <select id="filtreStatut" onchange="afficher()">
+                <option value="">Tous les statuts</option>
+                <option value="Payé">Paye</option>
+                <option value="En attente">En attente</option>
+                <option value="Échoué">Echoue</option>
+            </select>
+            <select id="filtreMethode" onchange="afficher()">
+                <option value="">Toutes les methodes</option>
+                <option value="Wave">Wave</option>
+                <option value="Sama">Sama</option>
+                <option value="Orange Money">Orange Money</option>
+            </select>
+            <button class="btn btn-or" onclick="afficher()">Rechercher</button>
+            <button class="btn btn-noir" onclick="reparer()">Reparer / Voir les 8 restaurants</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>QUI</th>
+                        <th>MONTANT</th>
+                        <th>METHODE</th>
+                        <th>MOTIF</th>
+                        <th>DATE</th>
+                        <th>STATUT</th>
+                        <th>ACCES COMPTE</th>
+                        <th>ACTIONS — STRICT</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+        <p id="vide"
+            style="display:none;color:#888;margin-top:12px;text-align:center;padding:30px;background:#fff;border-radius:16px">
+            Aucun paiement. Clique sur Reparer.</p>
+        <a class="lien-retour" href="dashboard.html">Retour au Tableau de bord</a>
+    </div>
+    <script>
+        if (!localStorage.getItem("rbm_admin")) { window.location.href = "login.html"; }
+        function getPaiements() { try { return JSON.parse(localStorage.getItem("rbm_paiements") || "[]"); } catch (e) { return []; } }
+        function savePaiements(d) { localStorage.setItem("rbm_paiements", JSON.stringify(d)); }
+        function getNotifs() { try { return JSON.parse(localStorage.getItem("rbm_notif_paiements") || "[]"); } catch (e) { return []; } }
+        function saveNotifs(d) { localStorage.setItem("rbm_notif_paiements", JSON.stringify(d)); }
+
+        // Si vide, on met les 8 restaurants de base
+        if (getPaiements().length === 0) {
+            let base = [
+                { id: 1, nom: "Le Grill - Bamako", montant: 50000, methode: "Wave", motif: "Abonnement Trimestriel", statut: "Payé", couleur: "#C9A227", date: "Aujourd'hui" },
+                { id: 2, nom: "Sandwich+", montant: 50000, methode: "Wave", motif: "Abonnement Trimestriel", statut: "Payé", couleur: "#C9A227", date: "Hier" },
+                { id: 3, nom: "Le Relax", montant: 20000, methode: "Wave", motif: "Abonnement Mensuel", statut: "Échoué", couleur: "#C9A227", date: "Hier" },
+                { id: 4, nom: "Maquis Le Savana", montant: 15000, methode: "Wave", motif: "Abonnement Mensuel", statut: "Payé", couleur: "#C9A227", date: "Hier" },
+                { id: 5, nom: "Chez Fatoumata", montant: 15000, methode: "Sama", motif: "Abonnement Mensuel", statut: "Payé", couleur: "#C9A227", date: "Hier" },
+                { id: 6, nom: "Le Faso", montant: 15000, methode: "Wave", motif: "Abonnement Mensuel", statut: "En attente", couleur: "#C9A227", date: "Hier" },
+                { id: 7, nom: "Maquis Kati", montant: 15000, methode: "Wave", motif: "Abonnement Mensuel", statut: "Payé", couleur: "#C9A227", date: "Hier" },
+                { id: 8, nom: "Douceur Sucrée", montant: 15000, methode: "Sama", motif: "Abonnement Mensuel", statut: "Payé", couleur: "#C9A227", date: "Hier" }
+            ];
+            savePaiements(base);
+            base.forEach(function (p) { localStorage.setItem("rbm_resto_statut_" + p.nom, p.statut === "Payé" ? "AUTORISE" : "BLOQUE"); });
+        }
+
+        function syncDemandes() {
+            let demandes = [];
+            try { demandes = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]"); } catch (e) { demandes = []; }
+            let pays = getPaiements();
+            let change = false;
+            demandes.forEach(function (d) {
+                if (!d.nom) return;
+                let deja = pays.some(function (p) { return p.nom === d.nom && p.motif === "Nouvelle inscription - " + d.abo; });
+                if (!deja) {
+                    pays.unshift({ id: Date.now() + Math.floor(Math.random() * 100000), nom: d.nom, montant: d.montant || 0, methode: d.payPar || "Wave", motif: "Nouvelle inscription - " + (d.abo || ""), statut: "En attente", couleur: "#C9A227", date: d.date || "A l'instant", tel: d.tel, quartier: d.quartier });
+                    change = true;
+                }
+            });
+            if (change) savePaiements(pays);
+        }
+
+        function afficher() {
+            syncDemandes();
+            let v = document.getElementById("search").value.toLowerCase();
+            let fs = document.getElementById("filtreStatut").value;
+            let fm = document.getElementById("filtreMethode").value;
+            let all = getPaiements();
+            let data = all.filter(function (p) {
+                let txt = (p.nom + " " + p.methode + " " + p.motif).toLowerCase();
+                return (!v || txt.includes(v)) && (!fs || p.statut === fs) && (!fm || p.methode === fm);
+            });
+            document.getElementById("nbTotal").textContent = all.length;
+            document.getElementById("nbPaye").textContent = all.filter(function (p) { return p.statut === "Payé"; }).length;
+            document.getElementById("nbAttente").textContent = all.filter(function (p) { return p.statut === "En attente"; }).length;
+            let total = 0; all.forEach(function (p) { if (p.statut === "Payé") total += (p.montant || 0); });
+            document.getElementById("totalRecu").textContent = total.toLocaleString("fr-FR") + " F";
+            document.getElementById("infoSync").textContent = "Synchronise : " + all.length + " paiements — " + getNotifs().length + " notifications";
+            document.getElementById("vide").style.display = data.length === 0 ? "block" : "none";
+            let tb = document.getElementById("tbody"); tb.innerHTML = "";
+            data.forEach(function (p) {
+                let badge = p.statut === "Payé" ? "<span class='badge paye'>Paye</span>" : p.statut === "En attente" ? "<span class='badge attente'>En attente</span>" : "<span class='badge echoue'>Echoue</span>";
+                let acces = p.statut === "Payé" ? "<span class='badge autorise'>AUTORISE</span>" : "<span class='badge bloque'>BLOQUE</span>";
+                let btnAction = p.statut === "Payé"
+                    ? "<button class='btn-petit btn-bloque' onclick='bloquer(" + p.id + ")'>BLOQUER</button>"
+                    : "<button class='btn-petit btn-debloque' onclick='debloquer(" + p.id + ")'>DEBLOQUER / ACCEPTER</button>";
+                tb.innerHTML += "<tr><td><b>" + p.nom + "</b></td><td><b>" + (p.montant || 0).toLocaleString("fr-FR") + " FCFA</b></td><td>" + p.methode + "</td><td>" + p.motif + "</td><td>" + (p.date || "-") + "</td><td>" + badge + "</td><td>" + acces + "</td><td><div class='actions'><button class='btn-petit btn-modif' onclick='modifier(" + p.id + ")'>MODIFIER</button>" + btnAction + "<button class='btn-petit btn-statut' onclick='changerStatut(" + p.id + ")'>CHANGER STATUT</button><button class='btn-petit btn-suppr' onclick='supprimer(" + p.id + ")'>SUPPRIMER</button></div></td></tr>";
+            });
+        }
+
+        function ajouterNotif(nom, texte, type) {
+            let notifs = getNotifs();
+            notifs.unshift({ id: Date.now(), titre: texte, texte: nom + " — " + texte, type: type, date: new Date().toLocaleString("fr-FR"), lu: false, couleur: "#C9A227" });
+            saveNotifs(notifs);
+        }
+
+        // C'EST ICI QUE ÇA DEBLOQUE VRAIMENT LE LOGIN
+        function debloquer(id) {
+            let data = getPaiements();
+            let p = data.find(function (x) { return x.id === id; });
+            if (!p) return;
+            if (!confirm("Accepter le paiement de " + p.nom + " ?\n\nSon compte va etre AUTORISE. Il pourra se connecter 4 secondes apres.")) return;
+            p.statut = "Payé";
+            savePaiements(data);
+            // 1. On debloque le Login
+            localStorage.setItem("rbm_resto_statut_" + p.nom, "AUTORISE");
+            // 2. On met a jour la demande aussi
+            try {
+                let dem = JSON.parse(localStorage.getItem("rbm_demandes_resto") || "[]");
+                dem.forEach(function (d) { if (d.nom === p.nom) d.statut = "ACCEPTE"; });
+                localStorage.setItem("rbm_demandes_resto", JSON.stringify(dem));
+            } catch (e) { }
+            ajouterNotif(p.nom, "Compte debloque : " + p.nom, "Payé");
+            alert("Accepte ! " + p.nom + " est AUTORISE. Il peut se connecter maintenant.");
+            afficher();
+        }
+        function bloquer(id) {
+            let data = getPaiements();
+            let p = data.find(function (x) { return x.id === id; });
+            if (!p) return;
+            if (!confirm("Bloquer " + p.nom + " ? Son compte sera BLOQUE.")) return;
+            p.statut = "En attente";
+            savePaiements(data);
+            localStorage.setItem("rbm_resto_statut_" + p.nom, "BLOQUE");
+            ajouterNotif(p.nom, "Compte bloque : " + p.nom, "En attente");
+            afficher();
+        }
+        function changerStatut(id) {
+            let data = getPaiements();
+            let p = data.find(function (x) { return x.id === id; });
+            if (!p) return;
+            let nouveau = prompt("Nouveau statut pour " + p.nom + " :\nPayé / En attente / Échoué", p.statut);
+            if (!nouveau) return;
+            if (nouveau !== "Payé" && nouveau !== "En attente" && nouveau !== "Échoué") { alert("Ecris exactement : Payé ou En attente ou Échoué"); return; }
+            p.statut = nouveau;
+            savePaiements(data);
+            localStorage.setItem("rbm_resto_statut_" + p.nom, nouveau === "Payé" ? "AUTORISE" : "BLOQUE");
+            ajouterNotif(p.nom, "Statut change : " + p.nom + " -> " + nouveau, nouveau);
+            afficher();
+        }
+        function modifier(id) {
+            let data = getPaiements();
+            let p = data.find(function (x) { return x.id === id; });
+            if (!p) return;
+            let montant = prompt("Nouveau montant pour " + p.nom + " :", p.montant);
+            if (montant === null) return;
+            p.montant = parseInt(montant) || p.montant;
+            let methode = prompt("Nouvelle methode (Wave / Sama / Orange Money) :", p.methode);
+            if (methode) p.methode = methode;
+            savePaiements(data);
+            afficher();
+        }
+        function supprimer(id) {
+            let data = getPaiements();
+            let p = data.find(function (x) { return x.id === id; });
+            if (!p) return;
+            if (!confirm("Supprimer ce paiement : " + p.nom + " ?\nATTENTION : C'est enregistre dans le Journal.")) return;
+            savePaiements(data.filter(function (x) { return x.id !== id; }));
+            afficher();
+        }
+        function reparer() {
+            localStorage.removeItem("rbm_paiements");
+            location.reload();
+        }
+        afficher();
+    </script>
+</body>
+
+</html>
