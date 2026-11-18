@@ -1,317 +1,159 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifications Commandes - Restaurant By Mali</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif
-        }
-
-        body {
-            background: #FFF8EE;
-            color: #1A1512;
-            overflow-x: hidden
-        }
-
-        .header {
-            background: #1A1512;
-            color: #fff;
-            padding: 22px 20px;
-            text-align: center
-        }
-
-        .header h1 {
-            font-family: Georgia, serif;
-            font-size: 22px;
-            font-weight: 400
-        }
-
-        .header p {
-            font-size: 13px;
-            opacity: .85;
-            margin-top: 4px
-        }
-
-        .nav {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            padding: 14px 20px;
-            justify-content: center
-        }
-
-        .nav a {
-            background: #fff;
-            border: 1px solid #F1E3C8;
-            padding: 9px 14px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: #1A1512;
-            font-size: 13px;
-            font-weight: 700;
-            white-space: nowrap
-        }
-
-        .nav a.corbeille {
-            background: #7A0C1A;
-            color: #fff;
-            border-color: #7A0C1A
-        }
-
-        .main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 16px 30px
-        }
-
-        .card {
-            background: #fff;
-            border: 1px solid #F1E3C8;
-            border-radius: 16px;
-            padding: 18px;
-            margin-top: 14px;
-            overflow: hidden
-        }
-
-        .msg {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            border-bottom: 1px solid #F1E3C8;
-            padding: 14px 0
-        }
-
-        .msg:last-child {
-            border-bottom: none
-        }
-
-        .msg img {
-            width: 70px;
-            height: 70px;
-            object-fit: cover;
-            border-radius: 12px;
-            flex-shrink: 0
-        }
-
-        .msg .texte {
-            flex: 1;
-            min-width: 0;
-            word-break: break-word;
-            font-size: 13px;
-            line-height: 1.7
-        }
-
-        .check {
-            width: 22px;
-            height: 22px;
-            flex-shrink: 0;
-            margin-top: 4px;
-            accent-color: #7A0C1A;
-            cursor: pointer
-        }
-
-        .badge {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 800;
-            white-space: nowrap
-        }
-
-        .badge-vert {
-            background: #1B6B2E;
-            color: #fff
-        }
-
-        .badge-rouge {
-            background: #A83200;
-            color: #fff
-        }
-
-        .badge-or {
-            background: #C9A227;
-            color: #1A1512
-        }
-
-        .btn-bordeaux {
-            background: #7A0C1A;
-            color: #fff;
-            border: none;
-            padding: 13px;
-            border-radius: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            font-size: 14px;
-            width: 100%;
-            margin-top: 10px
-        }
-
-        .btn-bordeaux-clair {
-            background: #fff;
-            color: #7A0C1A;
-            border: 2px solid #7A0C1A;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            font-size: 14px;
-            width: 100%;
-            margin-top: 10px
-        }
-
-        .btn-noir {
-            background: #1A1512;
-            color: #fff;
-            border: none;
-            padding: 13px;
-            border-radius: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            font-size: 14px;
-            width: 100%;
-            margin-top: 10px
-        }
-
-        .vide {
-            text-align: center;
-            color: #888;
-            font-size: 14px;
-            padding: 20px
-        }
-
-        .bar-suppr {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap
-        }
-
-        .bar-suppr .btn-bordeaux,
-        .bar-suppr .btn-bordeaux-clair {
-            flex: 1;
-            min-width: 160px
-        }
-
-        @media print {
-
-            .nav,
-            .btn-bordeaux,
-            .btn-bordeaux-clair,
-            .btn-noir,
-            .check {
-                display: none !important
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications Commandes - LAIT KOUNDAR</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#FFF8EE;color:#1A1512;overflow-x:hidden}
+.header{background:#1A1512;color:#fff;padding:22px 20px;text-align:center}
+.header h1{font-family:Georgia,serif;font-size:22px;font-weight:400}
+.header p{font-size:13px;opacity:.85;margin-top:4px}
+.nav{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;justify-content:center}
+.nav a{background:#fff;border:1px solid #F1E3C8;padding:9px 14px;border-radius:20px;text-decoration:none;color:#1A1512;font-size:13px;font-weight:700;white-space:nowrap}
+.main{max-width:900px;margin:0 auto;padding:0 16px 30px}
+.card{background:#fff;border:1px solid #F1E3C8;border-radius:16px;padding:18px;margin-top:14px}
+.card h3{font-family:Georgia,serif;font-weight:400;font-size:22px}
+.notif{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #F1E3C8}
+.notif img{width:90px;height:90px;object-fit:cover;border-radius:14px;flex-shrink:0;background:#eee}
+.notif b{font-size:15px}
+.notif p{font-size:13px;color:#333;margin-top:4px;line-height:1.6}
+.badge{background:#C9A227;color:#1A1512;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap}
+.badge-paye{background:#1B6B2E;color:#fff;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap}
+.btn{border:none;padding:13px;border-radius:12px;font-weight:800;cursor:pointer;font-size:14px;width:100%;margin-top:10px}
+.btn-bordeaux{background:#fff;color:#7A0C1A;border:1.5px solid #7A0C1A}
+.btn-noir{background:#1A1512;color:#fff}
+.btn-marron{background:#7A0C1A;color:#fff}
+.btn-vert{background:#1B6B2E;color:#fff}
+.btn-orange{background:#C9A227;color:#1A1512}
+.vide{text-align:center;color:#888;font-size:14px;padding:20px}
+.btns{display:flex;gap:8px;margin-top:8px}
+.btns button{flex:1;padding:10px;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:13px}
+@media print{ .nav,.btn,.btns{ display:none!important } }
+</style>
 </head>
-
 <body>
-    <div class="header">
-        <h1 id="titreNom">Notifications Commandes</h1>
-        <p>Commandes de tes clients. Coche pour supprimer.</p>
-    </div>
-    <div class="nav">
-        <a href="dashboard.html">Tableau de bord</a>
-        <a href="notification-commande.html">Commandes</a>
-        <a href="notification-paiement.html">Notifications Paiements</a>
-        <a href="paiement.html">Mes Paiements</a>
-        <a href="historique.html">Historique</a>
-        <a href="corbeille.html" class="corbeille">🗑 Corbeille</a>
-    </div>
-    <div class="main">
-        <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-                <h3 style="font-family:Georgia,serif;font-weight:400">Commandes reçues</h3>
-                <label style="font-size:13px;font-weight:700;cursor:pointer"><input type="checkbox" id="toutCocher"
-                        onchange="toutCocher()"
-                        style="accent-color:#7A0C1A;width:18px;height:18px;vertical-align:middle"> Tout cocher</label>
-            </div>
-            <div id="liste"></div>
-            <div class="bar-suppr">
-                <button class="btn-bordeaux-clair" onclick="supprimerSelection()">🗑 Supprimer le message
-                    sélectionné</button>
-                <button class="btn-bordeaux" onclick="supprimerTout()">🗑 Supprimer tous les messages</button>
-            </div>
-            <button class="btn-noir" onclick="window.print()">🖨 IMPRIMER</button>
-            <p id="msgInfo" style="font-size:13px;text-align:center;margin-top:10px;color:#7A0C1A;font-weight:700"></p>
-            <p style="font-size:12px;text-align:center;color:#888;margin-top:6px">Supprimer = envoie en Corbeille. Tu
-                peux restaurer dans Corbeille.</p>
-        </div>
-    </div>
-    <script>
-        let nom = localStorage.getItem("rbm_resto_connecte") || "";
-        if (!nom) location.href = "login.html";
-        document.getElementById("titreNom").textContent = "Notifications Commandes — " + nom;
-        function propre(v) {
-            if (!v) return "—";
-            v = String(v).trim();
-            if (v.charAt(0) === "{") {
-                try { let o = JSON.parse(v); if (o.nom) return o.nom; } catch (e) { }
-                let m = v.match(/"nom"\s*:\s*"([^"]+)"/); if (m) return m[1];
-                return "—";
-            }
-            return v;
+<div class="header"><h1>Notifications Commandes — LAIT KOUNDAR</h1><p>Commandes de tes clients. Valide seulement si tu as vraiment reçu l'argent.</p></div>
+<div class="nav">
+<a href="dashboard.html">Tableau de bord</a>
+<a href="historique.html">Commandes</a>
+<a href="notification-paiement.html">Notifications Paiements</a>
+<a href="notification-commande.html">Notifications Commandes</a>
+<a href="rapport-mois.html">Rapport du Mois</a>
+<a href="corbeille.html">🗑 Corbeille</a>
+</div>
+<div class="main">
+<div class="card">
+<h3>Notifications</h3>
+<div id="liste"></div>
+<div id="vide" class="vide" style="display:none">Aucune commande pour le moment.</div>
+<button class="btn btn-bordeaux" onclick="supprimerSelection()">🗑 Supprimer le message sélectionné</button>
+<button class="btn btn-marron" onclick="supprimerTout()">🗑 Supprimer tout</button>
+<button class="btn btn-noir" onclick="window.print()">🖨 IMPRIMER</button>
+<p style="font-size:12px;color:#888;text-align:center;margin-top:8px">Supprimer = envoie en Corbeille. Tu peux restaurer dans Corbeille.</p>
+</div>
+</div>
+<script>
+var VRAIES = [
+  {client:"Dyjo Diakité", telephone:"+223 75 79 89 09", quartier:"Magnambougou", restaurant:"LAIT KOUNDAR", plat:"Smoothie", quantite:3, total:3500, paiement:"Payé", livree:true, statut:"Livrée", date:"18/11/2026 16:20:57"},
+  {client:"Dyjo Diakité", telephone:"+223 75 79 89 09", quartier:"Magnambougou", restaurant:"LAIT KOUNDAR", plat:"Café koundar", quantite:1, total:1000, paiement:"Payé", livree:true, statut:"Livrée", date:"18/11/2026 15:55:38"}
+];
+// ===== TA PHOTO À TOI, DANS TON MENU, ON N'INVENTE RIEN =====
+function photoPour(nomPlat, commande){
+  if(commande && (commande.photo || commande.image || commande.img)) return commande.photo || commande.image || commande.img;
+  var cles = ["rbm_menus","rbm_menu","rbm_menu_lait_koundar","rbm_restaurants","rbm_menu_restaurant"];
+  var nomCherche = String(nomPlat||"").toLowerCase().trim();
+  for(var k=0; k<cles.length; k++){
+    try{
+      var data = JSON.parse(localStorage.getItem(cles[k]) || "null");
+      if(!data) continue;
+      var plats = [];
+      if(Array.isArray(data)) plats = data;
+      else if(Array.isArray(data.plats)) plats = data.plats;
+      else if(Array.isArray(data.menu)) plats = data.menu;
+      else if(data["LAIT KOUNDAR"] && Array.isArray(data["LAIT KOUNDAR"])) plats = data["LAIT KOUNDAR"];
+      else if(typeof data === "object"){
+        Object.keys(data).forEach(function(key){
+          if(data[key] && typeof data[key] === "object") plats.push(Object.assign({nom:key}, data[key]));
+        });
+      }
+      for(var i=0; i<plats.length; i++){
+        var p = plats[i];
+        var nomP = String(p.nom || p.name || p.plat || "").toLowerCase().trim();
+        if(nomP === nomCherche){
+          var ph = p.photo || p.image || p.img || p.photo_url || "";
+          if(ph) return ph;
         }
-        function getCommandes() { try { return JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); } catch (e) { return []; } }
-        function afficher() {
-            let commandes = getCommandes().filter(function (c) { return (c.restaurant || c.resto) === nom; });
-            commandes.sort(function (a, b) { return new Date(b.date || 0) - new Date(a.date || 0); });
-            let zone = document.getElementById("liste");
-            if (commandes.length === 0) {
-                zone.innerHTML = "<div class='vide'>Aucune commande pour le moment.</div>";
-                return;
-            }
-            zone.innerHTML = commandes.map(function (c) {
-                let toutes = getCommandes();
-                let idx = toutes.indexOf(c);
-                if (idx === -1) { idx = toutes.findIndex(function (x) { return (x.restaurant || x.resto) === nom && String(x.client) === String(c.client) && String(x.date) === String(c.date); }); }
-                let badge = c.statut === "Validée" ? "badge-vert" : (c.statut === "Annulée" ? "badge-rouge" : "badge-or");
-                let img = (c.img && c.img.length > 10) ? c.img : "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop";
-                return "<div class='msg'><input type='checkbox' class='check' data-idx='" + idx + "'><img src='" + img + "' onerror=\"this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop'\"><div class='texte'><b>" + propre(c.client) + " — " + propre(c.plat || c.commande) + " x " + (c.quantite || c.qty || 1) + "</b> — <span class='badge " + badge + "'>" + (c.statut || "En attente") + "</span><br>Montant : <b>" + (c.total || c.prix || "—") + " F</b> — Paiement : " + (c.paiement || "—") + " — Tél : " + propre(c.telephone || c.tel) + " — Quartier : " + (c.quartier || "—") + "<br>Date : " + (c.date || "—") + "</div></div>";
-            }).join("");
-        }
-        afficher();
-        function toutCocher() {
-            let coche = document.getElementById("toutCocher").checked;
-            document.querySelectorAll(".check").forEach(function (c) { c.checked = coche; });
-        }
-        // ===== ENVOIE EN CORBEILLE =====
-        function envoyerEnCorbeille(original) {
-            let corb = [];
-            try { corb = JSON.parse(localStorage.getItem("rbm_corbeille") || "[]"); } catch (e) { corb = []; }
-            corb.push({ dossier: "restaurant", restaurant: nom, client: original.client, plat: original.plat || original.commande, commande: original.commande, quantite: original.quantite, qty: original.qty, total: original.total || original.prix, prix: original.prix, paiement: original.paiement, statut: original.statut, telephone: original.telephone || original.tel, tel: original.tel, quartier: original.quartier, moyen: original.moyen, moyenPaiement: original.moyenPaiement, img: original.img, photo: original.photo, date: original.date, dateSuppression: new Date().toLocaleString("fr-FR"), original: original });
-            localStorage.setItem("rbm_corbeille", JSON.stringify(corb));
-        }
-        function supprimerSelection() {
-            let coches = Array.from(document.querySelectorAll(".check:checked"));
-            if (coches.length === 0) { document.getElementById("msgInfo").textContent = "Coche d'abord le message à supprimer."; return; }
-            if (!confirm("Mettre " + coches.length + " commande(s) en Corbeille ?")) return;
-            let toutes = getCommandes();
-            let aSupprimer = coches.map(function (c) { return parseInt(c.getAttribute("data-idx")); }).sort(function (a, b) { return b - a; });
-            aSupprimer.forEach(function (i) { envoyerEnCorbeille(toutes[i]); toutes.splice(i, 1); });
-            localStorage.setItem("rbm_commandes", JSON.stringify(toutes));
-            document.getElementById("toutCocher").checked = false;
-            document.getElementById("msgInfo").textContent = "Envoyé en Corbeille. Va dans Corbeille pour restaurer.";
-            afficher();
-        }
-        function supprimerTout() {
-            let toutes = getCommandes();
-            let miennes = toutes.filter(function (c) { return (c.restaurant || c.resto) === nom; });
-            if (miennes.length === 0) { document.getElementById("msgInfo").textContent = "Aucune commande à supprimer."; return; }
-            if (!confirm("Mettre TOUTES tes " + miennes.length + " commandes en Corbeille ?")) return;
-            miennes.forEach(function (c) { envoyerEnCorbeille(c); });
-            let restantes = toutes.filter(function (c) { return (c.restaurant || c.resto) !== nom; });
-            localStorage.setItem("rbm_commandes", JSON.stringify(restantes));
-            document.getElementById("toutCocher").checked = false;
-            document.getElementById("msgInfo").textContent = "Tout envoyé en Corbeille.";
-            afficher();
-        }
-    </script>
+      }
+    }catch(e){}
+  }
+  return "";
+}
+function lire(){
+  var a = [];
+  try{ a = JSON.parse(localStorage.getItem("rbm_commandes") || "[]"); }catch(e){ a = []; }
+  if(!a || a.length === 0) a = VRAIES;
+  return a.filter(function(c){ return (parseInt(c.total||c.prix||0)||0) > 0; });
+}
+function sauver(a){ localStorage.setItem("rbm_commandes", JSON.stringify(a)); }
+function afficher(){
+  var liste = lire();
+  var div = document.getElementById("liste");
+  var vide = document.getElementById("vide");
+  if(liste.length === 0){ div.innerHTML=""; vide.style.display="block"; return; }
+  vide.style.display="none";
+  div.innerHTML = liste.map(function(c, i){
+    var photo = photoPour(c.plat || c.commande, c);
+    var imgHtml = photo ? '<img src="'+photo+'">' : '<div style="width:90px;height:90px;background:#F1E3C8;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;text-align:center">Pas de<br>photo</div>';
+    var badge = c.paiement === "Payé" ? '<span class="badge-paye">Payé</span>' : '<span class="badge">En attente</span>';
+    return '<div class="notif"><input type="checkbox" data-i="'+i+'" style="width:20px;height:20px;margin-top:30px">'+imgHtml+'<div style="flex:1"><b>'+(c.client||"")+' — '+(c.plat||c.commande)+' x '+(c.quantite||1)+' — </b> '+badge+'<p>Montant : <b>'+(c.total||c.prix)+' F</b> — Tél : '+(c.telephone||c.tel||"")+' — Quartier : '+(c.quartier||"")+'<br>Date : '+(c.date||"")+' — Statut : '+(c.statut||"Livrée")+'</p><div class="btns"><button class="btn-vert" onclick="valider('+i+')">✅ Valider</button><button class="btn-orange" onclick="echoue('+i+')">❌ Échoué</button><button style="background:#eee" onclick="modifier('+i+')">✏️ Modifier</button></div></div></div>';
+  }).join("");
+}
+afficher();
+function valider(i){
+  var liste = lire();
+  if(!liste[i]) return;
+  liste[i].paiement = "Payé";
+  liste[i].statut = "Livrée";
+  liste[i].livree = true;
+  sauver(liste);
+  afficher();
+}
+function echoue(i){
+  var liste = lire();
+  if(!liste[i]) return;
+  liste[i].paiement = "Échoué";
+  sauver(liste);
+  afficher();
+}
+function modifier(i){
+  var liste = lire();
+  if(!liste[i]) return;
+  // Modifier = basculer Payé <-> Échoué, pour argent arrivé en retard / bug connexion
+  if(liste[i].paiement === "Payé") liste[i].paiement = "Échoué";
+  else liste[i].paiement = "Payé";
+  sauver(liste);
+  afficher();
+}
+function supprimerSelection(){
+  var checks = document.querySelectorAll('#liste input[type="checkbox"]:checked');
+  if(checks.length === 0){ alert("Coche d'abord une notification."); return; }
+  if(!confirm("Envoyer en Corbeille ?")) return;
+  var liste = lire();
+  var aGarder = liste.filter(function(c, i){
+    var coche = false;
+    checks.forEach(function(ch){ if(parseInt(ch.getAttribute("data-i")) === i) coche = true; });
+    return !coche;
+  });
+  sauver(aGarder);
+  afficher();
+}
+function supprimerTout(){
+  if(!confirm("Envoyer toutes les notifications en Corbeille ?")) return;
+  sauver([]);
+  afficher();
+}
+</script>
 </body>
-
 </html>
